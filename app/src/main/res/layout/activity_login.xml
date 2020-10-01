@@ -6,25 +6,37 @@
     android:layout_height="match_parent"
     tools:context=".LoginActivity">
 
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="164dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo" />
+
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_xxl_2"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/logo">
 
         <EditText
             android:id="@+id/email_edit"
             android:layout_width="296dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/spacing_m"
             android:backgroundTint="@color/line"
             android:ems="10"
+            android:fontFamily="@font/notosanskr_regular"
             android:hint="E-mail"
-            android:inputType="textEmailAddress" />
+            android:inputType="textEmailAddress"
+            android:padding="@dimen/spacing_m"
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/password_edit"
@@ -32,20 +44,13 @@
             android:layout_height="wrap_content"
             android:backgroundTint="@color/line"
             android:ems="10"
+            android:fontFamily="@font/notosanskr_regular"
             android:hint="Password"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:padding="@dimen/spacing_m"
+            android:textSize="16sp" />
 
     </LinearLayout>
-
-    <ImageView
-        android:id="@+id/logo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/spacing_xxl_2"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/logo" />
 
     <Button
         android:id="@+id/login_btn"
@@ -54,9 +59,9 @@
         android:layout_marginTop="@dimen/spacing_l"
         android:background="@drawable/ic_button"
         android:text="로그인"
+        android:fontFamily="@font/notosanskr_bold"
         android:textColor="@color/white"
         android:textSize="18sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
@@ -76,7 +81,10 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/spacing_m"
             android:layout_weight="0"
-            android:text="아이디 / 비밀번호 찾기" />
+            android:text="아이디 / 비밀번호 찾기"
+            android:fontFamily="@font/notosanskr_regular"
+            android:textSize="12sp"
+            android:textColor="@color/sub_gray" />
 
         <TextView
             android:id="@+id/textView3"
@@ -84,6 +92,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="0"
             android:text="|"
+            android:fontFamily="@font/notosanskr_regular"
+            android:textSize="12sp"
             android:textColor="@color/sub_gray" />
 
         <TextView
@@ -92,7 +102,10 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/spacing_m"
             android:layout_weight="0"
-            android:text="회원가입" />
+            android:text="회원가입"
+            android:fontFamily="@font/notosanskr_regular"
+            android:textSize="12sp"
+            android:textColor="@color/sub_gray" />
 
     </LinearLayout>
 
