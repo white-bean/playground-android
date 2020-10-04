@@ -1,12 +1,15 @@
-package com.doubleslash.playground;
+package com.doubleslash.playground.login;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.doubleslash.playground.R;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText emailEdit;
@@ -46,7 +49,8 @@ public class LoginActivity extends AppCompatActivity {
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // 할 일
+                Intent intent = new Intent(getApplicationContext(), RegiserActivity1.class);
+                startActivity(intent);
             }
         });
     }
