@@ -58,16 +58,131 @@ public class RegisterActivity2 extends AppCompatActivity {
         checkAllBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                check1Btn.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_check2));
-                check2Btn.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_check2));
-                check3Btn.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_check2));
-                check4Btn.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_check2));
-                checkAllBtn.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_check));
-
-                nextBtn.setBackgroundResource(R.drawable.ic_button);
-                nextBtn.setTextColor(getResources().getColor(R.color.white));
-                nextBtn.setClickable(true);
+                if (!isAllChecked()) {
+                    OnCheck1();
+                    OnCheck2();
+                    OnCheck3();
+                    OnCheck4();
+                    OnNextBtn();
+                } else {
+                    OffCheck1();
+                    OffCheck2();
+                    OffCheck3();
+                    OffCheck4();
+                    OffNextBtn();
+                }
+            }
+        });
+        check1Btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!isCheck1On) {
+                    OnCheck1();
+                    if (isAllChecked()) OnNextBtn();
+                } else {
+                    OffCheck1();
+                    OffNextBtn();
+                }
+            }
+        });
+        check2Btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!isCheck2On) {
+                    OnCheck2();
+                    if (isAllChecked()) OnNextBtn();
+                } else {
+                    OffCheck2();
+                    OffNextBtn();
+                }
+            }
+        });
+        check3Btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!isCheck3On) {
+                    OnCheck3();
+                    if (isAllChecked()) OnNextBtn();
+                } else {
+                    OffCheck3();
+                    OffNextBtn();
+                }
+            }
+        });
+        check4Btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!isCheck4On) {
+                    OnCheck4();
+                    if (isAllChecked()) OnNextBtn();
+                } else {
+                    OffCheck4();
+                    OffNextBtn();
+                }
             }
         });
     }
+
+    private boolean isAllChecked() {
+        if (isCheck1On && isCheck2On && isCheck3On && isCheck4On) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private void OnCheck1() {
+        isCheck1On = true;
+        check1Btn.setImageResource(R.drawable.ic_check2);
+    }
+
+    private void OffCheck1() {
+        isCheck1On = false;
+        check1Btn.setImageResource(R.drawable.ic_disabled_check2);
+    }
+
+    private void OnCheck2() {
+        isCheck2On = true;
+        check2Btn.setImageResource(R.drawable.ic_check2);
+    }
+
+    private void OffCheck2() {
+        isCheck2On = false;
+        check2Btn.setImageResource(R.drawable.ic_disabled_check2);
+    }
+
+    private void OnCheck3() {
+        isCheck3On = true;
+        check3Btn.setImageResource(R.drawable.ic_check2);
+    }
+
+    private void OffCheck3() {
+        isCheck3On = false;
+        check3Btn.setImageResource(R.drawable.ic_disabled_check2);
+    }
+
+    private void OnCheck4() {
+        isCheck4On = true;
+        check4Btn.setImageResource(R.drawable.ic_check2);
+    }
+
+    private void OffCheck4() {
+        isCheck4On = false;
+        check4Btn.setImageResource(R.drawable.ic_disabled_check2);
+    }
+
+    private void OnNextBtn() {
+        checkAllBtn.setImageResource(R.drawable.ic_check);
+        nextBtn.setBackgroundResource(R.drawable.ic_button);
+        nextBtn.setTextColor(getResources().getColor(R.color.white));
+        nextBtn.setClickable(true);
+    }
+
+    private void OffNextBtn() {
+        checkAllBtn.setImageResource(R.drawable.ic_disabled_check);
+        nextBtn.setBackgroundResource(R.drawable.ic_disabled_button);
+        nextBtn.setTextColor(getResources().getColor(R.color.sub_gray));
+        nextBtn.setClickable(false);
+    }
+
 }
