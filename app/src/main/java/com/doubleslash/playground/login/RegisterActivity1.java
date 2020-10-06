@@ -2,15 +2,17 @@ package com.doubleslash.playground.login;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.doubleslash.playground.R;
 
-public class RegiserActivity1 extends AppCompatActivity {
+public class RegisterActivity1 extends AppCompatActivity {
     EditText univEdit;
     EditText yearEdit;
     Button nextBtn;
@@ -18,7 +20,7 @@ public class RegiserActivity1 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_regiser1);
+        setContentView(R.layout.activity_register1);
 
         initUI();
     }
@@ -27,6 +29,13 @@ public class RegiserActivity1 extends AppCompatActivity {
         univEdit = findViewById(R.id.univ_edit);
         yearEdit = findViewById(R.id.year_edit);
         nextBtn = findViewById(R.id.next_btn);
+        nextBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), RegisterActivity2.class);
+                startActivity(intent);
+            }
+        });
 
         univEdit.addTextChangedListener(new TextWatcher() {
             @Override
