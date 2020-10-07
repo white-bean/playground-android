@@ -44,13 +44,13 @@ public class GroupListFragment extends Fragment {
     }
     private void addItems(){
         adapter.addItem(new Group("서울 송파", "스터디", "1", "4", "자소서 스터디",
-                "자기소개서 스터디 하실 분 구합니다:)", R.drawable.group_vio));
+                "자기소개서 스터디 하실 분 구합니다:)", R.drawable.img_join));
         adapter.addItem(new Group("서울 송파", "스터디", "1", "4", "C++ 스터디",
-                "열심히 코딩 공부하실 분들 오세여", R.drawable.group_vio));
+                "열심히 코딩 공부하실 분들 오세여", R.drawable.img_join));
         adapter.addItem(new Group("서울 송파", "스터디", "1", "4", "자소서 스터디",
                 "자소서 서로 첨삭해주는 스터디", R.drawable.group_vio));
         adapter.addItem(new Group("서울 송파", "스터디", "1", "4", "자소서 스터디",
-                "자소서 서로 첨삭해주는 스터디", R.drawable.group_vio));
+                "자소서 서로 첨삭해주는 스터디", R.drawable.img_join));
         adapter.addItem(new Group("서울 송파", "스터디", "1", "4", "자소서 스터디",
                 "자소서 서로 첨삭해주는 스터디", R.drawable.group_vio));
         adapter.addItem(new Group("서울 송파", "스터디", "1", "4", "자소서 스터디",
