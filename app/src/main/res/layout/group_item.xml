@@ -47,6 +47,8 @@
                         android:text="서울 송파"
                         android:textColor="@color/playviolet"
                         android:textSize="12sp"
+                        android:fontFamily="@font/notosanskr_regular"
+                        android:includeFontPadding="false"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -64,6 +66,8 @@
                         android:text="스터디"
                         android:textColor="@color/playviolet"
                         android:textSize="12sp"
+                        android:fontFamily="@font/notosanskr_regular"
+                        android:includeFontPadding="false"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/location_tV"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -75,6 +79,8 @@
                         android:text="1"
                         android:textColor="@color/playviolet"
                         android:textSize="16sp"
+                        android:fontFamily="@font/notosanskr_regular"
+                        android:includeFontPadding="false"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/textView15"
                         app:layout_constraintTop_toTopOf="parent"
@@ -87,6 +93,8 @@
                         android:text="/"
                         android:textColor="@color/sub_gray"
                         android:textSize="16sp"
+                        android:fontFamily="@font/notosanskr_regular"
+                        android:includeFontPadding="false"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/total_tV"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -98,6 +106,8 @@
                         android:text="4"
                         android:textColor="@color/sub_gray"
                         android:textSize="16sp"
+                        android:fontFamily="@font/notosanskr_regular"
+                        android:includeFontPadding="false"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -111,7 +121,9 @@
                     android:layout_marginBottom="@dimen/spacing_xs"
                     android:text="그룹 제목"
                     android:textColor="@color/main_black"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:fontFamily="@font/notosanskr_bold"
+                    android:includeFontPadding="false"/>
 
                 <TextView
                     android:id="@+id/info_tV"
@@ -119,7 +131,9 @@
                     android:layout_height="wrap_content"
                     android:text="그룹 소개"
                     android:textColor="@color/sub_black"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    android:fontFamily="@font/notosanskr_regular"
+                    android:includeFontPadding="false"/>
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
