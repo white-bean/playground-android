@@ -60,6 +60,7 @@
         android:background="@drawable/ic_button"
         android:text="로그인"
         android:fontFamily="@font/notosanskr_bold"
+        android:includeFontPadding="false"
         android:textColor="@color/white"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -83,6 +84,7 @@
             android:layout_weight="0"
             android:text="아이디 / 비밀번호 찾기"
             android:fontFamily="@font/notosanskr_regular"
+            android:includeFontPadding="false"
             android:textSize="12sp"
             android:textColor="@color/sub_gray" />
 
@@ -93,6 +95,7 @@
             android:layout_weight="0"
             android:text="|"
             android:fontFamily="@font/notosanskr_regular"
+            android:includeFontPadding="false"
             android:textSize="12sp"
             android:textColor="@color/sub_gray" />
 
@@ -104,6 +107,7 @@
             android:layout_weight="0"
             android:text="회원가입"
             android:fontFamily="@font/notosanskr_regular"
+            android:includeFontPadding="false"
             android:textSize="12sp"
             android:textColor="@color/sub_gray" />
 
