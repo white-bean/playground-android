@@ -37,6 +37,7 @@ public class RegisterActivity1 extends AppCompatActivity {
             }
         });
 
+        // 두 EditText에 모두 내용이 있을 때만 다음 버튼 활성화
         univEdit.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

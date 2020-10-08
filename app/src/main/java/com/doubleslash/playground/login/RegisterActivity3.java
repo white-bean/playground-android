@@ -2,6 +2,7 @@ package com.doubleslash.playground.login;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -16,11 +17,11 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 public class RegisterActivity3 extends AppCompatActivity {
-    private EditText emailEdit;
-    private Button requestNumberBtn;
     private RelativeLayout numberLayout;
+    private EditText emailEdit;
     private EditText numberEdit;
     private TextView okBtn;
+    private Button requestNumberBtn;
     private Button nextBtn;
 
     int time, min, sec;   // 타이머를 위한 변수
@@ -34,11 +35,11 @@ public class RegisterActivity3 extends AppCompatActivity {
     }
 
     private void initUI() {
-        emailEdit = findViewById(R.id.email_edit);
-        requestNumberBtn = findViewById(R.id.request_number_btn);
         numberLayout = findViewById(R.id.number_layout);
+        emailEdit = findViewById(R.id.email_edit);
         numberEdit = findViewById(R.id.number_edit);
         okBtn = findViewById(R.id.ok_btn);
+        requestNumberBtn = findViewById(R.id.request_number_btn);
         nextBtn = findViewById(R.id.next_btn);
 
         requestNumberBtn.setOnClickListener(new View.OnClickListener() {
@@ -56,8 +57,17 @@ public class RegisterActivity3 extends AppCompatActivity {
                 nextBtn.setEnabled(true);
             }
         });
+
+        nextBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), RegisterActivity4.class);
+                startActivity(intent);
+            }
+        });
     }
 
+    // 인증 번호 요청 후 타이머 구현
     private void timerStart() {
         numberLayout.setVisibility(View.VISIBLE);
         requestNumberBtn.setBackgroundResource(R.drawable.ic_disabled_blue_lined_button);

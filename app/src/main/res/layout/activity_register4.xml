@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".login.RegisterActivity4">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/spacing_m"
+        android:layout_marginTop="64dp"
+        android:fontFamily="@font/notosanskr_bold"
+        android:includeFontPadding="false"
+        android:text="프로필을\n설정해주세요."
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/spacing_m"
+        android:layout_marginTop="@dimen/spacing_xs"
+        android:fontFamily="@font/notosanskr_regular"
+        android:includeFontPadding="false"
+        android:text="서비스 내에서 보여질 닉네임과 나이,\n주로 활동할 거주지를 선택해주세요."
+        android:textColor="@color/sub_gray"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout4"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/spacing_m"
+        android:layout_marginTop="27dp"
+        android:layout_marginRight="@dimen/spacing_m"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/request_number_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="34dp"
+                android:layout_alignEnd="@id/nickname_edit"
+                android:layout_alignRight="@id/nickname_edit"
+                android:layout_marginTop="@dimen/spacing_xxs"
+                android:background="@drawable/ic_blue_lined_button"
+                android:fontFamily="@font/notosanskr_bold"
+                android:text="중복 확인"
+                android:textColor="@color/playviolet"
+                android:textSize="12sp" />
+
+            <EditText
+                android:id="@+id/nickname_edit"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:ems="10"
+                android:fontFamily="@font/notosanskr_regular"
+                android:hint="닉네임을 설정해주세요."
+                android:includeFontPadding="false"
+                android:inputType="text"
+                android:textColor="@color/sub_black"
+                android:textColorHint="@color/gray"
+                android:textSize="16sp" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/man_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginLeft="@dimen/spacing_m"
+        android:layout_marginTop="@dimen/spacing_m"
+        android:background="@drawable/ic_disabled_button"
+        android:text="남"
+        android:textColor="@color/sub_gray"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout4" />
+
+    <Button
+        android:id="@+id/woman_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginLeft="@dimen/spacing_xxs"
+        android:layout_marginTop="@dimen/spacing_m"
+        android:background="@drawable/ic_disabled_button"
+        android:text="여"
+        android:textColor="@color/sub_gray"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/man_btn"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout4" />
+
+    <EditText
+        android:id="@+id/birth_year_edit"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginLeft="@dimen/spacing_m"
+        android:layout_marginTop="@dimen/spacing_m"
+        android:layout_marginRight="@dimen/spacing_m"
+        android:fontFamily="@font/notosanskr_regular"
+        android:hint="출생년도 (나이)"
+        android:includeFontPadding="false"
+        android:inputType="text"
+        android:textColor="@color/sub_black"
+        android:textColorHint="@color/gray"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/woman_btn"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout4" />
+
+    <com.doubleslash.playground.customwidget.SearchEditText
+        android:id="@+id/search_edit"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:layout_marginLeft="@dimen/spacing_m"
+        android:layout_marginTop="@dimen/spacing_m"
+        android:layout_marginRight="@dimen/spacing_m"
+        android:hint="사는 지역을 설정해주세요."
+        android:includeFontPadding="false"
+        android:inputType="text"
+        android:textColor="@color/sub_black"
+        android:textColorHint="@color/gray"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/woman_btn" />
+
+    <Button
+        android:id="@+id/next_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/spacing_m"
+        android:background="@drawable/ic_disabled_button"
+        android:enabled="false"
+        android:fontFamily="@font/notosanskr_bold"
+        android:text="다음"
+        android:textColor="@color/sub_gray"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="8dp"
+        android:layout_height="8dp"
+        android:layout_marginRight="@dimen/spacing_m"
+        android:layout_marginBottom="@dimen/spacing_xxl_2"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_gray_circle" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="8dp"
+        android:layout_height="8dp"
+        android:layout_marginRight="@dimen/spacing_l"
+        android:layout_marginBottom="40dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
+        app:layout_constraintEnd_toStartOf="@+id/imageView"
+        app:srcCompat="@drawable/ic_blue_circle" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

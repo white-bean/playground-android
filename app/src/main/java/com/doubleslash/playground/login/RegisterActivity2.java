@@ -140,14 +140,10 @@ public class RegisterActivity2 extends AppCompatActivity {
         }
     }
 
+    // 체크 활성화
     private void OnCheck1() {
         isCheck1On = true;
         check1Btn.setImageResource(R.drawable.ic_check2);
-    }
-
-    private void OffCheck1() {
-        isCheck1On = false;
-        check1Btn.setImageResource(R.drawable.ic_disabled_check2);
     }
 
     private void OnCheck2() {
@@ -155,19 +151,9 @@ public class RegisterActivity2 extends AppCompatActivity {
         check2Btn.setImageResource(R.drawable.ic_check2);
     }
 
-    private void OffCheck2() {
-        isCheck2On = false;
-        check2Btn.setImageResource(R.drawable.ic_disabled_check2);
-    }
-
     private void OnCheck3() {
         isCheck3On = true;
         check3Btn.setImageResource(R.drawable.ic_check2);
-    }
-
-    private void OffCheck3() {
-        isCheck3On = false;
-        check3Btn.setImageResource(R.drawable.ic_disabled_check2);
     }
 
     private void OnCheck4() {
@@ -175,11 +161,28 @@ public class RegisterActivity2 extends AppCompatActivity {
         check4Btn.setImageResource(R.drawable.ic_check2);
     }
 
+    // 체크 비활성화
+    private void OffCheck1() {
+        isCheck1On = false;
+        check1Btn.setImageResource(R.drawable.ic_disabled_check2);
+    }
+
+    private void OffCheck2() {
+        isCheck2On = false;
+        check2Btn.setImageResource(R.drawable.ic_disabled_check2);
+    }
+
+    private void OffCheck3() {
+        isCheck3On = false;
+        check3Btn.setImageResource(R.drawable.ic_disabled_check2);
+    }
+
     private void OffCheck4() {
         isCheck4On = false;
         check4Btn.setImageResource(R.drawable.ic_disabled_check2);
     }
 
+    // 다음 버튼 활성화
     private void OnNextBtn() {
         checkAllBtn.setImageResource(R.drawable.ic_check);
         nextBtn.setBackgroundResource(R.drawable.ic_button);
@@ -187,6 +190,7 @@ public class RegisterActivity2 extends AppCompatActivity {
         nextBtn.setEnabled(true);
     }
 
+    // 다음 버튼 비활성화
     private void OffNextBtn() {
         checkAllBtn.setImageResource(R.drawable.ic_disabled_check);
         nextBtn.setBackgroundResource(R.drawable.ic_disabled_button);
