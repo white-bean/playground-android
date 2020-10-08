@@ -67,7 +67,7 @@
         android:layout_marginRight="@dimen/spacing_m"
         android:layout_marginBottom="@dimen/spacing_m"
         android:background="@drawable/ic_disabled_button"
-        android:clickable="false"
+        android:enabled="false"
         android:fontFamily="@font/notosanskr_bold"
         android:text="다음"
         android:textColor="@color/sub_gray"

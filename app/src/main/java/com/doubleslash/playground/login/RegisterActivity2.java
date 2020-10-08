@@ -184,14 +184,14 @@ public class RegisterActivity2 extends AppCompatActivity {
         checkAllBtn.setImageResource(R.drawable.ic_check);
         nextBtn.setBackgroundResource(R.drawable.ic_button);
         nextBtn.setTextColor(getResources().getColor(R.color.white));
-        nextBtn.setClickable(true);
+        nextBtn.setEnabled(true);
     }
 
     private void OffNextBtn() {
         checkAllBtn.setImageResource(R.drawable.ic_disabled_check);
         nextBtn.setBackgroundResource(R.drawable.ic_disabled_button);
         nextBtn.setTextColor(getResources().getColor(R.color.sub_gray));
-        nextBtn.setClickable(false);
+        nextBtn.setEnabled(false);
     }
 
 }

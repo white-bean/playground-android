@@ -117,7 +117,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/spacing_m"
         android:background="@drawable/ic_disabled_button"
-        android:clickable="false"
+        android:enabled="false"
         android:fontFamily="@font/notosanskr_bold"
         android:text="다음"
         android:textColor="@color/sub_gray"
