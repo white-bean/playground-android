@@ -3,6 +3,7 @@ package com.doubleslash.playground.login;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -121,6 +122,14 @@ public class RegisterActivity2 extends AppCompatActivity {
                 }
             }
         });
+
+        nextBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), RegisterActivity3.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private boolean isAllChecked() {
@@ -131,14 +140,10 @@ public class RegisterActivity2 extends AppCompatActivity {
         }
     }
 
+    // 체크 활성화
     private void OnCheck1() {
         isCheck1On = true;
         check1Btn.setImageResource(R.drawable.ic_check2);
-    }
-
-    private void OffCheck1() {
-        isCheck1On = false;
-        check1Btn.setImageResource(R.drawable.ic_disabled_check2);
     }
 
     private void OnCheck2() {
@@ -146,19 +151,9 @@ public class RegisterActivity2 extends AppCompatActivity {
         check2Btn.setImageResource(R.drawable.ic_check2);
     }
 
-    private void OffCheck2() {
-        isCheck2On = false;
-        check2Btn.setImageResource(R.drawable.ic_disabled_check2);
-    }
-
     private void OnCheck3() {
         isCheck3On = true;
         check3Btn.setImageResource(R.drawable.ic_check2);
-    }
-
-    private void OffCheck3() {
-        isCheck3On = false;
-        check3Btn.setImageResource(R.drawable.ic_disabled_check2);
     }
 
     private void OnCheck4() {
@@ -166,23 +161,41 @@ public class RegisterActivity2 extends AppCompatActivity {
         check4Btn.setImageResource(R.drawable.ic_check2);
     }
 
+    // 체크 비활성화
+    private void OffCheck1() {
+        isCheck1On = false;
+        check1Btn.setImageResource(R.drawable.ic_disabled_check2);
+    }
+
+    private void OffCheck2() {
+        isCheck2On = false;
+        check2Btn.setImageResource(R.drawable.ic_disabled_check2);
+    }
+
+    private void OffCheck3() {
+        isCheck3On = false;
+        check3Btn.setImageResource(R.drawable.ic_disabled_check2);
+    }
+
     private void OffCheck4() {
         isCheck4On = false;
         check4Btn.setImageResource(R.drawable.ic_disabled_check2);
     }
 
+    // 다음 버튼 활성화
     private void OnNextBtn() {
         checkAllBtn.setImageResource(R.drawable.ic_check);
         nextBtn.setBackgroundResource(R.drawable.ic_button);
         nextBtn.setTextColor(getResources().getColor(R.color.white));
-        nextBtn.setClickable(true);
+        nextBtn.setEnabled(true);
     }
 
+    // 다음 버튼 비활성화
     private void OffNextBtn() {
         checkAllBtn.setImageResource(R.drawable.ic_disabled_check);
         nextBtn.setBackgroundResource(R.drawable.ic_disabled_button);
         nextBtn.setTextColor(getResources().getColor(R.color.sub_gray));
-        nextBtn.setClickable(false);
+        nextBtn.setEnabled(false);
     }
 
 }

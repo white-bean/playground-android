@@ -37,6 +37,7 @@ public class RegisterActivity1 extends AppCompatActivity {
             }
         });
 
+        // 두 EditText에 모두 내용이 있을 때만 다음 버튼 활성화
         univEdit.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -55,12 +56,12 @@ public class RegisterActivity1 extends AppCompatActivity {
                 if (text1.length() > 0 && text2.length() > 0) {
                     nextBtn.setBackgroundResource(R.drawable.ic_button);
                     nextBtn.setTextColor(getResources().getColor(R.color.white));
-                    nextBtn.setClickable(true);
+                    nextBtn.setEnabled(true);
                 }
                 else {
                     nextBtn.setBackgroundResource(R.drawable.ic_disabled_button);
                     nextBtn.setTextColor(getResources().getColor(R.color.sub_gray));
-                    nextBtn.setClickable(false);
+                    nextBtn.setEnabled(false);
                 }
             }
         });
@@ -83,12 +84,12 @@ public class RegisterActivity1 extends AppCompatActivity {
                 if (text1.length() > 0 && text2.length() > 0) {
                     nextBtn.setBackgroundResource(R.drawable.ic_button);
                     nextBtn.setTextColor(getResources().getColor(R.color.white));
-                    nextBtn.setClickable(true);
+                    nextBtn.setEnabled(true);
                 }
                 else {
                     nextBtn.setBackgroundResource(R.drawable.ic_disabled_button);
                     nextBtn.setTextColor(getResources().getColor(R.color.sub_gray));
-                    nextBtn.setClickable(false);
+                    nextBtn.setEnabled(false);
                 }
             }
         });
