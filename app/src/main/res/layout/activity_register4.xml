@@ -4,20 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".login.RegisterActivity4">
+    tools:context=".register.RegisterActivity4">
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/spacing_m"
-        android:layout_marginTop="64dp"
-        android:fontFamily="@font/notosanskr_bold"
-        android:includeFontPadding="false"
-        android:text="프로필을\n설정해주세요."
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    android:id="@+id/textView"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/spacing_m"
+    android:layout_marginTop="64dp"
+    android:fontFamily="@font/notosanskr_bold"
+    android:includeFontPadding="false"
+    android:text="프로필을\n설정해주세요."
+    android:textSize="24sp"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView2"

@@ -1,4 +1,4 @@
-package com.doubleslash.playground.login;
+package com.doubleslash.playground.register;
 
 import androidx.appcompat.app.AppCompatActivity;
 

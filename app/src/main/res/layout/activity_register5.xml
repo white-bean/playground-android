@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".register.RegisterActivity5">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/spacing_m"
+        android:layout_marginTop="64dp"
+        android:fontFamily="@font/notosanskr_bold"
+        android:includeFontPadding="false"
+        android:text="프로필을\n설정해주세요."
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="8dp"
+        android:layout_height="8dp"
+        android:layout_marginTop="128dp"
+        android:layout_marginRight="@dimen/spacing_m"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_blue_circle" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="8dp"
+        android:layout_height="8dp"
+        android:layout_marginTop="128dp"
+        android:layout_marginRight="@dimen/spacing_l"
+        app:layout_constraintEnd_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_gray_circle" />
+
+    <RelativeLayout
+        android:id="@+id/linearLayout5"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_xl"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView">
+
+        <ImageView
+            android:id="@+id/picture1_btn"
+            android:layout_width="104dp"
+            android:layout_height="104dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentBottom="false"
+            android:layout_marginLeft="@dimen/spacing_m"
+            android:background="@drawable/ic_rounded_rectangle"
+            android:padding="@dimen/spacing_l"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/camera_gray" />
+
+        <ImageView
+            android:id="@+id/picture2_btn"
+            android:layout_width="104dp"
+            android:layout_height="104dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="@dimen/spacing_xs"
+            android:background="@drawable/ic_rounded_rectangle"
+            android:padding="@dimen/spacing_l"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/camera_gray" />
+
+        <ImageView
+            android:id="@+id/picture3_btn"
+            android:layout_width="104dp"
+            android:layout_height="104dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/spacing_m"
+            android:background="@drawable/ic_rounded_rectangle"
+            android:padding="@dimen/spacing_l"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/camera_gray" />
+    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/intro_edit"
+        android:layout_width="match_parent"
+        android:layout_height="96dp"
+        android:layout_marginLeft="@dimen/spacing_m"
+        android:layout_marginTop="@dimen/spacing_m"
+        android:layout_marginRight="@dimen/spacing_m"
+        android:background="@drawable/ic_rounded_rectangle"
+        android:ems="10"
+        android:fontFamily="@font/notosanskr_regular"
+        android:includeFontPadding="false"
+        android:gravity="start"
+        android:hint="자기소개를 입력해주세요. (최대 300자)"
+        android:inputType="none"
+        android:maxLength="300"
+        android:padding="@dimen/spacing_m"
+        android:textColor="@color/sub_black"
+        android:textColorHint="@color/gray"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout5" />
+
+    <Button
+        android:id="@+id/next_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/spacing_m"
+        android:background="@drawable/ic_disabled_button"
+        android:enabled="false"
+        android:fontFamily="@font/notosanskr_bold"
+        android:text="다음"
+        android:textColor="@color/sub_gray"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

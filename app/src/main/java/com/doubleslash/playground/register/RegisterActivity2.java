@@ -1,7 +1,6 @@
-package com.doubleslash.playground.login;
+package com.doubleslash.playground.register;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.os.Bundle;

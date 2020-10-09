@@ -1,4 +1,4 @@
-package com.doubleslash.playground.login;
+package com.doubleslash.playground;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,6 +10,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.doubleslash.playground.R;
+import com.doubleslash.playground.register.RegisterActivity1;
+import com.doubleslash.playground.register.RegisterActivity4;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText emailEdit;
