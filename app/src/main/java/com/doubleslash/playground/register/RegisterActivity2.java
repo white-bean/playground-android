@@ -59,17 +59,17 @@ public class RegisterActivity2 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!isAllChecked()) {
-                    OnCheck1();
-                    OnCheck2();
-                    OnCheck3();
-                    OnCheck4();
-                    OnNextBtn();
+                    onCheck1();
+                    onCheck2();
+                    onCheck3();
+                    onCheck4();
+                    onNextBtn();
                 } else {
-                    OffCheck1();
-                    OffCheck2();
-                    OffCheck3();
-                    OffCheck4();
-                    OffNextBtn();
+                    offCheck1();
+                    offCheck2();
+                    offCheck3();
+                    offCheck4();
+                    offNextBtn();
                 }
             }
         });
@@ -77,11 +77,11 @@ public class RegisterActivity2 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!isCheck1On) {
-                    OnCheck1();
-                    if (isAllChecked()) OnNextBtn();
+                    onCheck1();
+                    if (isAllChecked()) onNextBtn();
                 } else {
-                    OffCheck1();
-                    OffNextBtn();
+                    offCheck1();
+                    offNextBtn();
                 }
             }
         });
@@ -89,11 +89,11 @@ public class RegisterActivity2 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!isCheck2On) {
-                    OnCheck2();
-                    if (isAllChecked()) OnNextBtn();
+                    onCheck2();
+                    if (isAllChecked()) onNextBtn();
                 } else {
-                    OffCheck2();
-                    OffNextBtn();
+                    offCheck2();
+                    offNextBtn();
                 }
             }
         });
@@ -101,11 +101,11 @@ public class RegisterActivity2 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!isCheck3On) {
-                    OnCheck3();
-                    if (isAllChecked()) OnNextBtn();
+                    onCheck3();
+                    if (isAllChecked()) onNextBtn();
                 } else {
-                    OffCheck3();
-                    OffNextBtn();
+                    offCheck3();
+                    offNextBtn();
                 }
             }
         });
@@ -113,11 +113,11 @@ public class RegisterActivity2 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!isCheck4On) {
-                    OnCheck4();
-                    if (isAllChecked()) OnNextBtn();
+                    onCheck4();
+                    if (isAllChecked()) onNextBtn();
                 } else {
-                    OffCheck4();
-                    OffNextBtn();
+                    offCheck4();
+                    offNextBtn();
                 }
             }
         });
@@ -127,62 +127,59 @@ public class RegisterActivity2 extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), RegisterActivity3.class);
                 startActivity(intent);
+                finish();
             }
         });
     }
 
     private boolean isAllChecked() {
-        if (isCheck1On && isCheck2On && isCheck3On && isCheck4On) {
-            return true;
-        } else {
-            return false;
-        }
+        return isCheck1On && isCheck2On && isCheck3On && isCheck4On;
     }
 
     // 체크 활성화
-    private void OnCheck1() {
+    private void onCheck1() {
         isCheck1On = true;
         check1Btn.setImageResource(R.drawable.ic_check2);
     }
 
-    private void OnCheck2() {
+    private void onCheck2() {
         isCheck2On = true;
         check2Btn.setImageResource(R.drawable.ic_check2);
     }
 
-    private void OnCheck3() {
+    private void onCheck3() {
         isCheck3On = true;
         check3Btn.setImageResource(R.drawable.ic_check2);
     }
 
-    private void OnCheck4() {
+    private void onCheck4() {
         isCheck4On = true;
         check4Btn.setImageResource(R.drawable.ic_check2);
     }
 
     // 체크 비활성화
-    private void OffCheck1() {
+    private void offCheck1() {
         isCheck1On = false;
         check1Btn.setImageResource(R.drawable.ic_disabled_check2);
     }
 
-    private void OffCheck2() {
+    private void offCheck2() {
         isCheck2On = false;
         check2Btn.setImageResource(R.drawable.ic_disabled_check2);
     }
 
-    private void OffCheck3() {
+    private void offCheck3() {
         isCheck3On = false;
         check3Btn.setImageResource(R.drawable.ic_disabled_check2);
     }
 
-    private void OffCheck4() {
+    private void offCheck4() {
         isCheck4On = false;
         check4Btn.setImageResource(R.drawable.ic_disabled_check2);
     }
 
     // 다음 버튼 활성화
-    private void OnNextBtn() {
+    private void onNextBtn() {
         checkAllBtn.setImageResource(R.drawable.ic_check);
         nextBtn.setBackgroundResource(R.drawable.ic_button);
         nextBtn.setTextColor(getResources().getColor(R.color.white));
@@ -190,7 +187,7 @@ public class RegisterActivity2 extends AppCompatActivity {
     }
 
     // 다음 버튼 비활성화
-    private void OffNextBtn() {
+    private void offNextBtn() {
         checkAllBtn.setImageResource(R.drawable.ic_disabled_check);
         nextBtn.setBackgroundResource(R.drawable.ic_disabled_button);
         nextBtn.setTextColor(getResources().getColor(R.color.sub_gray));

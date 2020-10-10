@@ -58,7 +58,7 @@
             android:layout_marginLeft="@dimen/spacing_m"
             android:background="@drawable/ic_rounded_rectangle"
             android:padding="@dimen/spacing_l"
-            android:scaleType="centerCrop"
+            android:scaleType="center"
             app:srcCompat="@drawable/camera_gray" />
 
         <ImageView
@@ -69,7 +69,7 @@
             android:layout_marginLeft="@dimen/spacing_xs"
             android:background="@drawable/ic_rounded_rectangle"
             android:padding="@dimen/spacing_l"
-            android:scaleType="centerCrop"
+            android:scaleType="center"
             app:srcCompat="@drawable/camera_gray" />
 
         <ImageView
@@ -80,7 +80,7 @@
             android:layout_marginRight="@dimen/spacing_m"
             android:background="@drawable/ic_rounded_rectangle"
             android:padding="@dimen/spacing_l"
-            android:scaleType="centerCrop"
+            android:scaleType="center"
             app:srcCompat="@drawable/camera_gray" />
     </RelativeLayout>
 
@@ -120,6 +120,7 @@
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        style="?android:attr/borderlessButtonStyle" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

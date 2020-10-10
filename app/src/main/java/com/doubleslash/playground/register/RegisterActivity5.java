@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -62,6 +64,37 @@ public class RegisterActivity5 extends AppCompatActivity {
                 startActivityForResult(intent, GET_IMAGE_FOR_PICUTRE3);
             }
         });
+
+        introEdit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.toString().length() > 10) {
+                    onNextBtn();
+                }
+                else {
+                    offNextBtn();
+                }
+            }
+        });
+
+        nextBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), RegisterActivity6.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     @Override
@@ -85,5 +118,19 @@ public class RegisterActivity5 extends AppCompatActivity {
                     break;
             }
         }
+    }
+
+    // 다음 버튼 활성화
+    private void onNextBtn() {
+        nextBtn.setBackgroundResource(R.drawable.ic_button);
+        nextBtn.setTextColor(getResources().getColor(R.color.white));
+        nextBtn.setEnabled(true);
+    }
+
+    // 다음 버튼 비활성화
+    private void offNextBtn() {
+        nextBtn.setBackgroundResource(R.drawable.ic_disabled_button);
+        nextBtn.setTextColor(getResources().getColor(R.color.sub_gray));
+        nextBtn.setEnabled(false);
     }
 }
