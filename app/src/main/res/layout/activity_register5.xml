@@ -58,7 +58,7 @@
             android:layout_marginLeft="@dimen/spacing_m"
             android:background="@drawable/ic_rounded_rectangle"
             android:scaleType="center"
-            app:srcCompat="@drawable/camera_gray" />
+            app:srcCompat="@drawable/photo_group" />
 
         <ImageView
             android:id="@+id/picture2_btn"
@@ -68,7 +68,7 @@
             android:layout_marginLeft="@dimen/spacing_xs"
             android:background="@drawable/ic_rounded_rectangle"
             android:scaleType="center"
-            app:srcCompat="@drawable/camera_gray" />
+            app:srcCompat="@drawable/photo_group_sub" />
 
         <ImageView
             android:id="@+id/picture3_btn"
@@ -78,7 +78,7 @@
             android:layout_marginRight="@dimen/spacing_m"
             android:background="@drawable/ic_rounded_rectangle"
             android:scaleType="center"
-            app:srcCompat="@drawable/camera_gray" />
+            app:srcCompat="@drawable/photo_group_sub" />
     </RelativeLayout>
 
     <EditText
