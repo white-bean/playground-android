@@ -9,6 +9,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.MultiTransformation;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 import com.doubleslash.playground.MainActivity;
 import com.doubleslash.playground.R;
 
@@ -54,8 +59,9 @@ public class RegisterActivity7 extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && data != null && data.getData() != null && requestCode == GET_IMAGE_FOR_STUDENT_CARD) {
+            MultiTransformation multiOption = new MultiTransformation(new CenterCrop(), new RoundedCorners(8));
             Uri selectedImageUri = data.getData();
-            studentCardBtn.setImageURI(selectedImageUri);
+            Glide.with(getApplicationContext()).asBitmap().load(selectedImageUri).apply(RequestOptions.bitmapTransform(multiOption)).into(studentCardBtn);
         }
     }
 

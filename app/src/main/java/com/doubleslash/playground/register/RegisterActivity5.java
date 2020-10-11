@@ -1,8 +1,13 @@
 package com.doubleslash.playground.register;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.drawable.RoundedBitmapDrawable;
+import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
@@ -12,6 +17,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.MultiTransformation;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 import com.doubleslash.playground.R;
 
 public class RegisterActivity5 extends AppCompatActivity {
@@ -100,21 +110,22 @@ public class RegisterActivity5 extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Uri selectedImageUri;
+        MultiTransformation multiOption = new MultiTransformation(new CenterCrop(), new RoundedCorners(8));
 
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && data != null && data.getData() != null) {
             switch(requestCode) {
                 case GET_IMAGE_FOR_PICUTRE1:
                     selectedImageUri = data.getData();
-                    picture1Btn.setImageURI(selectedImageUri);
+                    Glide.with(getApplicationContext()).asBitmap().load(selectedImageUri).apply(RequestOptions.bitmapTransform(multiOption)).into(picture1Btn);
                     break;
                 case GET_IMAGE_FOR_PICUTRE2:
                     selectedImageUri = data.getData();
-                    picture2Btn.setImageURI(selectedImageUri);
+                    Glide.with(getApplicationContext()).asBitmap().load(selectedImageUri).apply(RequestOptions.bitmapTransform(multiOption)).into(picture2Btn);
                     break;
                 case GET_IMAGE_FOR_PICUTRE3:
                     selectedImageUri = data.getData();
-                    picture3Btn.setImageURI(selectedImageUri);
+                    Glide.with(getApplicationContext()).asBitmap().load(selectedImageUri).apply(RequestOptions.bitmapTransform(multiOption)).into(picture3Btn);
                     break;
             }
         }
@@ -133,4 +144,5 @@ public class RegisterActivity5 extends AppCompatActivity {
         nextBtn.setTextColor(getResources().getColor(R.color.sub_gray));
         nextBtn.setEnabled(false);
     }
+
 }
