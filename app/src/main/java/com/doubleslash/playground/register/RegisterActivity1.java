@@ -1,4 +1,4 @@
-package com.doubleslash.playground.login;
+package com.doubleslash.playground.register;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -34,6 +34,7 @@ public class RegisterActivity1 extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), RegisterActivity2.class);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -54,14 +55,10 @@ public class RegisterActivity1 extends AppCompatActivity {
                 String text1 = s.toString();
                 String text2 = yearEdit.getText().toString();
                 if (text1.length() > 0 && text2.length() > 0) {
-                    nextBtn.setBackgroundResource(R.drawable.ic_button);
-                    nextBtn.setTextColor(getResources().getColor(R.color.white));
-                    nextBtn.setEnabled(true);
+                    onNextBtn();
                 }
                 else {
-                    nextBtn.setBackgroundResource(R.drawable.ic_disabled_button);
-                    nextBtn.setTextColor(getResources().getColor(R.color.sub_gray));
-                    nextBtn.setEnabled(false);
+                    offNextBtn();
                 }
             }
         });
@@ -82,16 +79,26 @@ public class RegisterActivity1 extends AppCompatActivity {
                 String text1 = s.toString();
                 String text2 = univEdit.getText().toString();
                 if (text1.length() > 0 && text2.length() > 0) {
-                    nextBtn.setBackgroundResource(R.drawable.ic_button);
-                    nextBtn.setTextColor(getResources().getColor(R.color.white));
-                    nextBtn.setEnabled(true);
+                    onNextBtn();
                 }
                 else {
-                    nextBtn.setBackgroundResource(R.drawable.ic_disabled_button);
-                    nextBtn.setTextColor(getResources().getColor(R.color.sub_gray));
-                    nextBtn.setEnabled(false);
+                    offNextBtn();
                 }
             }
         });
+    }
+
+    // 다음 버튼 활성화
+    private void onNextBtn() {
+        nextBtn.setBackgroundResource(R.drawable.ic_button);
+        nextBtn.setTextColor(getResources().getColor(R.color.white));
+        nextBtn.setEnabled(true);
+    }
+
+    // 다음 버튼 비활성화
+    private void offNextBtn() {
+        nextBtn.setBackgroundResource(R.drawable.ic_disabled_button);
+        nextBtn.setTextColor(getResources().getColor(R.color.sub_gray));
+        nextBtn.setEnabled(false);
     }
 }

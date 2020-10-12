@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".register.RegisterActivity6">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/spacing_m"
+        android:layout_marginTop="64dp"
+        android:fontFamily="@font/notosanskr_bold"
+        android:includeFontPadding="false"
+        android:text="프로필을\n설정해주세요."
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="43dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/study_btn"
+                android:layout_width="160dp"
+                android:layout_height="64dp"
+                android:layout_marginRight="@dimen/spacing_xs"
+                android:background="@drawable/ic_rounded_rectangle"
+                android:drawableLeft="@drawable/writing_hand"
+                android:drawablePadding="@dimen/spacing_xxs"
+                android:fontFamily="@font/notosanskr_bold"
+                android:includeFontPadding="false"
+                android:gravity="fill_vertical"
+                android:paddingLeft="@dimen/spacing_xxl_2"
+                android:text="스터디"
+                android:textColor="@color/sub_black"
+                android:textSize="16sp"
+                style="?android:attr/borderlessButtonStyle" />
+
+            <Button
+                android:id="@+id/diet_btn"
+                android:layout_width="160dp"
+                android:layout_height="64dp"
+                android:layout_marginRight="@dimen/spacing_xs"
+                android:background="@drawable/ic_rounded_rectangle"
+                android:drawableLeft="@drawable/diet"
+                android:drawablePadding="@dimen/spacing_xxs"
+                android:fontFamily="@font/notosanskr_bold"
+                android:gravity="fill_vertical"
+                android:includeFontPadding="false"
+                android:paddingLeft="11dp"
+                android:text="운동 / 다이어트"
+                android:textColor="@color/sub_black"
+                android:textSize="16sp"
+                style="?android:attr/borderlessButtonStyle" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/cultural_btn"
+                android:layout_width="160dp"
+                android:layout_height="64dp"
+                android:layout_marginTop="@dimen/spacing_xs"
+                android:layout_marginRight="@dimen/spacing_xs"
+                android:background="@drawable/ic_rounded_rectangle"
+                android:drawableLeft="@drawable/draw"
+                android:drawablePadding="@dimen/spacing_xxs"
+                android:fontFamily="@font/notosanskr_bold"
+                android:includeFontPadding="false"
+                android:gravity="fill_vertical"
+                android:paddingLeft="33dp"
+                android:text="문화생활"
+                android:textColor="@color/sub_black"
+                android:textSize="16sp"
+                style="?android:attr/borderlessButtonStyle" />
+
+            <Button
+                android:id="@+id/game_btn"
+                android:layout_width="160dp"
+                android:layout_height="64dp"
+                android:layout_marginTop="@dimen/spacing_xs"
+                android:layout_marginRight="@dimen/spacing_xs"
+                android:background="@drawable/ic_rounded_rectangle"
+                android:drawableLeft="@drawable/game"
+                android:drawablePadding="@dimen/spacing_xxs"
+                android:fontFamily="@font/notosanskr_bold"
+                android:includeFontPadding="false"
+                android:gravity="fill_vertical"
+                android:paddingLeft="48dp"
+                android:text="게임"
+                android:textColor="@color/sub_black"
+                android:textSize="16sp"
+                style="?android:attr/borderlessButtonStyle" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/next_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/spacing_m"
+        android:background="@drawable/ic_disabled_button"
+        android:enabled="false"
+        android:fontFamily="@font/notosanskr_bold"
+        android:text="다음"
+        android:textColor="@color/sub_gray"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        style="?android:attr/borderlessButtonStyle" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,4 +1,4 @@
-package com.doubleslash.playground.login;
+package com.doubleslash.playground.register;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -52,9 +52,7 @@ public class RegisterActivity3 extends AppCompatActivity {
         okBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                nextBtn.setBackgroundResource(R.drawable.ic_button);
-                nextBtn.setTextColor(getResources().getColor(R.color.white));
-                nextBtn.setEnabled(true);
+                onNextBtn();
             }
         });
 
@@ -63,6 +61,7 @@ public class RegisterActivity3 extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), RegisterActivity4.class);
                 startActivity(intent);
+                finish();
             }
         });
     }
@@ -104,5 +103,12 @@ public class RegisterActivity3 extends AppCompatActivity {
         };
         Executor executor = Executors.newSingleThreadExecutor();
         executor.execute(addRunnable);
+    }
+
+    // 다음 버튼 활성화
+    private void onNextBtn() {
+        nextBtn.setBackgroundResource(R.drawable.ic_button);
+        nextBtn.setTextColor(getResources().getColor(R.color.white));
+        nextBtn.setEnabled(true);
     }
 }
