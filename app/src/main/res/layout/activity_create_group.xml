@@ -60,6 +60,7 @@
                     android:textColor="@color/sub_black"
                     android:textColorHint="@color/gray"
                     android:textSize="16sp"
+                    android:nextFocusDown="@id/info_edit"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -110,7 +111,9 @@
                     android:padding="@dimen/spacing_m"
                     android:textColor="@color/sub_black"
                     android:textColorHint="@color/sub_gray"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    android:scrollbars="vertical"
+                    android:nextFocusDown="@id/member_spinner"/>
 
                 <TextView
                     android:id="@+id/text_num_tV"
@@ -158,6 +161,7 @@
                         android:background="@drawable/button_r8"
                         android:entries="@array/member"
                         android:paddingLeft="@dimen/spacing_m"
+                        android:nextFocusDown="@id/location_edit"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent" />
 
@@ -198,6 +202,8 @@
                         android:fontFamily="@font/notosanskr_regular"
                         android:hint="서울 OO구"
                         android:includeFontPadding="false"
+                        android:inputType="textShortMessage"
+                        android:nextFocusDown="@id/category_spinner"
                         android:paddingLeft="@dimen/spacing_m"
                         android:textColor="@color/sub_black"
                         android:textColorHint="@color/sub_gray"
@@ -239,6 +245,7 @@
                     android:id="@+id/category_spinner"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
+                    android:nextFocusDown="@id/sub_category_spinner"
                     android:background="@drawable/button_r8"
                     android:entries="@array/category"
                     android:paddingLeft="@dimen/spacing_m" />
@@ -273,6 +280,7 @@
                     android:id="@+id/sub_category_spinner"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
+                    android:imeOptions="actionDone"
                     android:background="@drawable/button_r8"
                     android:entries="@array/category"
                     android:paddingLeft="@dimen/spacing_m" />
@@ -308,14 +316,15 @@
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/create_btn"
             android:layout_width="match_parent"
             android:layout_height="52dp"
             android:layout_margin="@dimen/spacing_m"
-            android:background="@drawable/ic_button"
+            android:background="@drawable/ic_disabled_button"
+            android:enabled="false"
             android:fontFamily="@font/notosanskr_bold"
             android:text="생성 신청"
-            android:textColor="@color/white"
+            android:textColor="@color/sub_gray"
             android:textSize="18sp" />
     </LinearLayout>
 </LinearLayout>

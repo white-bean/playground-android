@@ -3,16 +3,16 @@ package com.doubleslash.playground;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -23,18 +23,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.MultiTransformation;
-import com.bumptech.glide.load.resource.bitmap.CenterCrop;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.bumptech.glide.request.RequestOptions;
-
-import java.io.InputStream;
 
 public class CreateGroupActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private Button register_pic_btn;
     private EditText GroupName_edit;
-    private Button check_btn, search_btn;//search_btn은 돋보기 버튼 -> 나중에 구현해야함
-    private EditText info_edit;
+    private Button check_btn, search_btn, create_btn;//search_btn은 돋보기 버튼 -> 나중에 구현해야함
+    private EditText info_edit, location_edit;
     private TextView text_num_tV;
     private Spinner member_spinner, category_spinner, sub_category_spinner;
     private ImageView register_pic_iV;
@@ -47,16 +41,44 @@ public class CreateGroupActivity extends AppCompatActivity implements AdapterVie
 
         initUI();
     }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {  //edittext 포커싱 문제 해결하기 위해
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            View v = getCurrentFocus();
+            if ( v instanceof EditText) {
+                Rect outRect = new Rect();
+                v.getGlobalVisibleRect(outRect);
+                if (!outRect.contains((int)event.getRawX(), (int)event.getRawY())) {
+                    v.clearFocus();
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+            }
+        }
+        return super.dispatchTouchEvent( event );
+    }
+
     private void initUI() {
-        register_pic_btn = findViewById(R.id.register_pic_btn);
+        register_pic_btn = findViewById(R.id.register_pic_btn); //사진 받는 버튼
+        GroupName_edit = findViewById(R.id.GroupName_edit); //소모임 이름 입력받기
+        check_btn = findViewById(R.id.check_btn);   //중복 확인 버튼
+        info_edit = findViewById(R.id.info_edit);  //소모임 소개 입력받기
+        text_num_tV = findViewById(R.id.text_num_tV);   // 소개에서 입력받은 글자 수 실시간 출력하기
+        location_edit = findViewById(R.id.location_edit);   //위치 입력받기
+        create_btn = findViewById(R.id.create_btn); //생성하기
+        register_pic_iV = findViewById(R.id.register_pic_iV);
+
+
         register_pic_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                register_pic_btn.setVisibility(View.INVISIBLE);
+                register_pic_iV.setVisibility(View.VISIBLE);
                 openGallery();
             }
         });
 
-        GroupName_edit = findViewById(R.id.GroupName_edit); //소모임 이름 입력받기
         GroupName_edit.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -70,11 +92,18 @@ public class CreateGroupActivity extends AppCompatActivity implements AdapterVie
 
             @Override
             public void afterTextChanged(Editable s) {
-
+                String text1 = s.toString();
+                String text2 = info_edit.getText().toString();
+                String text3 = location_edit.getText().toString();
+                if (text1.length() > 0 && text2.length() > 0 && text3.length() > 0){
+                    onCreateBtn();
+                }
+                else {
+                    offCreateBtn();
+                }
             }
         });
 
-        check_btn = findViewById(R.id.check_btn);
         check_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,9 +111,8 @@ public class CreateGroupActivity extends AppCompatActivity implements AdapterVie
             }
         });
 
-        info_edit = findViewById(R.id.info_edit);  //소모임 소개 입력받기
-        text_num_tV = findViewById(R.id.text_num_tV);   // 소개에서 입력받은 글자 수 실시간 출력하기
-        info_edit.addTextChangedListener(new TextWatcher() {
+        bindEditTextScrolling(info_edit);
+        info_edit.addTextChangedListener(new TextWatcher() {    //소모임 소개
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -92,14 +120,49 @@ public class CreateGroupActivity extends AppCompatActivity implements AdapterVie
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                findViewById(R.id.info_edit).setBackground(getResources().getDrawable(R.drawable.focus_box));
-                String input = info_edit.getText().toString();
-                text_num_tV.setText(input.length()+"/300");
+
             }
 
             @Override
             public void afterTextChanged(Editable s) {
+                findViewById(R.id.info_edit).setBackground(getResources().getDrawable(R.drawable.focus_box));
+                String input = info_edit.getText().toString();
+                text_num_tV.setText(input.length()+"/300"); //소모임 소개 실시간 글자수
 
+                String text1 = s.toString();
+                String text2 = GroupName_edit.getText().toString();
+                String text3 = location_edit.getText().toString();
+                if (text1.length() > 0 && text2.length() > 0 && text3.length() > 0){
+                    onCreateBtn();
+                }
+                else {
+                    offCreateBtn();
+                }
+            }
+        });
+
+        location_edit.addTextChangedListener(new TextWatcher() {    //위치 입력받기
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String text1 = s.toString();
+                String text2 = GroupName_edit.getText().toString();
+                String text3 = info_edit.getText().toString();
+                if (text1.length() > 0 && text2.length() > 0 && text3.length() > 0){
+                    onCreateBtn();
+                }
+                else {
+                    offCreateBtn();
+                }
             }
         });
 
@@ -121,6 +184,7 @@ public class CreateGroupActivity extends AppCompatActivity implements AdapterVie
         subAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sub_category_spinner.setAdapter(subAdapter);
         sub_category_spinner.setOnItemSelectedListener(this);
+
 
     }
 
@@ -166,5 +230,41 @@ public class CreateGroupActivity extends AppCompatActivity implements AdapterVie
                     break;
             }
         }
+    }
+    public static void bindEditTextScrolling(EditText view)
+    {
+        view.setOnTouchListener(new View.OnTouchListener()
+        {
+            @Override
+            public boolean onTouch(View v, MotionEvent event)
+            {
+                switch (event.getAction() & MotionEvent.ACTION_MASK)
+                {
+                    // 터치가 눌렸을때 터치 이벤트를 활성화한다.
+                    case MotionEvent.ACTION_DOWN:
+                        v.getParent().requestDisallowInterceptTouchEvent(true);
+                        break;
+                    // 터치가 끝났을때 터치 이벤트를 비활성화한다 [원상복구]
+                    case MotionEvent.ACTION_UP:
+                        v.getParent().requestDisallowInterceptTouchEvent(false);
+                        break;
+                }
+                return false;
+            }
+        });
+    }
+
+    // 다음 버튼 활성화
+    private void onCreateBtn() {
+        create_btn.setBackgroundResource(R.drawable.ic_button);
+        create_btn.setTextColor(getResources().getColor(R.color.white));
+        create_btn.setEnabled(true);
+    }
+
+    // 다음 버튼 비활성화
+    private void offCreateBtn() {
+        create_btn.setBackgroundResource(R.drawable.ic_disabled_button);
+        create_btn.setTextColor(getResources().getColor(R.color.sub_gray));
+        create_btn.setEnabled(false);
     }
 }
