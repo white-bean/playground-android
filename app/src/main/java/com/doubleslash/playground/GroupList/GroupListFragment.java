@@ -11,10 +11,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.doubleslash.playground.CreateGroupActivity;
+import com.doubleslash.playground.FindGroupActivity;
 import com.doubleslash.playground.R;
 
 
 public class GroupListFragment extends Fragment {
+    private RecyclerView recyclerView;
+    private GroupAdapter adapter;
+    private Button add_btn, search_btn;
+
     RecyclerView recyclerView;
     GroupAdapter adapter;
 
@@ -40,7 +46,24 @@ public class GroupListFragment extends Fragment {
         return rootView;
     }
     private void initUI(ViewGroup rootView){
+        add_btn = rootView.findViewById(R.id.add_btn);      //그룹추가버튼
+        search_btn = rootView.findViewById(R.id.search_btn);//그룹찾기버튼
 
+        add_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), CreateGroupActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        search_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), FindGroupActivity.class);
+                startActivity(intent);
+            }
+        });
     }
     private void addItems(){
         adapter.addItem(new Group("서울 송파", "스터디", "1", "4", "자소서 스터디",
