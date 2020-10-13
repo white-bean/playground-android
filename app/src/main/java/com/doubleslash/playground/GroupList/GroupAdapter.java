@@ -73,7 +73,7 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.ViewHolder> 
         public ViewHolder(View itemView, final OnGroupItemClickListener listener){
             super(itemView);
 
-            location = itemView.findViewById(R.id.location_edit); //위치
+            location = itemView.findViewById(R.id.location_tV); //위치
             category = itemView.findViewById(R.id.category_tV); //카테고리
             curr_num = itemView.findViewById(R.id.curr_tV);     //현재 인원 수
             total_num = itemView.findViewById(R.id.total_tV);   //전체 인원 수

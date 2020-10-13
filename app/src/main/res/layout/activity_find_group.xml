@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/spacing_m"
+    android:paddingRight="@dimen/spacing_m"
+    tools:context=".FindGroupActivity">
+
+    <com.doubleslash.playground.customwidget.SearchbarEditText
+        android:id="@+id/search_edit"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="56dp"
+        android:background="@drawable/r20"
+        android:fontFamily="@font/notosanskr_regular"
+        android:hint="검색어를 입력하세요."
+        android:includeFontPadding="false"
+        android:inputType="textShortMessage"
+        android:paddingLeft="@dimen/spacing_m"
+        android:paddingTop="@dimen/spacing_xs"
+        android:paddingRight="@dimen/spacing_m"
+        android:paddingBottom="@dimen/spacing_xs"
+        android:textColor="@color/sub_black"
+        android:textColorHint="@color/sub_gray"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_l"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search_edit">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_xs">
+
+            <Button
+                android:id="@+id/btn_1"
+                android:layout_width="65dp"
+                android:layout_height="22dp"
+                android:layout_marginRight="@dimen/spacing_xs"
+                android:background="@drawable/r11"
+                android:fontFamily="@font/notosanskr_regular"
+                android:includeFontPadding="false"
+                android:text="영어 스터디"
+                android:textColor="@color/sub_gray"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/btn_2"
+                android:layout_width="wrap_content"
+                android:layout_height="22dp"
+                android:layout_marginRight="@dimen/spacing_xs"
+                android:background="@drawable/r11"
+                android:fontFamily="@font/notosanskr_regular"
+                android:includeFontPadding="false"
+                android:text="기상 스터디"
+                android:textColor="@color/sub_gray"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/btn_3"
+                android:layout_width="wrap_content"
+                android:layout_height="22dp"
+                android:layout_marginRight="@dimen/spacing_xs"
+                android:background="@drawable/r11"
+                android:fontFamily="@font/notosanskr_regular"
+                android:includeFontPadding="false"
+                android:text="한강러닝"
+                android:textColor="@color/sub_gray"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/btn_4"
+                android:layout_width="wrap_content"
+                android:layout_height="22dp"
+                android:background="@drawable/r11"
+                android:fontFamily="@font/notosanskr_regular"
+                android:includeFontPadding="false"
+                android:text="어몽어스"
+                android:textColor="@color/sub_gray"
+                android:textSize="12sp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/btn_5"
+                android:layout_width="wrap_content"
+                android:layout_height="22dp"
+                android:layout_marginRight="@dimen/spacing_xs"
+                android:background="@drawable/r11"
+                android:fontFamily="@font/notosanskr_regular"
+                android:includeFontPadding="false"
+                android:text="강남 소모임"
+                android:textColor="@color/sub_gray"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/btn_6"
+                android:layout_width="wrap_content"
+                android:layout_height="22dp"
+                android:layout_marginRight="@dimen/spacing_xs"
+                android:background="@drawable/r11"
+                android:fontFamily="@font/notosanskr_regular"
+                android:includeFontPadding="false"
+                android:text="연대 소모임"
+                android:textColor="@color/sub_gray"
+                android:textSize="12sp" />
+        </TableRow>
+
+    </TableLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
