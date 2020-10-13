@@ -23,7 +23,6 @@ public class GroupListFragment extends Fragment {
     private GroupAdapter adapter;
     private Button add_btn, search_btn;
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

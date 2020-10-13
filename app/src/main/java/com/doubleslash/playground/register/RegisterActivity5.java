@@ -26,9 +26,9 @@ public class RegisterActivity5 extends AppCompatActivity {
     private EditText introEdit;
     private Button nextBtn;
 
-    private final int GET_IMAGE_FOR_PICUTRE1 = 200;
-    private final int GET_IMAGE_FOR_PICUTRE2 = 201;
-    private final int GET_IMAGE_FOR_PICUTRE3 = 202;
+    private final int GET_IMAGE_FOR_PICTURE1 = 300;
+    private final int GET_IMAGE_FOR_PICTURE2 = 301;
+    private final int GET_IMAGE_FOR_PICTURE3 = 302;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,24 +49,24 @@ public class RegisterActivity5 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_PICK);
-                intent. setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
-                startActivityForResult(intent, GET_IMAGE_FOR_PICUTRE1);
+                intent.setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+                startActivityForResult(intent, GET_IMAGE_FOR_PICTURE1);
             }
         });
         picture2Btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_PICK);
-                intent. setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
-                startActivityForResult(intent, GET_IMAGE_FOR_PICUTRE2);
+                intent.setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+                startActivityForResult(intent, GET_IMAGE_FOR_PICTURE2);
             }
         });
         picture3Btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_PICK);
-                intent. setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
-                startActivityForResult(intent, GET_IMAGE_FOR_PICUTRE3);
+                intent.setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+                startActivityForResult(intent, GET_IMAGE_FOR_PICTURE3);
             }
         });
 
@@ -110,15 +110,15 @@ public class RegisterActivity5 extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && data != null && data.getData() != null) {
             switch(requestCode) {
-                case GET_IMAGE_FOR_PICUTRE1:
+                case GET_IMAGE_FOR_PICTURE1:
                     selectedImageUri = data.getData();
                     Glide.with(getApplicationContext()).asBitmap().load(selectedImageUri).apply(RequestOptions.bitmapTransform(multiOption)).into(picture1Btn);
                     break;
-                case GET_IMAGE_FOR_PICUTRE2:
+                case GET_IMAGE_FOR_PICTURE2:
                     selectedImageUri = data.getData();
                     Glide.with(getApplicationContext()).asBitmap().load(selectedImageUri).apply(RequestOptions.bitmapTransform(multiOption)).into(picture2Btn);
                     break;
-                case GET_IMAGE_FOR_PICUTRE3:
+                case GET_IMAGE_FOR_PICTURE3:
                     selectedImageUri = data.getData();
                     Glide.with(getApplicationContext()).asBitmap().load(selectedImageUri).apply(RequestOptions.bitmapTransform(multiOption)).into(picture3Btn);
                     break;
