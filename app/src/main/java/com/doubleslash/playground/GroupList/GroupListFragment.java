@@ -1,5 +1,6 @@
 package com.doubleslash.playground.GroupList;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.doubleslash.playground.CreateGroupActivity;
@@ -20,10 +22,6 @@ public class GroupListFragment extends Fragment {
     private RecyclerView recyclerView;
     private GroupAdapter adapter;
     private Button add_btn, search_btn;
-
-    RecyclerView recyclerView;
-    GroupAdapter adapter;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
