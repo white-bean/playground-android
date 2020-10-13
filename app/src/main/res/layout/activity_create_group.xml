@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context=".CreateGroupActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:paddingLeft="@dimen/spacing_m"
+        android:paddingRight="@dimen/spacing_m">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/spacing_l">
+
+                <ImageView
+                    android:id="@+id/register_pic_iV"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp" />
+
+                <Button
+                    android:id="@+id/register_pic_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:background="@drawable/button_r8"
+                    android:drawableTop="@drawable/camera_gray"
+                    android:fontFamily="@font/notosanskr_bold"
+                    android:paddingTop="31dp"
+                    android:paddingBottom="31dp"
+                    android:text="대표사진 등록하기"
+                    android:textColor="@color/sub_gray"
+                    android:textSize="12sp" />
+            </FrameLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/GroupName_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/gray"
+                    android:ems="10"
+                    android:fontFamily="@font/notosanskr_regular"
+                    android:hint="소모임 이름을 입력하세요."
+                    android:inputType="textPersonName"
+                    android:textColor="@color/sub_black"
+                    android:textColorHint="@color/gray"
+                    android:textSize="16sp"
+                    android:nextFocusDown="@id/info_edit"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/check_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="34dp"
+                    android:background="@drawable/ic_blue_lined_button"
+                    android:fontFamily="@font/notosanskr_bold"
+                    android:text="중복 확인"
+                    android:textColor="@color/playviolet"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_l"
+                android:layout_marginBottom="7dp"
+                android:fontFamily="@font/notosanskr_bold"
+                android:includeFontPadding="false"
+                android:text="소모임 소개"
+                android:textColor="@color/sub_black"
+                android:textSize="12sp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/spacing_l">
+
+                <EditText
+                    android:id="@+id/info_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="96dp"
+                    android:background="@drawable/button_r8"
+                    android:ems="10"
+                    android:fontFamily="@font/notosanskr_regular"
+                    android:gravity="top"
+                    android:hint="소모임 목적, 참여 인원, 활동 지역, 소모임 원칙, 소모임 활동 내용 등 소모임을 잘 소개할 수 있게 작성해주세요!\n(최대 300자)"
+                    android:includeFontPadding="false"
+                    android:maxLength="300"
+                    android:padding="@dimen/spacing_m"
+                    android:textColor="@color/sub_black"
+                    android:textColorHint="@color/sub_gray"
+                    android:textSize="12sp"
+                    android:scrollbars="vertical"
+                    android:nextFocusDown="@id/member_spinner"/>
+
+                <TextView
+                    android:id="@+id/text_num_tV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginRight="@dimen/spacing_xs"
+                    android:layout_marginBottom="@dimen/spacing_xs"
+                    android:fontFamily="@font/notosanskr_bold"
+                    android:includeFontPadding="false"
+                    android:paddingBottom="@dimen/spacing_xs"
+                    android:text="300"
+                    android:textColor="@color/gray"
+                    android:textSize="12sp" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/textView14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/spacing_xs"
+                        android:fontFamily="@font/notosanskr_bold"
+                        android:includeFontPadding="false"
+                        android:text="소모임 정원"
+                        android:textColor="@color/sub_black"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toTopOf="@+id/member_spinner"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <Spinner
+                        android:id="@+id/member_spinner"
+                        android:layout_width="96dp"
+                        android:layout_height="48dp"
+                        android:background="@drawable/button_r8"
+                        android:entries="@array/member"
+                        android:paddingLeft="@dimen/spacing_m"
+                        android:nextFocusDown="@id/location_edit"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginRight="@dimen/spacing_m"
+                        android:background="@drawable/down_large"
+                        app:layout_constraintBottom_toBottomOf="@+id/member_spinner"
+                        app:layout_constraintEnd_toEndOf="@+id/member_spinner"
+                        app:layout_constraintTop_toTopOf="@+id/member_spinner" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/textView16"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/spacing_xs"
+                        android:fontFamily="@font/notosanskr_bold"
+                        android:includeFontPadding="false"
+                        android:text="소모임 활동 지역"
+                        android:textColor="@color/sub_black"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toTopOf="@+id/location_edit"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <EditText
+                        android:id="@+id/location_edit"
+                        android:layout_width="160dp"
+                        android:layout_height="48dp"
+                        android:background="@drawable/button_r8"
+                        android:fontFamily="@font/notosanskr_regular"
+                        android:hint="서울 OO구"
+                        android:includeFontPadding="false"
+                        android:inputType="textShortMessage"
+                        android:nextFocusDown="@id/category_spinner"
+                        android:paddingLeft="@dimen/spacing_m"
+                        android:textColor="@color/sub_black"
+                        android:textColorHint="@color/sub_gray"
+                        android:textSize="20sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <Button
+                        android:id="@+id/search_btn"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginRight="@dimen/spacing_m"
+                        android:background="@drawable/search"
+                        app:layout_constraintBottom_toBottomOf="@+id/location_edit"
+                        app:layout_constraintEnd_toEndOf="@+id/location_edit"
+                        app:layout_constraintTop_toTopOf="@+id/location_edit" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_l"
+                android:layout_marginBottom="@dimen/spacing_xs"
+                android:fontFamily="@font/notosanskr_bold"
+                android:includeFontPadding="false"
+                android:text="소모임 카테고리"
+                android:textColor="@color/sub_black"
+                android:textSize="12sp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <Spinner
+                    android:id="@+id/category_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:nextFocusDown="@id/sub_category_spinner"
+                    android:background="@drawable/button_r8"
+                    android:entries="@array/category"
+                    android:paddingLeft="@dimen/spacing_m" />
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_alignRight="@id/category_spinner"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/spacing_m"
+                    app:srcCompat="@drawable/down_large" />
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_l"
+                android:layout_marginBottom="@dimen/spacing_xs"
+                android:fontFamily="@font/notosanskr_bold"
+                android:includeFontPadding="false"
+                android:text="소모임 세부 카테고리 (선택)"
+                android:textColor="@color/sub_black"
+                android:textSize="12sp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <Spinner
+                    android:id="@+id/sub_category_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:imeOptions="actionDone"
+                    android:background="@drawable/button_r8"
+                    android:entries="@array/category"
+                    android:paddingLeft="@dimen/spacing_m" />
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_alignRight="@id/sub_category_spinner"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/spacing_m"
+                    app:srcCompat="@drawable/down_large" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/textView20"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_m"
+                android:layout_marginBottom="13dp"
+                android:fontFamily="@font/notosanskr_regular"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:text="소모임 생성 신청을 하시면 24시간 이내에\n관리자가 승인해드립니다."
+                android:textColor="@color/sub_gray"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/create_btn"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_margin="@dimen/spacing_m"
+            android:background="@drawable/ic_disabled_button"
+            android:enabled="false"
+            android:fontFamily="@font/notosanskr_bold"
+            android:text="생성 신청"
+            android:textColor="@color/sub_gray"
+            android:textSize="18sp" />
+    </LinearLayout>
+</LinearLayout>
