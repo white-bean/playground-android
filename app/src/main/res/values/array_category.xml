@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string-array name="category">
-        <item>스터디</item>
-        <item>운동/다이어트</item>
-        <item>문화생활</item>
-        <item>게임</item>
-    </string-array>
-</resources>
