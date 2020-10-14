@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.doubleslash.playground.chat.ChatRoomFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import com.doubleslash.playground.GroupList.GroupListFragment;
@@ -15,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigation;
     Menu menu;
     GroupListFragment groupListFragment;
+    ChatRoomFragment chatRoomFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         groupListFragment = new GroupListFragment();
+        chatRoomFragment = new ChatRoomFragment();
 
         bottomNavigation = findViewById(R.id.bottom_navigation);
         bottomNavigation.setItemIconTintList(null);
@@ -48,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
                     menuItem.setIcon(R.drawable.chat_vio);    // 선택한 이미지 변경
                     menu.findItem(R.id.group).setIcon(R.drawable.group);
                     menu.findItem(R.id.profile).setIcon(R.drawable.profile);
-                    //getSupportFragmentManager().beginTransaction().replace(R.id.container, 채팅프래그먼트).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container, chatRoomFragment).commit();
                     break;
 
                 case R.id.profile:
