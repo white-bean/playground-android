@@ -15,7 +15,7 @@ import com.doubleslash.playground.R;
 import java.util.ArrayList;
 
 public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.ViewHolder> implements OnChatRoomItemClickListener {
-    ArrayList<ChatRoom> items = new ArrayList<ChatRoom>();
+    ArrayList<ChatRoomItem> items = new ArrayList<ChatRoomItem>();
     OnChatRoomItemClickListener listener;
 
     @NonNull
@@ -29,7 +29,7 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ChatRoomAdapter.ViewHolder holder, int position) {
-        ChatRoom item = items.get(position);
+        ChatRoomItem item = items.get(position);
         holder.setItem(item);
     }
 
@@ -38,15 +38,15 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.ViewHo
         return items.size();
     }
 
-    public void addItem(ChatRoom item){
+    public void addItem(ChatRoomItem item){
         items.add(item);
     }
 
-    public void setItems(ArrayList<ChatRoom> items){
+    public void setItems(ArrayList<ChatRoomItem> items){
         this.items = items;
     }
 
-    public ChatRoom getItem(int position){
+    public ChatRoomItem getItem(int position){
         return items.get(position);
     }
 
@@ -91,7 +91,7 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.ViewHo
                 }
             });
         }
-        public void setItem(ChatRoom item){
+        public void setItem(ChatRoomItem item){
             titleText.setText(item.getTitle());
             contentText.setText(item.getContent());
             sendTimeText.setText(item.getSendTime());

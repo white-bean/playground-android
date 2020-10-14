@@ -1,12 +1,12 @@
 package com.doubleslash.playground.chat;
 
-public class ChatRoom {
+public class ChatRoomItem {
     String title;   // 제목
     String content; // 마지막에 친 내용
     String sendTime;    // 마지막에 보낸 시각
     int unreadMsgCnt;   // 안 읽은 메세지 갯수
 
-    public ChatRoom(String title, String content, String sendTime, int unreadMsgCnt) {
+    public ChatRoomItem(String title, String content, String sendTime, int unreadMsgCnt) {
         this.title = title;
         this.content = content;
         this.sendTime = sendTime;
