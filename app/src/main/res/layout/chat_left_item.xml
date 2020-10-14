@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#F8F8FA"
+    android:paddingTop="11dp"
+    android:paddingBottom="11dp">
+
+    <ImageView
+        android:id="@+id/profile_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/spacing_m"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/pro_min" />
+
+    <TextView
+        android:id="@+id/name_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/spacing_xs"
+        android:layout_marginTop="@dimen/spacing_xs"
+        android:fontFamily="@font/notosanskr_bold"
+        android:includeFontPadding="false"
+        android:text="이름"
+        android:textColor="@color/main_black"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/profile_image"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/msg_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/ic_white_rounded_rectangle"
+        android:fontFamily="@font/notosanskr_regular"
+        android:includeFontPadding="false"
+        android:paddingLeft="@dimen/spacing_m"
+        android:paddingTop="@dimen/spacing_xxs"
+        android:paddingRight="@dimen/spacing_m"
+        android:paddingBottom="@dimen/spacing_xxs"
+        android:text="상대방이 보낸 메세지"
+        android:textColor="@color/sub_black"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/profile_image"
+        app:layout_constraintTop_toBottomOf="@+id/name_text" />
+
+    <TextView
+        android:id="@+id/send_time_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/spacing_xs"
+        android:layout_marginTop="@dimen/spacing_m"
+        android:fontFamily="@font/notosanskr_regular"
+        android:includeFontPadding="false"
+        android:text="00:00"
+        android:textColor="@color/sub_gray"
+        android:textSize="10sp"
+        app:layout_constraintStart_toEndOf="@+id/msg_text"
+        app:layout_constraintTop_toBottomOf="@+id/name_text" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
