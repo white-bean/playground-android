@@ -19,12 +19,12 @@ public class ChatActivity extends AppCompatActivity {
     private EditText contentEdit;
     private TextView sendBtn;
 
-    private ArrayList<ChatItem> items = new ArrayList<>();  // adapter에서 별도로 업데이트할 수 있도록 변경해야 됨
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+
+        initUI();
     }
 
     private void initUI() {
@@ -34,8 +34,8 @@ public class ChatActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        addDummyData();
-        adapter = new ChatAdapter(items);
+        adapter = new ChatAdapter();
+        addDummyData(adapter);
         recyclerView.setAdapter(adapter);
 
         sendBtn.setOnClickListener(new View.OnClickListener() {
@@ -46,10 +46,10 @@ public class ChatActivity extends AppCompatActivity {
         });
     }
 
-    private void addDummyData() {
-        items.add(new ChatItem(null,"유저 1이 입장하셨습니다.", null, ChatType.ViewType.CENTER_CONTENT));
-        items.add(new ChatItem(null,"유저 2가 입장하셨습니다.", null, ChatType.ViewType.CENTER_CONTENT));
-        items.add(new ChatItem("유저 1","상대가 보낸 메세지", "00:00", ChatType.ViewType.LEFT_CONTENT));
-        items.add(new ChatItem(null,"상대가 보낸 메세지", "00:00", ChatType.ViewType.RIGHT_CONTENT));
+    private void addDummyData(ChatAdapter adapter) {
+        adapter.addItem(new ChatItem(null,"유저 1이 입장하셨습니다.", null, ChatType.ViewType.CENTER_CONTENT));
+        adapter.addItem(new ChatItem(null,"유저 2가 입장하셨습니다.", null, ChatType.ViewType.CENTER_CONTENT));
+        adapter.addItem(new ChatItem("유저 1","상대가 보낸 메세지", "00:00", ChatType.ViewType.LEFT_CONTENT));
+        adapter.addItem(new ChatItem(null,"상대가 보낸 메세지", "00:00", ChatType.ViewType.RIGHT_CONTENT));
     }
 }

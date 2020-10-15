@@ -16,11 +16,7 @@ import java.util.ArrayList;
 
 public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private ArrayList<ChatItem> items = null;
-
-    ChatAdapter(ArrayList<ChatItem> items) {
-        this.items = items;
-    }
+    private ArrayList<ChatItem> items = new ArrayList<ChatItem>();
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
