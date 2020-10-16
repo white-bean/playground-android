@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.doubleslash.playground.R;
+import com.doubleslash.playground.Retrofit_pakage.My_Retrofit;
 import com.doubleslash.playground.register.RegisterActivity1;
 import com.doubleslash.playground.register.RegisterActivity4;
 
@@ -31,13 +32,19 @@ public class LoginActivity extends AppCompatActivity {
     private void initUI() {
         emailEdit = findViewById(R.id.email_edit);
         passwordEdit = findViewById(R.id.password_edit);
+        final My_Retrofit my_retrofit=new My_Retrofit();
 
         loginBtn = findViewById(R.id.login_btn);
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
+                if(emailEdit.getText().toString()!=null&&passwordEdit.getText().toString()!=null){
+                    int result=my_retrofit.post_login(emailEdit.getText().toString(),passwordEdit.getText().toString());
+                    if(result==1) {
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(intent);
+                    }
+                }
             }
         });
 
