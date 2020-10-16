@@ -3,6 +3,7 @@ package com.doubleslash.playground;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         groupListFragment = new GroupListFragment();
         chatRoomFragment = new ChatRoomFragment();
 
@@ -52,6 +52,13 @@ public class MainActivity extends AppCompatActivity {
                     menu.findItem(R.id.group).setIcon(R.drawable.group);
                     menu.findItem(R.id.profile).setIcon(R.drawable.profile);
                     getSupportFragmentManager().beginTransaction().replace(R.id.container, chatRoomFragment).commit();
+
+                    Intent intent=getIntent();
+                    String email=intent.getStringExtra("email");
+                    System.out.println(email);
+                    Bundle bundle=new Bundle();
+                    bundle.putString("email",email);
+                    //chatRoomFragment.setArguments(bundle);
                     break;
 
                 case R.id.profile:

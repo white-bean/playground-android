@@ -16,6 +16,9 @@ import android.widget.Toast;
 import com.doubleslash.playground.CreateGroupActivity;
 import com.doubleslash.playground.FindGroupActivity;
 import com.doubleslash.playground.R;
+import com.doubleslash.playground.Retrofit_pakage.My_Retrofit;
+import com.doubleslash.playground.Retrofit_pakage.Total_group_responseDTO;
+import com.doubleslash.playground.infoGroup.InfoGroupActivity;
 
 
 public class GroupListFragment extends Fragment {
@@ -37,13 +40,16 @@ public class GroupListFragment extends Fragment {
             @Override
             public void onItemClick(GroupAdapter.ViewHolder holder, View view, int position) {
                 Group item = adapter.getItem(position);
-                Toast.makeText(getContext(), "아이템 선택됨: "+item.getSubject(), Toast.LENGTH_LONG).show();  //그냥 클릭했을 때 잘 되는지 확인용..
+                Intent intent = new Intent(getActivity(), InfoGroupActivity.class);
+                startActivity(intent);
+                Toast.makeText(getContext(), "아이템 선택됨: " + item.getSubject(), Toast.LENGTH_LONG).show();  //그냥 클릭했을 때 잘 되는지 확인용..
             }
         });
         initUI(rootView);
         return rootView;
     }
-    private void initUI(ViewGroup rootView){
+
+    private void initUI(ViewGroup rootView) {
         add_btn = rootView.findViewById(R.id.add_btn);      //그룹추가버튼
         search_btn = rootView.findViewById(R.id.search_btn);//그룹찾기버튼
 
@@ -63,7 +69,17 @@ public class GroupListFragment extends Fragment {
             }
         });
     }
+
     private void addItems(){
+        My_Retrofit my_retrofit = new My_Retrofit();
+        Total_group_responseDTO body = my_retrofit.get_grouplist();
+        while(body==null) {body=my_retrofit.total_group_responseDTO;}
+            for (int i = 0; i < body.getData().size(); i++) {
+                adapter.addItem(new Group(body.getData().get(i).getLocation().getCity() + " " + body.getData().get(i).getLocation().getStreet(), body.getData().get(i).getCategory(), "1", body.getData().get(i).getMaxMemberCount().toString(), body.getData().get(i).getName(),
+                        body.getData().get(i).getContent(), R.drawable.img_join));
+            }
+    }
+        /*
         adapter.addItem(new Group("서울 송파", "스터디", "1", "4", "자소서 스터디",
                 "자기소개서 스터디 하실 분 구합니다:)", R.drawable.img_join));
         adapter.addItem(new Group("서울 송파", "스터디", "1", "4", "C++ 스터디",
@@ -76,5 +92,5 @@ public class GroupListFragment extends Fragment {
                 "자소서 서로 첨삭해주는 스터디", R.drawable.group_vio));
         adapter.addItem(new Group("서울 송파", "스터디", "1", "4", "자소서 스터디",
                 "자소서 서로 첨삭해주는 스터디", R.drawable.group_vio));
-    }
+    }*/
 }

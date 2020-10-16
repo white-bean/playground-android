@@ -1,2 +1,3 @@
+include ':wstompclient'
 include ':app'
 rootProject.name = "Playground"

@@ -11,7 +11,9 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.doubleslash.playground.MainActivity;
 import com.doubleslash.playground.R;
+import com.doubleslash.playground.Retrofit_pakage.My_Retrofit;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -38,6 +40,7 @@ public class RegisterActivity3 extends AppCompatActivity {
     }
 
     private void initUI() {
+        final My_Retrofit my_retrofit=new My_Retrofit();
         numberLayout = findViewById(R.id.number_layout);
         passwordLayout = findViewById(R.id.password_layout);
         emailEdit = findViewById(R.id.email_edit);
@@ -72,9 +75,16 @@ public class RegisterActivity3 extends AppCompatActivity {
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), RegisterActivity4.class);
-                startActivity(intent);
-                finish();
+                if(emailEdit.getText().toString()!=null&&passwordEdit.getText().toString()!=null){
+                    System.out.println(emailEdit.getText().toString() + ",,,," +passwordEdit.getText().toString());
+
+                    int result=my_retrofit.post_sign_up(emailEdit.getText().toString(),passwordEdit.getText().toString());
+                    while(result==-1) {result=my_retrofit.result1;}
+                    if (result == 1){
+                        Intent intent = new Intent(getApplicationContext(), RegisterActivity4.class);
+                        startActivity(intent);
+                    }
+                }
             }
         });
     }
