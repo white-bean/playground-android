@@ -18,10 +18,13 @@ import java.util.concurrent.Executors;
 
 public class RegisterActivity3 extends AppCompatActivity {
     private RelativeLayout numberLayout;
+    private RelativeLayout passwordLayout;
     private EditText emailEdit;
     private EditText numberEdit;
+    private EditText passwordEdit;
     private TextView okBtn;
     private Button requestNumberBtn;
+    private Button passwordOkBtn;
     private Button nextBtn;
 
     int time, min, sec;   // 타이머를 위한 변수
@@ -36,9 +39,12 @@ public class RegisterActivity3 extends AppCompatActivity {
 
     private void initUI() {
         numberLayout = findViewById(R.id.number_layout);
+        passwordLayout = findViewById(R.id.password_layout);
         emailEdit = findViewById(R.id.email_edit);
         numberEdit = findViewById(R.id.number_edit);
+        passwordEdit = findViewById(R.id.password_edit);
         okBtn = findViewById(R.id.ok_btn);
+        passwordOkBtn = findViewById(R.id.password_ok_btn);
         requestNumberBtn = findViewById(R.id.request_number_btn);
         nextBtn = findViewById(R.id.next_btn);
 
@@ -49,7 +55,14 @@ public class RegisterActivity3 extends AppCompatActivity {
             }
         });
 
-        okBtn.setOnClickListener(new View.OnClickListener(){
+        okBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                passwordLayout.setVisibility(View.VISIBLE);
+            }
+        });
+
+        passwordOkBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 onNextBtn();

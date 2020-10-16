@@ -34,6 +34,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/spacing_m"
@@ -106,6 +107,39 @@
                 android:text="확인"
                 android:textColor="@color/playviolet"
                 android:textSize="16sp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/password_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="invisible">
+
+            <Button
+                android:id="@+id/password_ok_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="34dp"
+                android:layout_alignEnd="@id/password_edit"
+                android:layout_alignRight="@id/password_edit"
+                android:layout_marginTop="@dimen/spacing_xs"
+                android:background="@drawable/ic_blue_lined_button"
+                android:fontFamily="@font/notosanskr_bold"
+                android:text="확인"
+                android:textColor="@color/playviolet"
+                android:textSize="12sp" />
+
+            <EditText
+                android:id="@+id/password_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:fontFamily="@font/notosanskr_regular"
+                android:hint="비밀번호를 입력해주세요."
+                android:inputType="textPassword"
+                android:textColor="@color/sub_black"
+                android:textColorHint="@color/gray"
+                android:textSize="12sp" />
 
         </RelativeLayout>
 
