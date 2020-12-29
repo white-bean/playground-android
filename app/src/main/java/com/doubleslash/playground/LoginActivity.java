@@ -25,7 +25,6 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
         initUI();
     }
 
@@ -35,14 +34,20 @@ public class LoginActivity extends AppCompatActivity {
         final My_Retrofit my_retrofit=new My_Retrofit();
 
         loginBtn = findViewById(R.id.login_btn);
+
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                int result=0;
                 if(emailEdit.getText().toString()!=null&&passwordEdit.getText().toString()!=null){
-                    int result=my_retrofit.post_login(emailEdit.getText().toString(),passwordEdit.getText().toString());
-                    if(result==1) {
-                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                        startActivity(intent);
+                        result = my_retrofit.post_login(emailEdit.getText().toString(), passwordEdit.getText().toString());
+                        result =my_retrofit.result1;
+                        while(result==-1) {result =my_retrofit.result1;}
+                        System.out.println(result);
+                        if (result == 1) {
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            intent.putExtra("email",emailEdit.getText().toString());
+                            startActivity(intent);
                     }
                 }
             }
