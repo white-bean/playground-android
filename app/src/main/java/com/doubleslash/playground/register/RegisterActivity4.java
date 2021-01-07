@@ -3,89 +3,71 @@ package com.doubleslash.playground.register;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 
 import com.doubleslash.playground.R;
-import com.doubleslash.playground.customwidget.SearchEditText;
+import com.doubleslash.playground.databinding.ActivityRegister4Binding;
 
 public class RegisterActivity4 extends AppCompatActivity {
-    private EditText nicknameEdit;
-    private EditText birthYearEdit;
-    private SearchEditText searchEdit;
-    private Button manBtn;
-    private Button womanBtn;
-    private Button nextBtn;
+    private ActivityRegister4Binding binding;
 
     private boolean isMan, isWoman;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register4);
+        binding = ActivityRegister4Binding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         initUI();
     }
 
     private void initUI() {
-        nicknameEdit = findViewById(R.id.nickname_edit);
-        birthYearEdit = findViewById(R.id.birth_year_edit);
-        searchEdit = findViewById(R.id.search_edit);
-        manBtn = findViewById(R.id.man_btn);
-        womanBtn = findViewById(R.id.woman_btn);
-        nextBtn = findViewById(R.id.next_btn);
-
         isMan = false;
         isWoman = false;
 
         // 남, 여 고르기 버튼 활성화, 비활성화
-        manBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (isWoman) {
-                    womanBtn.setBackgroundResource(R.drawable.ic_disabled_button);
-                    womanBtn.setTextColor(getResources().getColor(R.color.sub_gray));
-                    isWoman = false;
-                }
-                manBtn.setBackgroundResource(R.drawable.ic_button);
-                manBtn.setTextColor(getResources().getColor(R.color.white));
-                isMan = true;
+        binding.manBtn.setOnClickListener(v -> {
+            if (isWoman) {
+                binding.womanBtn.setBackgroundResource(R.drawable.ic_disabled_button);
+                binding.womanBtn.setTextColor(getResources().getColor(R.color.sub_gray));
+                isWoman = false;
+            }
+            binding.manBtn.setBackgroundResource(R.drawable.ic_sub_black_lined_button);
+            binding.manBtn.setTextColor(Color.parseColor("#33353d"));
+            isMan = true;
 
-                String text1 = nicknameEdit.getText().toString();
-                String text2 = birthYearEdit.getText().toString();
-                String text3 = searchEdit.getText().toString();
-                if (text1.length() > 0 && text2.length() > 0 && text3.length() > 0) {
-                    onNextBtn();
-                }
+            String text1 = binding.nicknameEdit.getText().toString();
+            String text2 = binding.birthYearEdit.getText().toString();
+            String text3 = binding.searchEdit.getText().toString();
+            if (text1.length() > 0 && text2.length() > 0 && text3.length() > 0) {
+                onNextBtn();
             }
         });
-        womanBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (isMan) {
-                    manBtn.setBackgroundResource(R.drawable.ic_disabled_button);
-                    manBtn.setTextColor(getResources().getColor(R.color.sub_gray));
-                    isMan = false;
-                }
-                womanBtn.setBackgroundResource(R.drawable.ic_button);
-                womanBtn.setTextColor(getResources().getColor(R.color.white));
-                isWoman = true;
+        binding.womanBtn.setOnClickListener(v -> {
+            if (isMan) {
+                binding.manBtn.setBackgroundResource(R.drawable.ic_disabled_button);
+                binding.manBtn.setTextColor(getResources().getColor(R.color.sub_gray));
+                isMan = false;
+            }
+            binding.womanBtn.setBackgroundResource(R.drawable.ic_sub_black_lined_button);
+            binding.womanBtn.setTextColor(Color.parseColor("#33353d"));
+            isWoman = true;
 
-                String text1 = nicknameEdit.getText().toString();
-                String text2 = birthYearEdit.getText().toString();
-                String text3 = searchEdit.getText().toString();
-                if (text1.length() > 0 && text2.length() > 0 && text3.length() > 0) {
-                    onNextBtn();
-                }
+            String text1 = binding.nicknameEdit.getText().toString();
+            String text2 = binding.birthYearEdit.getText().toString();
+            String text3 = binding.searchEdit.getText().toString();
+            if (text1.length() > 0 && text2.length() > 0 && text3.length() > 0) {
+                onNextBtn();
             }
         });
 
         // 모든 EditText에 내용이 있고 남/여 체크가 되어있을 때만 다음 버튼 활성화
-        nicknameEdit.addTextChangedListener(new TextWatcher() {
+        binding.nicknameEdit.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -99,8 +81,8 @@ public class RegisterActivity4 extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 String text1 = s.toString();
-                String text2 = birthYearEdit.getText().toString();
-                String text3 = searchEdit.getText().toString();
+                String text2 = binding.birthYearEdit.getText().toString();
+                String text3 = binding.searchEdit.getText().toString();
                 if (text1.length() > 0 && text2.length() > 0 && text3.length() > 0 && (isMan || isWoman)) {
                     onNextBtn();
                 }
@@ -110,7 +92,7 @@ public class RegisterActivity4 extends AppCompatActivity {
             }
         });
 
-        birthYearEdit.addTextChangedListener(new TextWatcher() {
+        binding.birthYearEdit.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -124,8 +106,8 @@ public class RegisterActivity4 extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 String text1 = s.toString();
-                String text2 = nicknameEdit.getText().toString();
-                String text3 = searchEdit.getText().toString();
+                String text2 = binding.nicknameEdit.getText().toString();
+                String text3 = binding.searchEdit.getText().toString();
                 if (text1.length() > 0 && text2.length() > 0 && text3.length() > 0 && (isMan || isWoman)) {
                     onNextBtn();
                 }
@@ -135,7 +117,7 @@ public class RegisterActivity4 extends AppCompatActivity {
             }
         });
 
-        searchEdit.addTextChangedListener(new TextWatcher() {
+        binding.searchEdit.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -149,8 +131,8 @@ public class RegisterActivity4 extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 String text1 = s.toString();
-                String text2 = nicknameEdit.getText().toString();
-                String text3 = birthYearEdit.getText().toString();
+                String text2 = binding.nicknameEdit.getText().toString();
+                String text3 = binding.birthYearEdit.getText().toString();
                 if (text1.length() > 0 && text2.length() > 0 && text3.length() > 0 && (isMan || isWoman)) {
                     onNextBtn();
                 }
@@ -160,27 +142,24 @@ public class RegisterActivity4 extends AppCompatActivity {
             }
         });
 
-        nextBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), RegisterActivity5.class);
-                startActivity(intent);
-                finish();
-            }
+        binding.nextBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), RegisterActivity5.class);
+            startActivity(intent);
+            finish();
         });
     }
 
     // 다음 버튼 활성화
     private void onNextBtn() {
-        nextBtn.setBackgroundResource(R.drawable.ic_button);
-        nextBtn.setTextColor(getResources().getColor(R.color.white));
-        nextBtn.setEnabled(true);
+        binding.nextBtn.setBackgroundResource(R.drawable.ic_button);
+        binding.nextBtn.setTextColor(getResources().getColor(R.color.white));
+        binding.nextBtn.setEnabled(true);
     }
 
     // 다음 버튼 비활성화
     private void offNextBtn() {
-        nextBtn.setBackgroundResource(R.drawable.ic_disabled_button);
-        nextBtn.setTextColor(getResources().getColor(R.color.sub_gray));
-        nextBtn.setEnabled(false);
+        binding.nextBtn.setBackgroundResource(R.drawable.ic_disabled_button);
+        binding.nextBtn.setTextColor(getResources().getColor(R.color.sub_gray));
+        binding.nextBtn.setEnabled(false);
     }
 }

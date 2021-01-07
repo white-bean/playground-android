@@ -16,6 +16,7 @@
         android:text="재학중인 학교를\n알려주세요."
         android:includeFontPadding="false"
         android:textSize="24sp"
+        android:textColor="@color/main_black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -62,7 +63,7 @@
     <Button
         android:id="@+id/next_btn"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="52dp"
         android:layout_marginLeft="@dimen/spacing_m"
         android:layout_marginRight="@dimen/spacing_m"
         android:layout_marginBottom="@dimen/spacing_m"

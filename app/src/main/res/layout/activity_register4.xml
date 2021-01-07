@@ -16,6 +16,7 @@
         android:includeFontPadding="false"
         android:text="프로필을\n설정해주세요."
         android:textSize="24sp"
+        android:textColor="@color/main_black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -51,15 +52,15 @@
 
             <Button
                 android:id="@+id/request_number_btn"
-                android:layout_width="wrap_content"
+                android:layout_width="101dp"
                 android:layout_height="34dp"
                 android:layout_alignEnd="@id/nickname_edit"
                 android:layout_alignRight="@id/nickname_edit"
                 android:layout_marginTop="@dimen/spacing_xxs"
-                android:background="@drawable/ic_blue_lined_button"
+                android:background="@drawable/ic_sub_gray_button"
                 android:fontFamily="@font/notosanskr_bold"
                 android:text="중복 확인"
-                android:textColor="@color/playviolet"
+                android:textColor="@color/white"
                 android:textSize="12sp" />
 
             <EditText
@@ -84,7 +85,7 @@
         android:layout_height="48dp"
         android:layout_marginLeft="@dimen/spacing_m"
         android:layout_marginTop="@dimen/spacing_m"
-        android:background="@drawable/ic_disabled_button"
+        android:background="@drawable/ic_back_button"
         android:text="남"
         android:textColor="@color/sub_gray"
         android:textSize="16sp"
@@ -98,7 +99,7 @@
         android:layout_height="48dp"
         android:layout_marginLeft="@dimen/spacing_xxs"
         android:layout_marginTop="@dimen/spacing_m"
-        android:background="@drawable/ic_disabled_button"
+        android:background="@drawable/ic_back_button"
         android:text="여"
         android:textColor="@color/sub_gray"
         android:textSize="16sp"
@@ -165,7 +166,7 @@
         android:layout_marginBottom="@dimen/spacing_xxl_2"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_gray_circle" />
+        app:srcCompat="@drawable/ic_sub_gray_circle" />
 
     <ImageView
         android:id="@+id/imageView2"
@@ -175,6 +176,6 @@
         android:layout_marginBottom="40dp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
         app:layout_constraintEnd_toStartOf="@+id/imageView"
-        app:srcCompat="@drawable/ic_blue_circle" />
+        app:srcCompat="@drawable/ic_black_circle" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

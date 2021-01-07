@@ -3,25 +3,23 @@ package com.doubleslash.playground.register;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 
 import com.doubleslash.playground.R;
+import com.doubleslash.playground.databinding.ActivityRegister6Binding;
 
 public class RegisterActivity6 extends AppCompatActivity {
-    private Button studyBtn;
-    private Button dietBtn;
-    private Button culturalBtn;
-    private Button gameBtn;
-    private Button nextBtn;
+    ActivityRegister6Binding binding;
 
     private boolean isStudyOn, isDietOn, isCulturalOn, isGameOn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register6);
+        binding = ActivityRegister6Binding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         initUI();
     }
@@ -32,84 +30,74 @@ public class RegisterActivity6 extends AppCompatActivity {
         isCulturalOn = false;
         isGameOn = false;
 
-        studyBtn = findViewById(R.id.study_btn);
-        dietBtn = findViewById(R.id.diet_btn);
-        culturalBtn = findViewById(R.id.cultural_btn);
-        gameBtn = findViewById(R.id.game_btn);
-        nextBtn = findViewById(R.id.next_btn);
-
-        studyBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!isStudyOn) {
-                    studyBtn.setBackgroundResource(R.drawable.ic_button);
-                    studyBtn.setTextColor(getResources().getColor(R.color.white));
-                    isStudyOn = true;
-                } else {
-                    studyBtn.setBackgroundResource(R.drawable.ic_rounded_rectangle);
-                    studyBtn.setTextColor(getResources().getColor(R.color.sub_black));
-                    isStudyOn = false;
-                }
-                if (anyChecked()) onNextBtn();
-                else offNextBtn();
+        binding.studyBtn.setOnClickListener(v -> {
+            if (!isStudyOn) {
+                binding.studyBtn.setBackgroundResource(R.drawable.ic_button_study);
+                binding.tvStudy1.setTextColor(getResources().getColor(R.color.white));
+                binding.tvStudy2.setTextColor(getResources().getColor(R.color.white));
+                isStudyOn = true;
+            } else {
+                binding.studyBtn.setBackgroundResource(R.drawable.ic_rounded_rectangle);
+                binding.tvStudy1.setTextColor(Color.parseColor("#3b3e4a"));
+                binding.tvStudy2.setTextColor(Color.parseColor("#3b3e4a"));
+                isStudyOn = false;
             }
-        });
-        dietBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!isDietOn) {
-                    dietBtn.setBackgroundResource(R.drawable.ic_button);
-                    dietBtn.setTextColor(getResources().getColor(R.color.white));
-                    isDietOn = true;
-                } else {
-                    dietBtn.setBackgroundResource(R.drawable.ic_rounded_rectangle);
-                    dietBtn.setTextColor(getResources().getColor(R.color.sub_black));
-                    isDietOn = false;
-                }
-                if (anyChecked()) onNextBtn();
-                else offNextBtn();
-            }
-        });
-        culturalBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!isCulturalOn) {
-                    culturalBtn.setBackgroundResource(R.drawable.ic_button);
-                    culturalBtn.setTextColor(getResources().getColor(R.color.white));
-                    isCulturalOn = true;
-                } else {
-                    culturalBtn.setBackgroundResource(R.drawable.ic_rounded_rectangle);
-                    culturalBtn.setTextColor(getResources().getColor(R.color.sub_black));
-                    isCulturalOn = false;
-                }
-                if (anyChecked()) onNextBtn();
-                else offNextBtn();
-            }
-        });
-        gameBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!isGameOn) {
-                    gameBtn.setBackgroundResource(R.drawable.ic_button);
-                    gameBtn.setTextColor(getResources().getColor(R.color.white));
-                    isGameOn = true;
-                } else {
-                    gameBtn.setBackgroundResource(R.drawable.ic_rounded_rectangle);
-                    gameBtn.setTextColor(getResources().getColor(R.color.sub_black));
-                    isGameOn = false;
-                }
-                if (anyChecked()) onNextBtn();
-                else offNextBtn();
-            }
+            if (anyChecked()) onNextBtn();
+            else offNextBtn();
         });
 
-        nextBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), RegisterActivity7.class);
-                startActivity(intent);
-                finish();
+        binding.dietBtn.setOnClickListener(v -> {
+            if (!isDietOn) {
+                binding.dietBtn.setBackgroundResource(R.drawable.ic_button_diet);
+                binding.tvDiet1.setTextColor(getResources().getColor(R.color.white));
+                binding.tvDiet2.setTextColor(getResources().getColor(R.color.white));
+                isDietOn = true;
+            } else {
+                binding.dietBtn.setBackgroundResource(R.drawable.ic_rounded_rectangle);
+                binding.tvDiet1.setTextColor(Color.parseColor("#3b3e4a"));
+                binding.tvDiet2.setTextColor(Color.parseColor("#3b3e4a"));
+                isDietOn = false;
             }
+            if (anyChecked()) onNextBtn();
+            else offNextBtn();
+        });
+
+        binding.culturalBtn.setOnClickListener(v -> {
+            if (!isCulturalOn) {
+                binding.culturalBtn.setBackgroundResource(R.drawable.ic_button_cultural);
+                binding.tvCultural1.setTextColor(getResources().getColor(R.color.white));
+                binding.tvCultural2.setTextColor(getResources().getColor(R.color.white));
+                isCulturalOn = true;
+            } else {
+                binding.culturalBtn.setBackgroundResource(R.drawable.ic_rounded_rectangle);
+                binding.tvCultural1.setTextColor(Color.parseColor("#3b3e4a"));
+                binding.tvCultural2.setTextColor(Color.parseColor("#3b3e4a"));
+                isCulturalOn = false;
+            }
+            if (anyChecked()) onNextBtn();
+            else offNextBtn();
+        });
+
+        binding.gameBtn.setOnClickListener(v -> {
+            if (!isGameOn) {
+                binding.gameBtn.setBackgroundResource(R.drawable.ic_button_game);
+                binding.tvGame1.setTextColor(getResources().getColor(R.color.white));
+                binding.tvGame2.setTextColor(getResources().getColor(R.color.white));
+                isGameOn = true;
+            } else {
+                binding.gameBtn.setBackgroundResource(R.drawable.ic_rounded_rectangle);
+                binding.tvGame1.setTextColor(Color.parseColor("#3b3e4a"));
+                binding.tvGame2.setTextColor(Color.parseColor("#3b3e4a"));
+                isGameOn = false;
+            }
+            if (anyChecked()) onNextBtn();
+            else offNextBtn();
+        });
+
+        binding.nextBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), RegisterActivity7.class);
+            startActivity(intent);
+            finish();
         });
     }
 
@@ -119,15 +107,15 @@ public class RegisterActivity6 extends AppCompatActivity {
 
     // 다음 버튼 활성화
     private void onNextBtn() {
-        nextBtn.setBackgroundResource(R.drawable.ic_button);
-        nextBtn.setTextColor(getResources().getColor(R.color.white));
-        nextBtn.setEnabled(true);
+        binding.nextBtn.setBackgroundResource(R.drawable.ic_button);
+        binding.nextBtn.setTextColor(getResources().getColor(R.color.white));
+        binding.nextBtn.setEnabled(true);
     }
 
     // 다음 버튼 비활성화
     private void offNextBtn() {
-        nextBtn.setBackgroundResource(R.drawable.ic_disabled_button);
-        nextBtn.setTextColor(getResources().getColor(R.color.sub_gray));
-        nextBtn.setEnabled(false);
+        binding.nextBtn.setBackgroundResource(R.drawable.ic_disabled_button);
+        binding.nextBtn.setTextColor(getResources().getColor(R.color.sub_gray));
+        binding.nextBtn.setEnabled(false);
     }
 }

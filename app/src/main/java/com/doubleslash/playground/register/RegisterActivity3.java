@@ -5,85 +5,130 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.util.Patterns;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
+import android.widget.Toast;
 
-import com.doubleslash.playground.MainActivity;
 import com.doubleslash.playground.R;
 import com.doubleslash.playground.Retrofit_pakage.My_Retrofit;
+import com.doubleslash.playground.databinding.ActivityRegister3Binding;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 public class RegisterActivity3 extends AppCompatActivity {
-    private RelativeLayout numberLayout;
-    private RelativeLayout passwordLayout;
-    private EditText emailEdit;
-    private EditText numberEdit;
-    private EditText passwordEdit;
-    private TextView okBtn;
-    private Button requestNumberBtn;
-    private Button passwordOkBtn;
-    private Button nextBtn;
+    ActivityRegister3Binding binding;
 
-    int time, min, sec;   // 타이머를 위한 변수
+    String user_email;
+    String verification;
+    String user_password;
+
+    int time, min, sec; // 타이머를 위한 변수
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register3);
+        binding = ActivityRegister3Binding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         initUI();
     }
 
     private void initUI() {
-        final My_Retrofit my_retrofit=new My_Retrofit();
-        numberLayout = findViewById(R.id.number_layout);
-        passwordLayout = findViewById(R.id.password_layout);
-        emailEdit = findViewById(R.id.email_edit);
-        numberEdit = findViewById(R.id.number_edit);
-        passwordEdit = findViewById(R.id.password_edit);
-        okBtn = findViewById(R.id.ok_btn);
-        passwordOkBtn = findViewById(R.id.password_ok_btn);
-        requestNumberBtn = findViewById(R.id.request_number_btn);
-        nextBtn = findViewById(R.id.next_btn);
+        final My_Retrofit my_retrofit = new My_Retrofit();
 
-        requestNumberBtn.setOnClickListener(new View.OnClickListener() {
+        // 이메일 인증
+        binding.emailEdit.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onClick(View v) {
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                user_email = charSequence.toString();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        binding.requestNumberBtn.setOnClickListener(v -> {
+            if (isValidEmail(user_email)) {
                 timerStart();
+            } else {
+                Toast.makeText(getApplicationContext(), "올바른 이메일 주소가 아닙니다.", Toast.LENGTH_SHORT).show();
             }
         });
 
-        okBtn.setOnClickListener(new View.OnClickListener() {
+        // 인증번호 입력
+        binding.numberEdit.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onClick(View v) {
-                passwordLayout.setVisibility(View.VISIBLE);
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                verification = charSequence.toString();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
             }
         });
 
-        passwordOkBtn.setOnClickListener(new View.OnClickListener(){
+        binding.okBtn.setOnClickListener(v -> {
+            if (!TextUtils.isEmpty(verification)) {
+                binding.passwordLayout.setVisibility(View.VISIBLE);
+            } else {
+                Toast.makeText(getApplicationContext(), "인증번호를 입력해주세요.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // 비밀번호 입력
+        binding.passwordEdit.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onClick(View v) {
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                user_password = charSequence.toString();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        binding.passwordOkBtn.setOnClickListener(v -> {
+            if (!TextUtils.isEmpty(user_password)){
                 onNextBtn();
+            } else {
+                Toast.makeText(getApplicationContext(), "비밀번호를 입력해주세요.", Toast.LENGTH_SHORT).show();
             }
         });
 
-        nextBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(emailEdit.getText().toString()!=null&&passwordEdit.getText().toString()!=null){
-                    System.out.println(emailEdit.getText().toString() + ",,,," +passwordEdit.getText().toString());
+        binding.nextBtn.setOnClickListener(v -> {
+            if(binding.emailEdit.getText().toString() != null && binding.passwordEdit.getText().toString() != null){
+                System.out.println(binding.emailEdit.getText().toString() + ",,,," +binding.passwordEdit.getText().toString());
 
-                    int result=my_retrofit.post_sign_up(emailEdit.getText().toString(),passwordEdit.getText().toString());
-                    while(result==-1) {result=my_retrofit.result1;}
-                    if (result == 1){
-                        Intent intent = new Intent(getApplicationContext(), RegisterActivity4.class);
-                        startActivity(intent);
-                    }
+                int result = my_retrofit.post_sign_up(binding.emailEdit.getText().toString(),binding.passwordEdit.getText().toString());
+
+                while (result == -1) {result = my_retrofit.result1;}
+
+                if (result == 1) {
+                    Intent intent = new Intent(getApplicationContext(), RegisterActivity4.class);
+                    startActivity(intent);
                 }
             }
         });
@@ -91,47 +136,47 @@ public class RegisterActivity3 extends AppCompatActivity {
 
     // 인증 번호 요청 후 타이머 구현
     private void timerStart() {
-        numberLayout.setVisibility(View.VISIBLE);
-        requestNumberBtn.setBackgroundResource(R.drawable.ic_disabled_blue_lined_button);
-        requestNumberBtn.setTextColor(getResources().getColor(R.color.sub_gray));
-        requestNumberBtn.setEnabled(false);
+        binding.numberLayout.setVisibility(View.VISIBLE);
+        binding.requestNumberBtn.setBackgroundResource(R.drawable.ic_disabled_blue_lined_button);
+        binding.requestNumberBtn.setTextColor(getResources().getColor(R.color.sub_gray));
+        binding.requestNumberBtn.setEnabled(false);
 
         final Handler handler = new Handler();
-        Runnable addRunnable = new Runnable() {
-            @Override
-            public void run() {
-                time = 120;
+        Runnable addRunnable = () -> {
+            time = 120;
 
-                while (time > 0) {
-                    try {
-                        min = time / 60;
-                        sec = time % 60;
-                        handler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (sec < 10) {
-                                    requestNumberBtn.setText(min + ":0" + sec);
-                                } else {
-                                    requestNumberBtn.setText(min + ":" + sec);
-                                }
-                            }
-                        });
-                        Thread.sleep(1000);
-                        time--;
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+            while (time > 0) {
+                try {
+                    min = time / 60;
+                    sec = time % 60;
+                    handler.post(() -> {
+                        if (sec < 10) {
+                            binding.requestNumberBtn.setText(min + ":0" + sec);
+                        } else {
+                            binding.requestNumberBtn.setText(min + ":" + sec);
+                        }
+                    });
+                    Thread.sleep(1000);
+                    time--;
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             }
         };
+
         Executor executor = Executors.newSingleThreadExecutor();
         executor.execute(addRunnable);
     }
 
     // 다음 버튼 활성화
     private void onNextBtn() {
-        nextBtn.setBackgroundResource(R.drawable.ic_button);
-        nextBtn.setTextColor(getResources().getColor(R.color.white));
-        nextBtn.setEnabled(true);
+        binding.nextBtn.setBackgroundResource(R.drawable.ic_button);
+        binding.nextBtn.setTextColor(getResources().getColor(R.color.white));
+        binding.nextBtn.setEnabled(true);
+    }
+
+    // 이메일 형식 확인
+    public static boolean isValidEmail(CharSequence target) {
+        return (!TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches());
     }
 }

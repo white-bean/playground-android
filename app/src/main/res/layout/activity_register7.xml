@@ -16,6 +16,7 @@
         android:includeFontPadding="false"
         android:text="학생증을\n인증해주세요."
         android:textSize="24sp"
+        android:textColor="@color/main_black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -46,39 +47,39 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
-    <LinearLayout
+    <ImageView
+        android:id="@+id/student_card_btn"
+        android:layout_width="296dp"
+        android:layout_height="140dp"
+        android:layout_marginStart="@dimen/spacing_xl"
+        android:layout_marginEnd="@dimen/spacing_xl"
+        android:layout_marginTop="@dimen/spacing_l"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView3"
+
+        android:background="@drawable/ic_student_card"
+        android:scaleType="center"
+        app:srcCompat="@drawable/ic_camera_black" />
+
+    <TextView
+        android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_l"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3">
+        android:layout_marginTop="@dimen/spacing_xxs"
+        app:layout_constraintStart_toStartOf="@id/student_card_btn"
+        app:layout_constraintTop_toBottomOf="@id/student_card_btn"
 
-        <ImageView
-            android:id="@+id/student_card_btn"
-            android:layout_width="296dp"
-            android:layout_height="140dp"
-            android:background="@drawable/ic_student_card"
-            android:scaleType="center"
-            app:srcCompat="@drawable/camera_vio" />
-
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:fontFamily="@font/notosanskr_regular"
-            android:includeFontPadding="false"
-            android:text="*  만약 학생증이 없으시다면, 본인 이름이 나온 포탈로 인증이나\n재학증명서 등으로도 인증 가능합니다! "
-            android:textColor="@color/sub_gray"
-            android:textSize="10sp" />
-    </LinearLayout>
+        android:fontFamily="@font/notosanskr_regular"
+        android:includeFontPadding="false"
+        android:text="*  만약 학생증이 없으시다면, 본인 이름이 나온 포탈로 인증이나\n재학증명서 등으로도 인증 가능합니다! "
+        android:textColor="@color/sub_gray"
+        android:textSize="10sp" />
 
     <Button
         android:id="@+id/next_btn"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="52dp"
         android:layout_margin="@dimen/spacing_m"
         android:background="@drawable/ic_disabled_button"
         android:enabled="false"

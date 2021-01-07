@@ -16,6 +16,7 @@
         android:includeFontPadding="false"
         android:text="프로필을\n설정해주세요."
         android:textSize="24sp"
+        android:textColor="@color/main_black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -27,7 +28,7 @@
         android:layout_marginRight="@dimen/spacing_m"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_blue_circle" />
+        app:srcCompat="@drawable/ic_black_circle" />
 
     <ImageView
         android:id="@+id/imageView2"
@@ -37,7 +38,7 @@
         android:layout_marginRight="@dimen/spacing_l"
         app:layout_constraintEnd_toStartOf="@+id/imageView"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_gray_circle" />
+        app:srcCompat="@drawable/ic_sub_gray_circle" />
 
     <RelativeLayout
         android:id="@+id/linearLayout5"
@@ -107,7 +108,7 @@
     <Button
         android:id="@+id/next_btn"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="52dp"
         android:layout_margin="@dimen/spacing_m"
         android:background="@drawable/ic_disabled_button"
         android:enabled="false"

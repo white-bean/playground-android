@@ -8,9 +8,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.MultiTransformation;
@@ -18,13 +15,10 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.doubleslash.playground.R;
+import com.doubleslash.playground.databinding.ActivityRegister5Binding;
 
 public class RegisterActivity5 extends AppCompatActivity {
-    private ImageView picture1Btn;
-    private ImageView picture2Btn;
-    private ImageView picture3Btn;
-    private EditText introEdit;
-    private Button nextBtn;
+    ActivityRegister5Binding binding;
 
     private final int GET_IMAGE_FOR_PICTURE1 = 300;
     private final int GET_IMAGE_FOR_PICTURE2 = 301;
@@ -33,45 +27,32 @@ public class RegisterActivity5 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register5);
+        binding = ActivityRegister5Binding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         initIUI();
     }
 
     private void initIUI() {
-        picture1Btn = findViewById(R.id.picture1_btn);
-        picture2Btn = findViewById(R.id.picture2_btn);
-        picture3Btn = findViewById(R.id.picture3_btn);
-        introEdit = findViewById(R.id.intro_edit);
-        nextBtn = findViewById(R.id.next_btn);
-
-        picture1Btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(Intent.ACTION_PICK);
-                intent.setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
-                startActivityForResult(intent, GET_IMAGE_FOR_PICTURE1);
-            }
-        });
-        picture2Btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_PICK);
-                intent.setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
-                startActivityForResult(intent, GET_IMAGE_FOR_PICTURE2);
-            }
-        });
-        picture3Btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_PICK);
-                intent.setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
-                startActivityForResult(intent, GET_IMAGE_FOR_PICTURE3);
-            }
+        binding.picture1Btn.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_PICK);
+            intent.setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+            startActivityForResult(intent, GET_IMAGE_FOR_PICTURE1);
         });
 
-        introEdit.addTextChangedListener(new TextWatcher() {
+        binding.picture2Btn.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_PICK);
+            intent.setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+            startActivityForResult(intent, GET_IMAGE_FOR_PICTURE2);
+        });
+
+        binding.picture3Btn.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_PICK);
+            intent.setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+            startActivityForResult(intent, GET_IMAGE_FOR_PICTURE3);
+        });
+
+        binding.introEdit.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -86,21 +67,18 @@ public class RegisterActivity5 extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 if (s.toString().length() > 10) {
                     onNextBtn();
-                }
-                else {
-                    onNextBtn();//테스트용으로 버튼 무조건 활성화
-                    //offNextBtn();
+                } else {
+                    // 테스트용으로 버튼 무조건 활성화
+                    // offNextBtn();
+                    onNextBtn();
                 }
             }
         });
 
-        nextBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), RegisterActivity6.class);
-                startActivity(intent);
-                finish();
-            }
+        binding.nextBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), RegisterActivity6.class);
+            startActivity(intent);
+            finish();
         });
     }
 
@@ -114,15 +92,15 @@ public class RegisterActivity5 extends AppCompatActivity {
             switch(requestCode) {
                 case GET_IMAGE_FOR_PICTURE1:
                     selectedImageUri = data.getData();
-                    Glide.with(getApplicationContext()).asBitmap().load(selectedImageUri).apply(RequestOptions.bitmapTransform(multiOption)).into(picture1Btn);
+                    Glide.with(getApplicationContext()).asBitmap().load(selectedImageUri).apply(RequestOptions.bitmapTransform(multiOption)).into(binding.picture1Btn);
                     break;
                 case GET_IMAGE_FOR_PICTURE2:
                     selectedImageUri = data.getData();
-                    Glide.with(getApplicationContext()).asBitmap().load(selectedImageUri).apply(RequestOptions.bitmapTransform(multiOption)).into(picture2Btn);
+                    Glide.with(getApplicationContext()).asBitmap().load(selectedImageUri).apply(RequestOptions.bitmapTransform(multiOption)).into(binding.picture2Btn);
                     break;
                 case GET_IMAGE_FOR_PICTURE3:
                     selectedImageUri = data.getData();
-                    Glide.with(getApplicationContext()).asBitmap().load(selectedImageUri).apply(RequestOptions.bitmapTransform(multiOption)).into(picture3Btn);
+                    Glide.with(getApplicationContext()).asBitmap().load(selectedImageUri).apply(RequestOptions.bitmapTransform(multiOption)).into(binding.picture3Btn);
                     break;
             }
         }
@@ -130,16 +108,16 @@ public class RegisterActivity5 extends AppCompatActivity {
 
     // 다음 버튼 활성화
     private void onNextBtn() {
-        nextBtn.setBackgroundResource(R.drawable.ic_button);
-        nextBtn.setTextColor(getResources().getColor(R.color.white));
-        nextBtn.setEnabled(true);
+        binding.nextBtn.setBackgroundResource(R.drawable.ic_button);
+        binding.nextBtn.setTextColor(getResources().getColor(R.color.white));
+        binding.nextBtn.setEnabled(true);
     }
 
     // 다음 버튼 비활성화
     private void offNextBtn() {
-        nextBtn.setBackgroundResource(R.drawable.ic_disabled_button);
-        nextBtn.setTextColor(getResources().getColor(R.color.sub_gray));
-        nextBtn.setEnabled(false);
+        binding.nextBtn.setBackgroundResource(R.drawable.ic_disabled_button);
+        binding.nextBtn.setTextColor(getResources().getColor(R.color.sub_gray));
+        binding.nextBtn.setEnabled(false);
     }
 
 }
