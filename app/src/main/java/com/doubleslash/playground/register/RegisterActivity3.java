@@ -13,14 +13,15 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.doubleslash.playground.R;
-import com.doubleslash.playground.Retrofit_pakage.My_Retrofit;
 import com.doubleslash.playground.databinding.ActivityRegister3Binding;
+import com.doubleslash.playground.retrofit.RetrofitClient;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 public class RegisterActivity3 extends AppCompatActivity {
     ActivityRegister3Binding binding;
+    private RetrofitClient retrofitClient;
 
     String user_email;
     String verification;
@@ -38,7 +39,7 @@ public class RegisterActivity3 extends AppCompatActivity {
     }
 
     private void initUI() {
-        final My_Retrofit my_retrofit = new My_Retrofit();
+        retrofitClient = RetrofitClient.getInstance();
 
         // 이메일 인증
         binding.emailEdit.addTextChangedListener(new TextWatcher() {
@@ -120,13 +121,11 @@ public class RegisterActivity3 extends AppCompatActivity {
 
         binding.nextBtn.setOnClickListener(v -> {
             if(binding.emailEdit.getText().toString() != null && binding.passwordEdit.getText().toString() != null){
-                System.out.println(binding.emailEdit.getText().toString() + ",,,," +binding.passwordEdit.getText().toString());
+                System.out.println(binding.emailEdit.getText().toString() + ",,,," + binding.passwordEdit.getText().toString());
 
-                int result = my_retrofit.post_sign_up(binding.emailEdit.getText().toString(),binding.passwordEdit.getText().toString());
+                int result= retrofitClient.post_sign_up(binding.emailEdit.getText().toString(), binding.passwordEdit.getText().toString());
 
-                while (result == -1) {result = my_retrofit.result1;}
-
-                if (result == 1) {
+                if (result == 1){
                     Intent intent = new Intent(getApplicationContext(), RegisterActivity4.class);
                     startActivity(intent);
                 }

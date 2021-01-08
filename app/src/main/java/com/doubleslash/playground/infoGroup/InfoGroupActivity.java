@@ -6,24 +6,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.doubleslash.playground.R;
-import com.doubleslash.playground.Retrofit_pakage.My_Retrofit;
-import com.doubleslash.playground.Retrofit_pakage.Team_info_responseDTO;
-import com.doubleslash.playground.Retrofit_pakage.Total_group_responseDTO;
-import com.doubleslash.playground.chat.ChatRoomItem;
+import com.doubleslash.playground.retrofit.RetrofitClient;
+import com.doubleslash.playground.retrofit.Team_info_responseDTO;
 import com.doubleslash.playground.chat.MessageDto;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import nbouma.com.wstompclient.implementation.StompClient;
-import nbouma.com.wstompclient.model.Frame;
 
 public class InfoGroupActivity extends AppCompatActivity {
+    private RetrofitClient retrofitClient;
     private RecyclerView recyclerView;
     private memberAdapter adapter;
     public static StompClient stompClient;
@@ -47,8 +43,6 @@ public class InfoGroupActivity extends AppCompatActivity {
         adapter = new memberAdapter();
         recyclerView.setAdapter(adapter);
         addDummy();
-
-
     }
 
     private void init() {
@@ -62,42 +56,33 @@ public class InfoGroupActivity extends AppCompatActivity {
         num_member_tV = findViewById(R.id.num_member_tV);
         register_btn = findViewById(R.id.register_btn);
         chat_btn = findViewById(R.id.chat_btn);
-        My_Retrofit my_retrofit = new My_Retrofit();
-        Team_info_responseDTO body = my_retrofit.get_teaminfo();
-        while (body == null) {
-            body = my_retrofit.team_info_responseDTO;
-        }
-        System.out.println("112");
+
+        retrofitClient = RetrofitClient.getInstance();
+        Team_info_responseDTO body = retrofitClient.get_teaminfo(1);
+
         roomId = body.getRoomId();
         Log.d("room Id : ", roomId);
         //가입신청버튼눌렀을 때
-        register_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //그룹가입
+        register_btn.setOnClickListener(v -> {
+            //그룹가입
 
-                //소켓통신
-                connectStomp();
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                subscribeStomp("chan",roomId);
+            //소켓통신
+            connectStomp();
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
+            subscribeStomp("chan",roomId);
         });
 
-        chat_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //채팅 아이콘 버튼 눌렀을 때
+        chat_btn.setOnClickListener(v -> {
+            //채팅 아이콘 버튼 눌렀을 때
 
-            }
         });
     }
 
     private void addDummy() {
-
         adapter.addItem(new member(R.drawable.profile_img, "홍길동"));
         adapter.addItem(new member(R.drawable.profile_img, "홍길동"));
         adapter.addItem(new member(R.drawable.pro_min, "홍길동"));
@@ -138,6 +123,4 @@ public class InfoGroupActivity extends AppCompatActivity {
         this.stompClient.subscribe("/ws/chat/websocket",messageDto.messageToJson());
         System.out.println("start subscribe");
     }
-
-
 }

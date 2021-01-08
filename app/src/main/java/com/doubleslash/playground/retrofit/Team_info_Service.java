@@ -1,4 +1,4 @@
-package com.doubleslash.playground.Retrofit_pakage;
+package com.doubleslash.playground.retrofit;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

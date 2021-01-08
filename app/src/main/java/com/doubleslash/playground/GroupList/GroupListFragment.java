@@ -16,12 +16,13 @@ import android.widget.Toast;
 import com.doubleslash.playground.CreateGroupActivity;
 import com.doubleslash.playground.FindGroupActivity;
 import com.doubleslash.playground.R;
-import com.doubleslash.playground.Retrofit_pakage.My_Retrofit;
-import com.doubleslash.playground.Retrofit_pakage.Total_group_responseDTO;
+import com.doubleslash.playground.retrofit.RetrofitClient;
+import com.doubleslash.playground.retrofit.Total_group_responseDTO;
 import com.doubleslash.playground.infoGroup.InfoGroupActivity;
 
 
 public class GroupListFragment extends Fragment {
+    private RetrofitClient retrofitClient;
     private RecyclerView recyclerView;
     private GroupAdapter adapter;
     private Button add_btn, search_btn;
@@ -30,20 +31,19 @@ public class GroupListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_group_list, container, false);
+
+        retrofitClient = RetrofitClient.getInstance();
         recyclerView = rootView.findViewById(R.id.recyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
         adapter = new GroupAdapter();
         addItems(); // 리사이클러뷰에 들어갈 객체들
         recyclerView.setAdapter(adapter);
-        adapter.setOnItemClickListener(new OnGroupItemClickListener() {
-            @Override
-            public void onItemClick(GroupAdapter.ViewHolder holder, View view, int position) {
-                Group item = adapter.getItem(position);
-                Intent intent = new Intent(getActivity(), InfoGroupActivity.class);
-                startActivity(intent);
-                Toast.makeText(getContext(), "아이템 선택됨: " + item.getSubject(), Toast.LENGTH_LONG).show();  //그냥 클릭했을 때 잘 되는지 확인용..
-            }
+        adapter.setOnItemClickListener((holder, view, position) -> {
+            Group item = adapter.getItem(position);
+
+            Intent intent = new Intent(getActivity(), InfoGroupActivity.class);
+            startActivity(intent);
         });
         initUI(rootView);
         return rootView;
@@ -53,31 +53,23 @@ public class GroupListFragment extends Fragment {
         add_btn = rootView.findViewById(R.id.add_btn);      //그룹추가버튼
         search_btn = rootView.findViewById(R.id.search_btn);//그룹찾기버튼
 
-        add_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), CreateGroupActivity.class);
-                startActivity(intent);
-            }
+        add_btn.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), CreateGroupActivity.class);
+            startActivity(intent);
         });
 
-        search_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), FindGroupActivity.class);
-                startActivity(intent);
-            }
+        search_btn.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), FindGroupActivity.class);
+            startActivity(intent);
         });
     }
 
     private void addItems(){
-        My_Retrofit my_retrofit = new My_Retrofit();
-        Total_group_responseDTO body = my_retrofit.get_grouplist();
-        while(body==null) {body=my_retrofit.total_group_responseDTO;}
-            for (int i = 0; i < body.getData().size(); i++) {
-                adapter.addItem(new Group(body.getData().get(i).getLocation().getCity() + " " + body.getData().get(i).getLocation().getStreet(), body.getData().get(i).getCategory(), "1", body.getData().get(i).getMaxMemberCount().toString(), body.getData().get(i).getName(),
-                        body.getData().get(i).getContent(), R.drawable.img_join));
-            }
+        Total_group_responseDTO body = retrofitClient.get_grouplist();
+        for (int i = 0; i < body.getData().size(); i++) {
+            adapter.addItem(new Group(body.getData().get(i).getLocation().getCity() + " " + body.getData().get(i).getLocation().getStreet(), body.getData().get(i).getCategory(), "1", body.getData().get(i).getMaxMemberCount().toString(), body.getData().get(i).getName(),
+                    body.getData().get(i).getContent(), R.drawable.img_join));
+        }
     }
         /*
         adapter.addItem(new Group("서울 송파", "스터디", "1", "4", "자소서 스터디",

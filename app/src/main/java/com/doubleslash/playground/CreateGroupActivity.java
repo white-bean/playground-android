@@ -23,8 +23,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.doubleslash.playground.retrofit.RetrofitClient;
 
 public class CreateGroupActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+    private RetrofitClient retrofitClient;
     private Button register_pic_btn;
     private EditText GroupName_edit;
     private Button check_btn, search_btn, create_btn;//search_btn은 돋보기 버튼 -> 나중에 구현해야함
@@ -32,7 +34,6 @@ public class CreateGroupActivity extends AppCompatActivity implements AdapterVie
     private TextView text_num_tV;
     private Spinner member_spinner, category_spinner, sub_category_spinner;
     private ImageView register_pic_iV;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,14 +70,10 @@ public class CreateGroupActivity extends AppCompatActivity implements AdapterVie
         create_btn = findViewById(R.id.create_btn); //생성하기
         register_pic_iV = findViewById(R.id.register_pic_iV);
 
-
-        register_pic_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                register_pic_btn.setVisibility(View.INVISIBLE);
-                register_pic_iV.setVisibility(View.VISIBLE);
-                openGallery();
-            }
+        register_pic_btn.setOnClickListener(v -> {
+            register_pic_btn.setVisibility(View.INVISIBLE);
+            register_pic_iV.setVisibility(View.VISIBLE);
+            openGallery();
         });
 
         GroupName_edit.addTextChangedListener(new TextWatcher() {
@@ -104,11 +101,24 @@ public class CreateGroupActivity extends AppCompatActivity implements AdapterVie
             }
         });
 
-        check_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //중복확인하기
-            }
+        check_btn.setOnClickListener(v -> {
+            //중복확인하기
+        });
+
+        create_btn.setOnClickListener(v -> {
+            retrofitClient = RetrofitClient.getInstance();
+
+            String category = "category";
+            String city = location_edit.getText().toString();
+            String content = info_edit.getText().toString();
+            String maxMember = member_spinner.getSelectedItem().toString();
+            maxMember = maxMember.substring(0, maxMember.length() - 1);
+            int maxMemberCount = Integer.parseInt(maxMember);
+            String name = GroupName_edit.getText().toString();
+            String street = "거리";
+            String token = "token";
+
+            retrofitClient.post_group(category, city, content, maxMemberCount, name, street, token);
         });
 
         bindEditTextScrolling(info_edit);
@@ -184,8 +194,6 @@ public class CreateGroupActivity extends AppCompatActivity implements AdapterVie
         subAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sub_category_spinner.setAdapter(subAdapter);
         sub_category_spinner.setOnItemSelectedListener(this);
-
-
     }
 
 
@@ -233,24 +241,19 @@ public class CreateGroupActivity extends AppCompatActivity implements AdapterVie
     }
     public static void bindEditTextScrolling(EditText view)
     {
-        view.setOnTouchListener(new View.OnTouchListener()
-        {
-            @Override
-            public boolean onTouch(View v, MotionEvent event)
+        view.setOnTouchListener((v, event) -> {
+            switch (event.getAction() & MotionEvent.ACTION_MASK)
             {
-                switch (event.getAction() & MotionEvent.ACTION_MASK)
-                {
-                    // 터치가 눌렸을때 터치 이벤트를 활성화한다.
-                    case MotionEvent.ACTION_DOWN:
-                        v.getParent().requestDisallowInterceptTouchEvent(true);
-                        break;
-                    // 터치가 끝났을때 터치 이벤트를 비활성화한다 [원상복구]
-                    case MotionEvent.ACTION_UP:
-                        v.getParent().requestDisallowInterceptTouchEvent(false);
-                        break;
-                }
-                return false;
+                // 터치가 눌렸을때 터치 이벤트를 활성화한다.
+                case MotionEvent.ACTION_DOWN:
+                    v.getParent().requestDisallowInterceptTouchEvent(true);
+                    break;
+                // 터치가 끝났을때 터치 이벤트를 비활성화한다 [원상복구]
+                case MotionEvent.ACTION_UP:
+                    v.getParent().requestDisallowInterceptTouchEvent(false);
+                    break;
             }
+            return false;
         });
     }
 

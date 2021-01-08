@@ -4,14 +4,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+import android.widget.Toast;
 
-import com.doubleslash.playground.Retrofit_pakage.My_Retrofit;
 import com.doubleslash.playground.databinding.ActivityLoginBinding;
 import com.doubleslash.playground.register.RegisterActivity1;
+import com.doubleslash.playground.retrofit.RetrofitClient;
 
 public class LoginActivity extends AppCompatActivity {
     ActivityLoginBinding binding;
+    private RetrofitClient retrofitClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,22 +24,19 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void initUI() {
-        final My_Retrofit my_retrofit=new My_Retrofit();
+        retrofitClient = RetrofitClient.getInstance();
 
         binding.loginBtn.setOnClickListener(v -> {
             int result=0;
-
-            if(binding.emailEdit.getText().toString() != null && binding.passwordEdit.getText().toString() != null) {
-                    result = my_retrofit.post_login(binding.emailEdit.getText().toString(), binding.passwordEdit.getText().toString());
-                    result = my_retrofit.result1;
-
-                    while(result==-1) {result = my_retrofit.result1;}
-                    System.out.println(result);
-
-                    if (result == 1) {
-                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                        intent.putExtra("email", binding.emailEdit.getText().toString());
-                        startActivity(intent);
+            if (binding.emailEdit.getText().toString() != null && binding.passwordEdit.getText().toString() != null) {
+                result = retrofitClient.post_login(binding.emailEdit.getText().toString(), binding.passwordEdit.getText().toString());
+                System.out.println(result);
+                if (result == 1) {
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    intent.putExtra("email", binding.emailEdit.getText().toString());
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(getApplicationContext(), "아이디와 패스워드를 다시 한 번 확인해주세요.", Toast.LENGTH_SHORT).show();
                 }
             }
         });

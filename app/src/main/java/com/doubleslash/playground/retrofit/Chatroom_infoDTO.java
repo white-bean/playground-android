@@ -1,6 +1,5 @@
-package com.doubleslash.playground.Retrofit_pakage;
+package com.doubleslash.playground.retrofit;
 
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 

@@ -1,4 +1,4 @@
-package com.doubleslash.playground.Retrofit_pakage;
+package com.doubleslash.playground.retrofit;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -6,5 +6,4 @@ import retrofit2.http.GET;
 public interface Total_group_Service {
     @GET("/all/teams")
     Call<Total_group_responseDTO> getData();
-
 }

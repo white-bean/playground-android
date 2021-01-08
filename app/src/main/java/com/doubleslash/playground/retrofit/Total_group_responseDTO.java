@@ -1,16 +1,18 @@
-package com.doubleslash.playground.Retrofit_pakage;
+package com.doubleslash.playground.retrofit;
 
 
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-public class Chatroom_info_responseDTO {
+
+public class Total_group_responseDTO {
+
     @SerializedName("result")
     @Expose
     private Integer result;
     @SerializedName("data")
     @Expose
-    private List<Chatroom_infoDTO> data = null;
+    private List<Total_group_dataDTO> data = null;
 
     public Integer getResult() {
         return result;
@@ -20,11 +22,12 @@ public class Chatroom_info_responseDTO {
         this.result = result;
     }
 
-    public List<Chatroom_infoDTO> getData() {
+    public List<Total_group_dataDTO> getData() {
         return data;
     }
 
-    public void setData(List<Chatroom_infoDTO> data) {
+    public void setData(List<Total_group_dataDTO> data) {
         this.data = data;
     }
+
 }

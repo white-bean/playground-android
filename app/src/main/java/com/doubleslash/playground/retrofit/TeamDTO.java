@@ -1,38 +1,35 @@
-package com.doubleslash.playground.Retrofit_pakage;
-
-
-import android.location.Location;
+package com.doubleslash.playground.retrofit;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Total_group_dataDTO {
+public class TeamDTO {
 
-    @SerializedName("teamId")
+    @SerializedName("id")
     @Expose
-    private long teamId;
+    private Integer id;
     @SerializedName("name")
     @Expose
     private String name;
     @SerializedName("content")
     @Expose
     private String content;
-    @SerializedName("maxMemberCount")
-    @Expose
-    private Integer maxMemberCount;
     @SerializedName("location")
     @Expose
     private Total_group_locationDTO location;
     @SerializedName("category")
     @Expose
     private String category;
+    @SerializedName("maxMemberCount")
+    @Expose
+    private Integer maxMemberCount;
 
-    public long getTeamId() {
-        return teamId;
+    public Integer getId() {
+        return id;
     }
 
-    public void getTeamId(long teamId) {
-        this.teamId = teamId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -51,14 +48,6 @@ public class Total_group_dataDTO {
         this.content = content;
     }
 
-    public Integer getMaxMemberCount() {
-        return maxMemberCount;
-    }
-
-    public void setMaxMemberCount(Integer maxMemberCount) {
-        this.maxMemberCount = maxMemberCount;
-    }
-
     public Total_group_locationDTO getLocation() {
         return location;
     }
@@ -75,4 +64,11 @@ public class Total_group_dataDTO {
         this.category = category;
     }
 
+    public Integer getMaxMemberCount() {
+        return maxMemberCount;
+    }
+
+    public void setMaxMemberCount(Integer maxMemberCount) {
+        this.maxMemberCount = maxMemberCount;
+    }
 }

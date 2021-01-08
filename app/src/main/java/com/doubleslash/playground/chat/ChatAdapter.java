@@ -62,6 +62,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public void setItems(ArrayList<ChatItem> items){
         this.items = items;
+        notifyDataSetChanged();
     }
 
     public ChatItem getItem(int position){
