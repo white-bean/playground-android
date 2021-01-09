@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.StrictMode;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.doubleslash.playground.R;
+import com.doubleslash.playground.SendMail;
 import com.doubleslash.playground.databinding.ActivityRegister3Binding;
 import com.doubleslash.playground.retrofit.RetrofitClient;
 
@@ -22,7 +24,7 @@ import java.util.concurrent.Executors;
 public class RegisterActivity3 extends AppCompatActivity {
     ActivityRegister3Binding binding;
     private RetrofitClient retrofitClient;
-
+    private String emailAuth;
     String user_email;
     String verification;
     String user_password;
@@ -35,6 +37,11 @@ public class RegisterActivity3 extends AppCompatActivity {
         binding = ActivityRegister3Binding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+                .permitDiskReads()
+                .permitDiskWrites()
+                .permitNetwork()
+                .build());
         initUI();
     }
 
@@ -62,6 +69,9 @@ public class RegisterActivity3 extends AppCompatActivity {
         binding.requestNumberBtn.setOnClickListener(v -> {
             if (isValidEmail(user_email)) {
                 timerStart();
+                SendMail sendMail = new SendMail();
+                System.out.println(binding.emailEdit.getText().toString());
+                emailAuth=sendMail.sendSecurityCode(getApplicationContext(),binding.emailEdit.getText().toString());
             } else {
                 Toast.makeText(getApplicationContext(), "올바른 이메일 주소가 아닙니다.", Toast.LENGTH_SHORT).show();
             }
@@ -86,10 +96,10 @@ public class RegisterActivity3 extends AppCompatActivity {
         });
 
         binding.okBtn.setOnClickListener(v -> {
-            if (!TextUtils.isEmpty(verification)) {
+            if(emailAuth.equals(binding.numberEdit.getText().toString())){
                 binding.passwordLayout.setVisibility(View.VISIBLE);
-            } else {
-                Toast.makeText(getApplicationContext(), "인증번호를 입력해주세요.", Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(getApplicationContext(),"인증번호를 확인해 주세요",Toast.LENGTH_SHORT).show();
             }
         });
 

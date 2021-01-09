@@ -2,6 +2,7 @@ package com.doubleslash.playground.register;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,10 +16,12 @@ import com.bumptech.glide.request.RequestOptions;
 import com.doubleslash.playground.MainActivity;
 import com.doubleslash.playground.R;
 import com.doubleslash.playground.databinding.ActivityRegister7Binding;
+import com.doubleslash.playground.retrofit.RetrofitClient;
 
 public class RegisterActivity7 extends AppCompatActivity {
     ActivityRegister7Binding binding;
 
+    public static Context context;
     private final int GET_IMAGE_FOR_STUDENT_CARD = 203;
 
     @Override
@@ -26,7 +29,7 @@ public class RegisterActivity7 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityRegister7Binding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
+        context=this;
         initUI();
     }
 
@@ -52,6 +55,8 @@ public class RegisterActivity7 extends AppCompatActivity {
             MultiTransformation multiOption = new MultiTransformation(new CenterCrop(), new RoundedCorners(8));
             Uri selectedImageUri = data.getData();
             Glide.with(getApplicationContext()).asBitmap().load(selectedImageUri).apply(RequestOptions.bitmapTransform(multiOption)).into(binding.studentCardBtn);
+            RetrofitClient my_retrofit=new RetrofitClient();
+            my_retrofit.uploadImage(selectedImageUri);
         }
     }
 

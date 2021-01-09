@@ -1,13 +1,26 @@
 package com.doubleslash.playground.retrofit;
 
+import android.annotation.SuppressLint;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.AsyncTask;
+import android.provider.MediaStore;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.loader.content.CursorLoader;
+import com.doubleslash.playground.register.RegisterActivity7;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.io.File;
 import java.io.IOException;
 import java.lang.*;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -18,14 +31,14 @@ public class RetrofitClient {
     private static Total_group_Service total_group_service;
     private static Team_info_Service team_info_service;
     private static Chatroom_infoService chatroom_infoService;
-
+    private static Studentcard_upload_Service studentcard_upload_service;
     public static final String API_URL = "http://222.251.129.150/";
     public static int result =- 1;
     public static Total_group_responseDTO total_group_responseDTO = null;
     public static Team_info_responseDTO team_info_responseDTO = null;
     public static Chatroom_info_responseDTO chatroom_infoDTO = null;
 
-    private RetrofitClient() {
+    public RetrofitClient() {
         Gson gson = new GsonBuilder().setLenient().create();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(API_URL)
@@ -36,6 +49,7 @@ public class RetrofitClient {
         total_group_service =retrofit.create(Total_group_Service.class);
         team_info_service =retrofit.create(Team_info_Service.class);
         chatroom_infoService =retrofit.create(Chatroom_infoService.class);
+        studentcard_upload_service = retrofit.create(Studentcard_upload_Service.class);
     }
 
     public static RetrofitClient getInstance() {
@@ -43,6 +57,51 @@ public class RetrofitClient {
             instance = new RetrofitClient();
         }
         return instance;
+    }
+
+    private String getRealPathFromURI(Uri contentUri) {
+        String[] proj = { MediaStore.Images.Media.DATA };
+        CursorLoader loader = new CursorLoader(RegisterActivity7.context, contentUri, proj, null, null, null);
+        Cursor cursor = loader.loadInBackground();
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        String result = cursor.getString(column_index);
+        cursor.close();
+        return result;
+    }
+
+
+    public void uploadImage(Uri uri){
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                File file = new File(getRealPathFromURI(uri));
+                final RequestBody description = createPartFromString("add text?");
+                final MultipartBody.Part body1 = prepareFilePart("image", uri);
+                try {
+                    ResponseBody body =studentcard_upload_service.uploadFile(description,body1).execute().body();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        thread.start();
+    }
+
+    public static final String MULTIPART_FORM_DATA = "multipart/form-data";
+
+
+    @NonNull
+    private RequestBody createPartFromString(String descriptionString) {
+        return RequestBody.create(
+                MediaType.parse(MULTIPART_FORM_DATA), descriptionString);
+    }
+
+    @NonNull
+    private MultipartBody.Part prepareFilePart(String partName, Uri fileUri) {
+        File file = new File(getRealPathFromURI(fileUri));
+        RequestBody requestFile = RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), file);
+        return MultipartBody.Part.createFormData(partName, file.getName(), requestFile);
     }
 
     public void post_group(final String category, final String city, final String content, final int maxMemberCount, final String name, final String street, final String token) {
