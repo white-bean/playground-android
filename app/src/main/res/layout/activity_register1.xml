@@ -21,6 +21,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/spacing_m"
@@ -44,7 +45,11 @@
             android:textColor="@color/sub_black"
             android:textColorHint="@color/gray"
             android:textSize="16sp" />
-
+        <ListView
+            android:id="@+id/schoollist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
         <com.doubleslash.playground.customwidget.ClearEditText
             android:id="@+id/year_edit"
             android:layout_width="match_parent"
