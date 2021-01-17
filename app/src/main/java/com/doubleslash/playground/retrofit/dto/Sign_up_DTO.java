@@ -4,7 +4,6 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Sign_up_DTO {
-
     @SerializedName("email")
     @Expose
     private String email;
@@ -27,5 +26,4 @@ public class Sign_up_DTO {
     public void setpassword(String password) {
         this.password = password;
     }
-
 }

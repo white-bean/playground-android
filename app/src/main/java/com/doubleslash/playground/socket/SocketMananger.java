@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.doubleslash.playground.ClientApp;
 import com.doubleslash.playground.socket.model.Message;
+import com.doubleslash.playground.socket.model.Type;
 import com.google.gson.Gson;
 
 import org.java_websocket.client.WebSocketClient;
@@ -47,10 +48,22 @@ public class SocketMananger {
                     Message msg = gson.fromJson(message, Message.class);
                     // RoomId를 key로 사용함으로써, 해당 키가 존재하면 큐에 집어넣고 아니면 해당 키 추가
                     if (ClientApp.RoomMsgQueues.containsKey(msg.getTo())) {
-                        ClientApp.RoomMsgQueues.get(msg.getTo()).add(msg);
+                        if (msg.getType() == Type.REQUEST) {
+
+                        } else if (msg.getType() == Type.ACCEPT) {
+
+                        } else {
+                            ClientApp.RoomMsgQueues.get(msg.getTo()).add(msg);
+                        }
                     } else {
                         ClientApp.RoomMsgQueues.put(msg.getTo(), new LinkedList<>());
-                        ClientApp.RoomMsgQueues.get(msg.getTo()).add(msg);
+                        if (msg.getType() == Type.REQUEST) {
+
+                        } else if (msg.getType() == Type.ACCEPT) {
+
+                        } else {
+                            ClientApp.RoomMsgQueues.get(msg.getTo()).add(msg);
+                        }
                     }
                 }
 

@@ -10,6 +10,7 @@
         android:id="@+id/recyclerView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:paddingBottom="50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -17,23 +18,36 @@
     </androidx.recyclerview.widget.RecyclerView>
 
     <RelativeLayout
+        android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/item_border"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/menuLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/plus_button"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/spacing_m"
+            android:background="@drawable/ic_plus_button"
+            android:drawableLeft="@drawable/ic_plus"
+            android:gravity="center"
+            android:paddingLeft="4dp"
+            android:text="" />
 
         <EditText
             android:id="@+id/content_edit"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_alignWithParentIfMissing="false"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/spacing_m"
             android:layout_marginRight="@dimen/spacing_m"
-            android:layout_toLeftOf="@id/send_btn"
+            android:layout_toRightOf="@id/plus_button"
             android:background="@drawable/ic_chat_input_box"
             android:fontFamily="@font/notosanskr_regular"
             android:hint="내용을 입력하세요."
@@ -46,20 +60,117 @@
             android:textColorHint="@color/sub_gray"
             android:textSize="12sp" />
 
-        <TextView
+        <Button
             android:id="@+id/send_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="53dp"
+            android:layout_height="32dp"
             android:layout_alignParentLeft="false"
             android:layout_alignParentRight="true"
             android:layout_marginTop="@dimen/spacing_m"
-            android:layout_marginRight="@dimen/spacing_l"
+            android:layout_marginRight="20dp"
             android:layout_marginBottom="@dimen/spacing_m"
+            android:background="@drawable/ic_send_button"
             android:fontFamily="@font/notosanskr_regular"
             android:includeFontPadding="false"
             android:text="전송"
-            android:textColor="@color/playviolet"
-            android:textSize="16sp" />
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:layout_marginEnd="20dp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/menuLayout"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
+            android:id="@+id/linear_layout1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="9dp"
+            android:layout_toLeftOf="@+id/linear_layout2"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/vote_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_vote" />
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_xxs"
+                android:gravity="center"
+                android:fontFamily="@font/notosanskr_regular"
+                android:includeFontPadding="false"
+                android:textSize="10sp"
+                android:text="투표" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linear_layout2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="72dp"
+            android:layout_marginLeft="72dp"
+            android:layout_marginTop="9dp"
+            android:layout_marginEnd="72dp"
+            android:layout_marginRight="72dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/calendar_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_calendar" />
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_xxs"
+                android:gravity="center"
+                android:fontFamily="@font/notosanskr_regular"
+                android:includeFontPadding="false"
+                android:textSize="10sp"
+                android:text="일정" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linear_layout3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="9dp"
+            android:layout_toRightOf="@+id/linear_layout2"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/gallery_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_gallery" />
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_xxs"
+                android:gravity="center"
+                android:fontFamily="@font/notosanskr_regular"
+                android:includeFontPadding="false"
+                android:textSize="10sp"
+                android:text="사진" />
+        </LinearLayout>
+
     </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

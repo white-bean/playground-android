@@ -22,7 +22,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-// Check if we have read or write permission
+        // Check if we have read or write permission
         final int REQUEST_EXTERNAL_STORAGE = 1;
         String[] PERMISSIONS_STORAGE = {
                 Manifest.permission.READ_EXTERNAL_STORAGE,
