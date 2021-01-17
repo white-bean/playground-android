@@ -11,15 +11,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.doubleslash.playground.CreateGroupActivity;
 import com.doubleslash.playground.FindGroupActivity;
 import com.doubleslash.playground.R;
 import com.doubleslash.playground.retrofit.RetrofitClient;
-import com.doubleslash.playground.retrofit.Total_group_responseDTO;
+import com.doubleslash.playground.retrofit.dto.Total_group_responseDTO;
 import com.doubleslash.playground.infoGroup.InfoGroupActivity;
-
 
 public class GroupListFragment extends Fragment {
     private RetrofitClient retrofitClient;

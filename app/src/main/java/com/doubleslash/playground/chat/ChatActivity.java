@@ -3,48 +3,32 @@ package com.doubleslash.playground.chat;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.icu.text.IDNA;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.TextView;
 
-import com.doubleslash.playground.R;
+import com.doubleslash.playground.ClientApp;
+import com.doubleslash.playground.database.entity.MessageEntity;
+import com.doubleslash.playground.database.repository.MessageRepository;
 import com.doubleslash.playground.databinding.ActivityChatBinding;
-import com.doubleslash.playground.databinding.ActivityLoginBinding;
-import com.doubleslash.playground.infoGroup.InfoGroupActivity;
-
-import com.doubleslash.playground.infoGroup.InfoGroupActivity;
-import com.google.gson.JsonObject;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import com.doubleslash.playground.socket.model.Message;
+import com.doubleslash.playground.socket.model.Type;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
-import java.util.Timer;
-
-import nbouma.com.wstompclient.implementation.StompClient;
-import nbouma.com.wstompclient.model.Frame;
 
 public class ChatActivity extends AppCompatActivity{
     private ActivityChatBinding binding;
-    private static ChatAdapter adapter = new ChatAdapter();
+    private ChatAdapter adapter = new ChatAdapter();
     private ArrayList<ChatItem> chats = new ArrayList<ChatItem>();
     private MutableLiveData<ArrayList<ChatItem>> chatsLiveData = new MutableLiveData<ArrayList<ChatItem>>();
+    private List<MessageEntity> databaseMsgs;
 
-    public static StompClient stompClient;
-    private static String my_id = "";
-    private static final String TAG = "stomp app";
+    private static MessageRepository messageRepository;
+    private String roomId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,107 +43,90 @@ public class ChatActivity extends AppCompatActivity{
         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         binding.recyclerView.setLayoutManager(layoutManager);
 
-        Intent intent=getIntent();
-        final String roomid=intent.getStringExtra("roomId");
-        my_id = "chan";
-        System.out.println(roomid);
-        //Intent intent=getIntent();
-        //String email=intent.getStringExtra("email");
-        //String sender=email.split("@")[0];
+        Intent intent = getIntent();
+        roomId = intent.getStringExtra("roomId");
 
-        connectStomp();
+        String userId = ClientApp.user_token;
+
+        // 내부 데이터베이스에 읽는 채팅 내용을 읽어와서 추가
+        messageRepository = new MessageRepository(getApplication());
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                databaseMsgs = messageRepository.getMessagesByRoomId(roomId);
+                for (MessageEntity msg : databaseMsgs) {
+                    if (msg.getType() == ChatType.ViewType.CENTER_CONTENT) {
+                        chats.add(new ChatItem(msg.getFrom(), msg.getText(), dateConvert(System.currentTimeMillis()), ChatType.ViewType.CENTER_CONTENT));
+                    } else {
+                        if (userId.equals(msg.getFrom())) {
+                            chats.add(new ChatItem(msg.getFrom(), msg.getText(), dateConvert(System.currentTimeMillis()), ChatType.ViewType.RIGHT_CONTENT));
+                        } else {
+                            chats.add(new ChatItem(msg.getFrom(), msg.getText(), dateConvert(System.currentTimeMillis()), ChatType.ViewType.LEFT_CONTENT));
+                        }
+                    }
+                    chatsLiveData.postValue(chats);
+                }
+            }
+        };
+        thread.start();
         try {
-            Thread.sleep(1000);
+            thread.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        subscribeStomp(my_id,roomid);
         binding.recyclerView.setAdapter(adapter);
-        // LiveData를 통한 채팅사항 항시 반영
+        // LiveData를 통한 채팅사항 항시 반영 (이 때, 채팅방이 Observe하고 있는 대상은 데이터베이스의 내용)
         chatsLiveData.observe(this, adapter::setItems);
+
+        // 메세지 큐에 쌓여 있던 메세지 데이터베이스에 추가
+        // 선택지가 2개 있음
+        // 1. ChatItem을 기반으로 한 리사이클러뷰로 데이터베이스로부터 불러오고 데이터베이스의 내용을 다시 ChatItem으로 만들어 어댑터에 추가
+        // 2. 그냥 데이터베이스를 기반으로한 리사이클러뷰
+        if (ClientApp.RoomMsgQueues.containsKey(roomId)) {
+            Queue<Message> unloadedMsgs = ClientApp.RoomMsgQueues.get(roomId);
+
+            while (!unloadedMsgs.isEmpty()) {
+                Message msg = unloadedMsgs.poll();
+                Log.d("Message", msg.toString());
+                if (msg.getType() == Type.ENTER) {
+                    MessageEntity message = new MessageEntity(ChatType.ViewType.CENTER_CONTENT, msg.getFrom(), msg.getTo(), msg.getText(), dateConvert(System.currentTimeMillis()));
+                    messageRepository.insert(message);
+                    chats.add(new ChatItem(msg.getFrom(), msg.getText(), dateConvert(System.currentTimeMillis()), ChatType.ViewType.CENTER_CONTENT));
+                } else {
+                    if (userId.equals(msg.getFrom())) {
+                        MessageEntity message = new MessageEntity(ChatType.ViewType.RIGHT_CONTENT, msg.getFrom(), msg.getTo(), msg.getText(), dateConvert(System.currentTimeMillis()));
+                        messageRepository.insert(message);
+                        chats.add(new ChatItem(msg.getFrom(), msg.getText(), dateConvert(System.currentTimeMillis()), ChatType.ViewType.RIGHT_CONTENT));
+                    } else {
+                        MessageEntity message = new MessageEntity(ChatType.ViewType.LEFT_CONTENT, msg.getFrom(), msg.getTo(), msg.getText(), dateConvert(System.currentTimeMillis()));
+                        messageRepository.insert(message);
+                        chats.add(new ChatItem(msg.getFrom(), msg.getText(), dateConvert(System.currentTimeMillis()), ChatType.ViewType.LEFT_CONTENT));
+                    }
+                }
+                chatsLiveData.postValue(chats);
+            }
+        }
 
         binding.sendBtn.setOnClickListener(v -> {
             // 전송 누르면 할 일
-            if(binding.contentEdit.getText().toString() != null)
-                sendMessage("chan", roomid);
+            if(binding.contentEdit.getText().toString() != null) {
+                sendMessage(binding.contentEdit.getText().toString());
+                binding.contentEdit.setText("");
+            }
         });
     }
 
-    private void connectStomp() {
-        stompClient = new StompClient("ws://222.251.129.150/ws/chat/websocket") { //example "ws://localhost:8080/message-server"
-            @Override
-            protected void onStompError(String errorMessage) {
-                Log.d(TAG, "error : " + errorMessage);
-            }
+    private void sendMessage(String msg) {
+        Message message = new Message(Type.SEND, ClientApp.user_token, roomId, msg);
 
-            @Override
-            protected void onConnection(boolean connected) {
-                Log.d(TAG, "connected : " + String.valueOf(connected));
-            }
-
-            @Override
-            protected void onDisconnection(String reason) {
-                Log.d(TAG, "disconnected : " + reason);
-            }
-
-
-            @Override
-            protected void onStompMessage(String frame) throws JSONException {
-                JSONObject jsonObject = new JSONObject(frame);
-                String sender = jsonObject.get("sender").toString();
-                String message = jsonObject.get("message").toString();
-                String type = jsonObject.get("type").toString();
-                Log.d("Message : ",message);
-
-                if (sender.equals(my_id)) {
-                    if(type.equals("ENTER")){
-                        chats.add(new ChatItem(sender, message, dateConvert(System.currentTimeMillis()), ChatType.ViewType.CENTER_CONTENT));
-                        binding.contentEdit.setText("");
-                        chatsLiveData.postValue(chats);
-                    } else {
-                        chats.add(new ChatItem(sender, message, dateConvert(System.currentTimeMillis()), ChatType.ViewType.RIGHT_CONTENT));
-                        binding.contentEdit.setText("");
-                        chatsLiveData.postValue(chats);
-                    }
-                } else {
-                    if (type.equals("ENTER")) {
-                        chats.add(new ChatItem(sender, message, dateConvert(System.currentTimeMillis()), ChatType.ViewType.CENTER_CONTENT));
-                        binding.contentEdit.setText("");
-                        chatsLiveData.postValue(chats);
-                    } else {
-                        chats.add(new ChatItem(sender, message, dateConvert(System.currentTimeMillis()), ChatType.ViewType.LEFT_CONTENT));
-                        binding.contentEdit.setText("");
-                        chatsLiveData.postValue(chats);
-                    }
-                }
-            }
-        };
+        // 지원씨가 하셔야 할 일 : retrofit으로 message객체 바꾸기
+        // Message의 경우 toString()하면 Json형태의 문자열이 반환
+        ClientApp.socketMananger.sendMessage(message);
     }
 
-    private void subscribeStomp(String sender, String roomId) {
-        MessageDto messageDto = new MessageDto();
-        messageDto.setRoomId(roomId);
-        messageDto.setSender(sender);
-        System.out.println(messageDto.toString());
-        this.stompClient.subscribe("/ws/chat/websocket",messageDto.messageToJson());
-        System.out.println("start subscribe");
-    }
-
-
-    private void sendMessage(String sender, String roomId) {
-        String message = binding.contentEdit.getText().toString();
-        MessageDto messageDto = new MessageDto();
-        messageDto.setRoomId(roomId);
-        messageDto.setSender(sender);
-        messageDto.setMessage(message);
-        this.stompClient.sendMessage("/ws/chat/websocket", messageDto.messageToJson());
-    }
-
+    // 현재 시간을 몇시:몇분 am/pm 형태의 문자열로 반환
     private String dateConvert(long currentMiliis) {
-        SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm");
-        String str = timeFormat.format(new Date(currentMiliis));
-
-        return str;
+        return new SimpleDateFormat("hh:mm a").format(new Date(currentMiliis));
     }
 }

@@ -20,15 +20,15 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.ViewHo
 
     @NonNull
     @Override
-    public ChatRoomAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View itemView = inflater.inflate(R.layout.chat_room_item, parent, false);
 
-        return new ChatRoomAdapter.ViewHolder(itemView, this);
+        return new ViewHolder(itemView, this);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ChatRoomAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ChatRoomItem item = items.get(position);
         holder.setItem(item);
     }
@@ -55,7 +55,7 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.ViewHo
     }
 
     @Override
-    public void onItemClick(ChatRoomAdapter.ViewHolder holder, View view, int position) {
+    public void onItemClick(ViewHolder holder, View view, int position) {
         if (listener != null){
             listener.onItemClick(holder, view, position);
         }
@@ -85,7 +85,7 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.ViewHo
                     int position = getAdapterPosition();
 
                     if (listener != null){
-                        listener.onItemClick(ChatRoomAdapter.ViewHolder.this, view, position);
+                        listener.onItemClick(ViewHolder.this, view, position);
                     }
                     //클릭 시 동작
                 }

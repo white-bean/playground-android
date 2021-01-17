@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.doubleslash.playground.chat.ChatRoomFragment;
+import com.doubleslash.playground.socket.SocketMananger;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import com.doubleslash.playground.GroupList.GroupListFragment;
@@ -23,17 +24,26 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        initUI();
+
+        ClientApp.socketMananger = new SocketMananger();
+
+        ClientApp.user_token = "donghyeon";
+    }// onCreate()..
+
+    private void initUI() {
         groupListFragment = new GroupListFragment();
         chatRoomFragment = new ChatRoomFragment();
 
         bottomNavigation = findViewById(R.id.bottom_navigation);
         bottomNavigation.setItemIconTintList(null);
-        menu=bottomNavigation.getMenu();
+        menu = bottomNavigation.getMenu();
 
         bottomNavigation.setOnNavigationItemSelectedListener(new ItemSelectedListener());
 
         getSupportFragmentManager().beginTransaction().replace(R.id.container, groupListFragment).commit();
-    }// onCreate()..
+    }
 
     class ItemSelectedListener implements BottomNavigationView.OnNavigationItemSelectedListener{
         @Override
