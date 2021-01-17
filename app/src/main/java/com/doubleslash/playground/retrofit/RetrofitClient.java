@@ -1,15 +1,20 @@
 package com.doubleslash.playground.retrofit;
 
-import android.annotation.SuppressLint;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.provider.MediaStore;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.loader.content.CursorLoader;
 import com.doubleslash.playground.register.RegisterActivity7;
+import com.doubleslash.playground.retrofit.dto.Chatroom_info_responseDTO;
+import com.doubleslash.playground.retrofit.dto.Group_createDTO;
+import com.doubleslash.playground.retrofit.dto.Group_create_responseDTO;
+import com.doubleslash.playground.retrofit.dto.Sign_up_DTO;
+import com.doubleslash.playground.retrofit.dto.Sign_up_responseDTO;
+import com.doubleslash.playground.retrofit.dto.Team_info_responseDTO;
+import com.doubleslash.playground.retrofit.dto.Total_group_responseDTO;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -46,9 +51,9 @@ public class RetrofitClient {
                 .build();
         group_create_service = retrofit.create(Group_create_Service.class);
         sign_up_service = retrofit.create(Sign_up_Service.class);
-        total_group_service =retrofit.create(Total_group_Service.class);
-        team_info_service =retrofit.create(Team_info_Service.class);
-        chatroom_infoService =retrofit.create(Chatroom_infoService.class);
+        total_group_service = retrofit.create(Total_group_Service.class);
+        team_info_service = retrofit.create(Team_info_Service.class);
+        chatroom_infoService = retrofit.create(Chatroom_infoService.class);
         studentcard_upload_service = retrofit.create(Studentcard_upload_Service.class);
     }
 
