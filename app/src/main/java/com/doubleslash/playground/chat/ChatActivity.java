@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.doubleslash.playground.ClientApp;
 import com.doubleslash.playground.database.entity.MessageEntity;
@@ -20,6 +21,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Queue;
 
+import static android.view.View.GONE;
+
 public class ChatActivity extends AppCompatActivity{
     private ActivityChatBinding binding;
     private ChatAdapter adapter = new ChatAdapter();
@@ -29,6 +32,11 @@ public class ChatActivity extends AppCompatActivity{
 
     private static MessageRepository messageRepository;
     private String roomId;
+    private String userId;
+
+    private boolean menuOn;
+
+    private UpdateThread updateThread;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +54,20 @@ public class ChatActivity extends AppCompatActivity{
         Intent intent = getIntent();
         roomId = intent.getStringExtra("roomId");
 
-        String userId = ClientApp.user_token;
+        userId = ClientApp.user_token;
+
+        // 플러스 버튼으로 메뉴 열고 닫기
+        binding.menuLayout.setVisibility(GONE);
+        menuOn = true;
+        binding.plusButton.setOnClickListener(v -> {
+            if (menuOn) {
+                binding.menuLayout.setVisibility(View.VISIBLE);
+                menuOn = false;
+            } else {
+                binding.menuLayout.setVisibility(View.GONE);
+                menuOn = true;
+            }
+        });
 
         // 내부 데이터베이스에 읽는 채팅 내용을 읽어와서 추가
         messageRepository = new MessageRepository(getApplication());
@@ -83,30 +104,8 @@ public class ChatActivity extends AppCompatActivity{
         // 선택지가 2개 있음
         // 1. ChatItem을 기반으로 한 리사이클러뷰로 데이터베이스로부터 불러오고 데이터베이스의 내용을 다시 ChatItem으로 만들어 어댑터에 추가
         // 2. 그냥 데이터베이스를 기반으로한 리사이클러뷰
-        if (ClientApp.RoomMsgQueues.containsKey(roomId)) {
-            Queue<Message> unloadedMsgs = ClientApp.RoomMsgQueues.get(roomId);
-
-            while (!unloadedMsgs.isEmpty()) {
-                Message msg = unloadedMsgs.poll();
-                Log.d("Message", msg.toString());
-                if (msg.getType() == Type.ENTER) {
-                    MessageEntity message = new MessageEntity(ChatType.ViewType.CENTER_CONTENT, msg.getFrom(), msg.getTo(), msg.getText(), dateConvert(System.currentTimeMillis()));
-                    messageRepository.insert(message);
-                    chats.add(new ChatItem(msg.getFrom(), msg.getText(), dateConvert(System.currentTimeMillis()), ChatType.ViewType.CENTER_CONTENT));
-                } else {
-                    if (userId.equals(msg.getFrom())) {
-                        MessageEntity message = new MessageEntity(ChatType.ViewType.RIGHT_CONTENT, msg.getFrom(), msg.getTo(), msg.getText(), dateConvert(System.currentTimeMillis()));
-                        messageRepository.insert(message);
-                        chats.add(new ChatItem(msg.getFrom(), msg.getText(), dateConvert(System.currentTimeMillis()), ChatType.ViewType.RIGHT_CONTENT));
-                    } else {
-                        MessageEntity message = new MessageEntity(ChatType.ViewType.LEFT_CONTENT, msg.getFrom(), msg.getTo(), msg.getText(), dateConvert(System.currentTimeMillis()));
-                        messageRepository.insert(message);
-                        chats.add(new ChatItem(msg.getFrom(), msg.getText(), dateConvert(System.currentTimeMillis()), ChatType.ViewType.LEFT_CONTENT));
-                    }
-                }
-                chatsLiveData.postValue(chats);
-            }
-        }
+        updateThread = new UpdateThread();
+        //updateThread.start();
 
         binding.sendBtn.setOnClickListener(v -> {
             // 전송 누르면 할 일
@@ -128,5 +127,47 @@ public class ChatActivity extends AppCompatActivity{
     // 현재 시간을 몇시:몇분 am/pm 형태의 문자열로 반환
     private String dateConvert(long currentMiliis) {
         return new SimpleDateFormat("hh:mm a").format(new Date(currentMiliis));
+    }
+
+    // 메시지를 계속 업데이트해주는 쓰레드
+    class UpdateThread extends Thread {
+        @Override
+        public void run() {
+            while (true) {
+                if (ClientApp.RoomMsgQueues.containsKey(roomId)) {
+                    Queue<Message> unloadedMsgs = ClientApp.RoomMsgQueues.get(roomId);
+
+                    if (unloadedMsgs.size() > 0) {
+                        while (!unloadedMsgs.isEmpty()) {
+                            Message msg = unloadedMsgs.poll();
+                            Log.d("Message", msg.toString());
+                            if (msg.getType() == Type.ENTER) {
+                                MessageEntity message = new MessageEntity(ChatType.ViewType.CENTER_CONTENT, msg.getFrom(), msg.getTo(), msg.getText(), dateConvert(System.currentTimeMillis()));
+                                messageRepository.insert(message);
+                                chats.add(new ChatItem(msg.getFrom(), msg.getText(), dateConvert(System.currentTimeMillis()), ChatType.ViewType.CENTER_CONTENT));
+                            } else {
+                                if (userId.equals(msg.getFrom())) {
+                                    MessageEntity message = new MessageEntity(ChatType.ViewType.RIGHT_CONTENT, msg.getFrom(), msg.getTo(), msg.getText(), dateConvert(System.currentTimeMillis()));
+                                    messageRepository.insert(message);
+                                    chats.add(new ChatItem(msg.getFrom(), msg.getText(), dateConvert(System.currentTimeMillis()), ChatType.ViewType.RIGHT_CONTENT));
+                                } else {
+                                    MessageEntity message = new MessageEntity(ChatType.ViewType.LEFT_CONTENT, msg.getFrom(), msg.getTo(), msg.getText(), dateConvert(System.currentTimeMillis()));
+                                    messageRepository.insert(message);
+                                    chats.add(new ChatItem(msg.getFrom(), msg.getText(), dateConvert(System.currentTimeMillis()), ChatType.ViewType.LEFT_CONTENT));
+                                }
+                            }
+                            chatsLiveData.postValue(chats);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // 액티비티가 꺼질 때 쓰레드도 같이 종료
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        updateThread.interrupt();
     }
 }
