@@ -11,6 +11,8 @@ import com.doubleslash.playground.register.RegisterActivity7;
 import com.doubleslash.playground.retrofit.dto.Chatroom_info_responseDTO;
 import com.doubleslash.playground.retrofit.dto.Group_createDTO;
 import com.doubleslash.playground.retrofit.dto.Group_create_responseDTO;
+import com.doubleslash.playground.retrofit.dto.Send_chat_DTO;
+import com.doubleslash.playground.retrofit.dto.Send_chat_responseDTO;
 import com.doubleslash.playground.retrofit.dto.Sign_up_DTO;
 import com.doubleslash.playground.retrofit.dto.Sign_up_responseDTO;
 import com.doubleslash.playground.retrofit.dto.Team_info_responseDTO;
@@ -37,6 +39,7 @@ public class RetrofitClient {
     private static Team_info_Service team_info_service;
     private static Chatroom_infoService chatroom_infoService;
     private static Studentcard_upload_Service studentcard_upload_service;
+    private static Send_chat_Service send_chat_service;
     public static final String API_URL = "http://222.251.129.150/";
     public static int result =- 1;
     public static Total_group_responseDTO total_group_responseDTO = null;
@@ -55,6 +58,7 @@ public class RetrofitClient {
         team_info_service = retrofit.create(Team_info_Service.class);
         chatroom_infoService = retrofit.create(Chatroom_infoService.class);
         studentcard_upload_service = retrofit.create(Studentcard_upload_Service.class);
+        send_chat_service = retrofit.create(Send_chat_Service.class);
     }
 
     public static RetrofitClient getInstance() {
@@ -292,6 +296,35 @@ public class RetrofitClient {
         } catch (InterruptedException e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    public void send_chat(final String type, final String from, final String to, final String text){
+        final Send_chat_responseDTO[] body = new Send_chat_responseDTO[1];
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                Send_chat_DTO send_chat_dto = new Send_chat_DTO();
+                send_chat_dto.setType(type);
+                send_chat_dto.setFrom(from);
+                send_chat_dto.setTo(to);
+                send_chat_dto.setText(text);
+                try {
+                    body[0] = send_chat_service.postData(send_chat_dto).execute().body();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        thread.start();
+        try {
+            thread.join();
+            if(body[0].getChatRoomId() != null){
+                Log.d("data.getRoomId()", body[0].getChatRoomId() + "");
+            }
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 }

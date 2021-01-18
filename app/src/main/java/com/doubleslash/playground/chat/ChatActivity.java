@@ -13,6 +13,7 @@ import com.doubleslash.playground.ClientApp;
 import com.doubleslash.playground.database.entity.MessageEntity;
 import com.doubleslash.playground.database.repository.MessageRepository;
 import com.doubleslash.playground.databinding.ActivityChatBinding;
+import com.doubleslash.playground.retrofit.RetrofitClient;
 import com.doubleslash.playground.socket.model.Message;
 import com.doubleslash.playground.socket.model.Type;
 import java.text.SimpleDateFormat;
@@ -25,6 +26,7 @@ import static android.view.View.GONE;
 
 public class ChatActivity extends AppCompatActivity{
     private ActivityChatBinding binding;
+    private RetrofitClient retrofitClient;
     private ChatAdapter adapter = new ChatAdapter();
     private ArrayList<ChatItem> chats = new ArrayList<ChatItem>();
     private MutableLiveData<ArrayList<ChatItem>> chatsLiveData = new MutableLiveData<ArrayList<ChatItem>>();
@@ -117,8 +119,10 @@ public class ChatActivity extends AppCompatActivity{
     }
 
     private void sendMessage(String msg) {
+        retrofitClient = RetrofitClient.getInstance();
         Message message = new Message(Type.SEND, ClientApp.user_token, roomId, msg);
 
+        retrofitClient.send_chat(message.getType().toString(), message.getFrom(), message.getTo(), message.getText());
         // 지원씨가 하셔야 할 일 : retrofit으로 message객체 바꾸기
         // Message의 경우 toString()하면 Json형태의 문자열이 반환
         ClientApp.socketMananger.sendMessage(message);
