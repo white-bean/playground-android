@@ -11,11 +11,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.doubleslash.playground.R;
+import com.doubleslash.playground.databinding.ActivityInfoGroupBinding;
 import com.doubleslash.playground.retrofit.RetrofitClient;
 import com.doubleslash.playground.retrofit.dto.Team_info_responseDTO;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class InfoGroupActivity extends AppCompatActivity {
+    private ActivityInfoGroupBinding binding;
+
     private RetrofitClient retrofitClient;
     private RecyclerView recyclerView;
     private memberAdapter adapter;
@@ -29,30 +32,19 @@ public class InfoGroupActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_info_group);
+        binding = ActivityInfoGroupBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        init();
+//        init();
 
-        recyclerView = findViewById(R.id.member_recycler);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        recyclerView.setLayoutManager(layoutManager);
-        adapter = new memberAdapter();
-        recyclerView.setAdapter(adapter);
-        addDummy();
+//        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+//        recyclerView.setLayoutManager(layoutManager);
+//        adapter = new memberAdapter();
+//        recyclerView.setAdapter(adapter);
+//        addDummy();
     }
 
     private void init() {
-        group_iV = findViewById(R.id.group_iV);
-        location_tV = findViewById(R.id.location_tV);
-        category_tV = findViewById(R.id.category_tV);
-        subject_tV = findViewById(R.id.subject_tV);
-        period_tV = findViewById(R.id.period_tV);
-        dday_tV = findViewById(R.id.dday_tV);
-        info_tV = findViewById(R.id.info_tV);
-        num_member_tV = findViewById(R.id.num_member_tV);
-        register_btn = findViewById(R.id.register_btn);
-        chat_btn = findViewById(R.id.chat_btn);
-
         retrofitClient = RetrofitClient.getInstance();
         Team_info_responseDTO body = retrofitClient.get_teaminfo(1);
 
