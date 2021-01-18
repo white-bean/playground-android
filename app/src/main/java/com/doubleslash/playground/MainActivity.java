@@ -7,22 +7,37 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
+import com.doubleslash.playground.GroupList.GroupListFragment2;
 import com.doubleslash.playground.chat.ChatRoomFragment;
+import com.doubleslash.playground.databinding.ActivityMainBinding;
 import com.doubleslash.playground.socket.SocketMananger;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import com.doubleslash.playground.GroupList.GroupListFragment;
+import com.doubleslash.playground.GroupList.GroupListFragment1;
 
 public class MainActivity extends AppCompatActivity {
+    ActivityMainBinding binding;
+
     BottomNavigationView bottomNavigation;
-    Menu menu;
-    GroupListFragment groupListFragment;
+
+    GroupListFragment1 groupListFragment1;
+    GroupListFragment2 groupListFragment2;
     ChatRoomFragment chatRoomFragment;
+    ProfileFragment profileFragment;
+
+    Menu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
+
+        groupListFragment1 = new GroupListFragment1();
+        groupListFragment2 = new GroupListFragment2();
         setContentView(R.layout.activity_main);
 
         initUI();
@@ -33,17 +48,24 @@ public class MainActivity extends AppCompatActivity {
     }// onCreate()..
 
     private void initUI() {
-        groupListFragment = new GroupListFragment();
+        groupListFragment1 = new GroupListFragment1();
+        groupListFragment2 = new GroupListFragment2();
         chatRoomFragment = new ChatRoomFragment();
+        profileFragment = new ProfileFragment();
 
         bottomNavigation = findViewById(R.id.bottom_navigation);
         bottomNavigation.setItemIconTintList(null);
-        menu = bottomNavigation.getMenu();
+        menu=bottomNavigation.getMenu();
 
         bottomNavigation.setOnNavigationItemSelectedListener(new ItemSelectedListener());
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.container, groupListFragment).commit();
-    }
+        // 미완성 (소모임 그룹 가입 전후)
+        if (true) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, groupListFragment1).commit();
+        } else {
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, groupListFragment2).commit();
+        }
+    }// onCreate()..
 
     class ItemSelectedListener implements BottomNavigationView.OnNavigationItemSelectedListener{
         @Override
@@ -54,7 +76,13 @@ public class MainActivity extends AppCompatActivity {
                     menuItem.setIcon(R.drawable.group_vio);    // 선택한 이미지 변경
                     menu.findItem(R.id.chat).setIcon(R.drawable.chat_navigation);
                     menu.findItem(R.id.profile).setIcon(R.drawable.profile);
-                    getSupportFragmentManager().beginTransaction().replace(R.id.container, groupListFragment).commit();
+
+                    // 미완성 (소모임 그룹 가입 전후)
+                    if (true) {
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container, groupListFragment1).commit();
+                    } else {
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container, groupListFragment2).commit();
+                    }
                     break;
 
                 case R.id.chat:
@@ -75,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
                     menuItem.setIcon(R.drawable.profile_vio);    // 선택한 이미지 변경
                     menu.findItem(R.id.chat).setIcon(R.drawable.chat_navigation);
                     menu.findItem(R.id.group).setIcon(R.drawable.group);
-                    //getSupportFragmentManager().beginTransaction().replace(R.id.container, 프로필프래그먼트).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container, profileFragment).commit();
                     break;
             }// switch()..
             return true;
