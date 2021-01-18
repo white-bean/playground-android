@@ -1,5 +1,7 @@
 package com.doubleslash.playground.retrofit;
 
+import com.doubleslash.playground.retrofit.dto.Total_group_responseDTO;
+
 import retrofit2.Call;
 import retrofit2.http.GET;
 

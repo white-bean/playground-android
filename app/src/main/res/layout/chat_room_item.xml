@@ -82,7 +82,7 @@
                         android:id="@+id/imageView3"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        app:srcCompat="@drawable/ic_blue_circle" />
+                        app:srcCompat="@drawable/ic_black_circle" />
 
                     <TextView
                         android:id="@+id/unread_msg_cnt"

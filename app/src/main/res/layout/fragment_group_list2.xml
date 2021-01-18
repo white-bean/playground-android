@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/back"
+    android:paddingStart="@dimen/spacing_m"
+    android:paddingEnd="@dimen/spacing_m"
+    tools:context=".GroupList.GroupListFragment1">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/image_user"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginTop="@dimen/spacing_xl"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+
+            android:contentDescription="@null"
+            android:src="@drawable/profile_img" />
+
+        <TextView
+            android:id="@+id/tv_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toEndOf="@id/image_user"
+            app:layout_constraintTop_toTopOf="@id/image_user"
+
+            android:text="이지은님"
+            android:textSize="16sp"
+            android:textColor="@color/main_black"
+            android:fontFamily="@font/notosanskr_bold"
+
+            android:includeFontPadding="false" />
+
+        <TextView
+            android:id="@+id/tv_hello"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintStart_toStartOf="@id/tv_user_name"
+            app:layout_constraintBottom_toBottomOf="@id/image_user"
+
+            android:text="안녕하세요!"
+            android:textSize="16sp"
+            android:textColor="@color/main_black"
+            android:fontFamily="@font/notosanskr_regular"
+
+            android:includeFontPadding="false" />
+
+        <Button
+            android:id="@+id/btn_alarms"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="@dimen/spacing_m"
+            android:layout_marginRight="@dimen/spacing_m"
+            app:layout_constraintEnd_toStartOf="@id/btn_settings"
+            app:layout_constraintTop_toTopOf="@id/btn_settings"
+            app:layout_constraintBottom_toBottomOf="@id/btn_settings"
+
+            android:background="@drawable/ic_alarm"/>
+
+        <Button
+            android:id="@+id/btn_settings"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/image_user"
+
+            android:background="@drawable/ic_settings"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_user_group"
+            android:layout_width="match_parent"
+            android:layout_height="117dp"
+            android:layout_marginTop="@dimen/spacing_l"
+            app:layout_constraintTop_toBottomOf="@id/image_user" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_group_schedule"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_xl"
+            app:layout_constraintTop_toBottomOf="@id/rv_user_group">
+
+            <TextView
+                android:id="@+id/tv_group_schedule"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+
+                android:text="예정된 모임 일정"
+                android:textSize="14sp"
+                android:textColor="@color/sub_black"
+                android:fontFamily="@font/notosanskr_bold"
+
+                android:includeFontPadding="false" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_group_schedule"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_m"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_group_schedule" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_group_study"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_xxl_2"
+            app:layout_constraintTop_toBottomOf="@id/layout_group_schedule">
+
+            <TextView
+                android:id="@+id/tv_group_study"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+
+                android:text="이런 소모임은 어때요? #스터디"
+                android:textSize="14sp"
+                android:textColor="@color/sub_black"
+                android:fontFamily="@font/notosanskr_bold"
+
+                android:includeFontPadding="false" />
+
+            <TextView
+                android:id="@+id/tv_more_study"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+
+                android:text="더보기"
+                android:textSize="14sp"
+                android:textColor="@color/sub_gray"
+                android:fontFamily="@font/notosanskr_regular"
+
+                android:includeFontPadding="false" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_l"
+                app:layout_constraintTop_toBottomOf="@id/tv_group_study" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

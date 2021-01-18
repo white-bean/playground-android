@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#F8F8FA"
-    android:paddingTop="11dp"
-    android:paddingBottom="11dp">
+    android:background="@color/white"
+    android:paddingTop="12dp"
+    android:paddingBottom="12dp">
 
     <ImageView
         android:id="@+id/profile_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_marginLeft="@dimen/spacing_m"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -21,8 +21,7 @@
         android:id="@+id/name_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/spacing_xs"
-        android:layout_marginTop="@dimen/spacing_xs"
+        android:layout_marginLeft="@dimen/spacing_m"
         android:fontFamily="@font/notosanskr_bold"
         android:includeFontPadding="false"
         android:text="이름"
@@ -35,10 +34,9 @@
         android:id="@+id/msg_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginTop="4dp"
-        android:background="@drawable/ic_white_rounded_rectangle"
+        android:background="@drawable/ic_chat_left_item"
         android:fontFamily="@font/notosanskr_regular"
         android:includeFontPadding="false"
         android:paddingLeft="@dimen/spacing_m"
@@ -64,6 +62,5 @@
         android:textSize="10sp"
         app:layout_constraintStart_toEndOf="@+id/msg_text"
         app:layout_constraintTop_toBottomOf="@+id/name_text" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

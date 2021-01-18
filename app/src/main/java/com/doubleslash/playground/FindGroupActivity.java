@@ -14,13 +14,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.doubleslash.playground.databinding.ActivityFindGroupBinding;
+
 public class FindGroupActivity extends AppCompatActivity {
-    private EditText search_edit;
+    ActivityFindGroupBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_find_group);
+        binding = ActivityFindGroupBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
 
         initUI();
     }
@@ -32,8 +36,8 @@ public class FindGroupActivity extends AppCompatActivity {
                 Rect outRect = new Rect();
                 v.getGlobalVisibleRect(outRect);
                 if (!outRect.contains((int)event.getRawX(), (int)event.getRawY())) {
-                    if(search_edit.getText().toString().length()>0){
-                        search_edit.setBackgroundResource(R.drawable.r20_stroke_gray);
+                    if(binding.searchEdit.getText().toString().length()>0){
+                        binding.searchEdit.setBackgroundResource(R.drawable.r20_stroke_gray);
                     }
                     v.clearFocus();
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -45,9 +49,7 @@ public class FindGroupActivity extends AppCompatActivity {
     }
 
     private void initUI(){
-        search_edit = findViewById(R.id.search_edit);   //검색어를 입력하세요
-
-        search_edit.addTextChangedListener(new TextWatcher() {
+        binding.searchEdit.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 

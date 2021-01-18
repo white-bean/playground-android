@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/back"
+    android:paddingStart="@dimen/spacing_m"
+    android:paddingEnd="@dimen/spacing_m"
+    tools:context=".GroupList.GroupListFragment1">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_filter"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:layout_marginTop="@dimen/spacing_xl"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+
+        android:clickable="true"
+        android:focusable="true">
+
+        <ImageView
+            android:id="@+id/image_filter"
+            android:layout_width="24dp"
+            android:layout_height="14dp"
+            android:layout_marginStart="@dimen/spacing_xs"
+            android:layout_marginLeft="@dimen/spacing_xs"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+
+            android:contentDescription="@null"
+            app:srcCompat="@drawable/ic_filter" />
+
+        <TextView
+            android:id="@+id/tv_filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_xs"
+            android:layout_marginLeft="@dimen/spacing_xs"
+            app:layout_constraintStart_toEndOf="@id/image_filter"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+
+            android:text="전체"
+            android:textSize="12sp"
+            android:textColor="@color/sub_black"
+            android:fontFamily="@font/notosanskr_regular"
+
+            android:includeFontPadding="false" />
+
+        <Button
+            android:id="@+id/btn_filter"
+            android:layout_width="10dp"
+            android:layout_height="6dp"
+            android:layout_marginStart="@dimen/spacing_xs"
+            android:layout_marginEnd="@dimen/spacing_xs"
+            app:layout_constraintStart_toEndOf="@id/tv_filter"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+
+            android:background="@drawable/ic_down_sub_gray" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_filter_category"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:layout_marginTop="@dimen/spacing_xs"
+        app:layout_constraintTop_toBottomOf="@id/layout_filter"
+
+        android:visibility="gone"
+        android:background="@drawable/ic_white_rounded_rectangle">
+
+        <TextView
+            android:id="@+id/tv_all"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tv_study"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+
+            android:text="전체"
+            android:textSize="14sp"
+            android:textColor="@color/sub_gray"
+            android:gravity="center"
+
+            android:includeFontPadding="false" />
+
+        <TextView
+            android:id="@+id/tv_study"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toEndOf="@id/tv_all"
+            app:layout_constraintEnd_toStartOf="@id/tv_diet"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+
+            android:text="스터디"
+            android:textSize="14sp"
+            android:textColor="@color/sub_gray"
+            android:gravity="center"
+
+            android:includeFontPadding="false" />
+
+        <TextView
+            android:id="@+id/tv_diet"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toEndOf="@id/tv_study"
+            app:layout_constraintEnd_toStartOf="@id/tv_cultural"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+
+            android:text="운동/다이어트"
+            android:textSize="14sp"
+            android:textColor="@color/sub_gray"
+            android:gravity="center"
+
+            android:includeFontPadding="false" />
+
+        <TextView
+            android:id="@+id/tv_cultural"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toEndOf="@id/tv_diet"
+            app:layout_constraintEnd_toStartOf="@id/tv_game"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+
+            android:text="문화생활"
+            android:textSize="14sp"
+            android:textColor="@color/sub_gray"
+            android:gravity="center"
+
+            android:includeFontPadding="false" />
+
+        <TextView
+            android:id="@+id/tv_game"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toEndOf="@id/tv_cultural"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+
+            android:text="게임"
+            android:textSize="14sp"
+            android:textColor="@color/sub_gray"
+            android:gravity="center"
+
+            android:includeFontPadding="false" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/search_btn"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="@dimen/spacing_m"
+        android:layout_marginRight="@dimen/spacing_m"
+        app:layout_constraintEnd_toStartOf="@id/add_btn"
+        app:layout_constraintTop_toTopOf="@id/add_btn"
+        app:layout_constraintBottom_toBottomOf="@id/add_btn"
+
+        android:background="@drawable/search"/>
+
+    <Button
+        android:id="@+id/add_btn"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/layout_filter"
+        app:layout_constraintBottom_toBottomOf="@id/layout_filter"
+
+        android:background="@drawable/plus"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/spacing_l"
+        app:layout_constraintTop_toBottomOf="@id/layout_filter_category"
+        app:layout_constraintBottom_toBottomOf="parent"
+
+        android:background="@color/sub_gray" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

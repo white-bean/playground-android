@@ -1,242 +1,282 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".infoGroup.InfoGroupActivity">
 
-    <ImageView
-        android:id="@+id/group_iV"
-        android:layout_width="match_parent"
-        android:layout_height="192dp"
-        android:background="@android:drawable/sym_def_app_icon"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout6"
-        app:layout_constraintEnd_toEndOf="parent"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_image_group"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="29dp"
+        android:layout_marginLeft="29dp"
+        android:layout_marginTop="@dimen/spacing_xl"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
 
-    <LinearLayout
-        android:id="@+id/linearLayout6"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_m"
-        android:orientation="vertical"
-        android:paddingLeft="@dimen/spacing_m"
-        android:paddingRight="@dimen/spacing_m"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/group_iV">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/spacing_xs"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/location_tV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/spacing_xxs"
-                android:background="@drawable/grouplist_tv_shape"
-                android:fontFamily="@font/notosanskr_regular"
-                android:includeFontPadding="false"
-                android:paddingLeft="@dimen/spacing_xs"
-                android:paddingTop="2dp"
-                android:paddingRight="@dimen/spacing_xs"
-                android:paddingBottom="2dp"
-                android:text="서울 송파"
-                android:textColor="@color/playviolet"
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/category_tV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/grouplist_tv_shape"
-                android:fontFamily="@font/notosanskr_regular"
-                android:includeFontPadding="false"
-                android:paddingLeft="@dimen/spacing_xs"
-                android:paddingTop="2dp"
-                android:paddingRight="@dimen/spacing_xs"
-                android:paddingBottom="2dp"
-                android:text="스터디"
-                android:textColor="@color/playviolet"
-                android:textSize="12sp" />
-
-        </LinearLayout>
+        app:cardElevation="0dp"
+        app:cardCornerRadius="8dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/spacing_m">
-
-            <TextView
-                android:id="@+id/subject_tV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:layout_marginBottom="2dp"
-                android:fontFamily="@font/notosanskr_bold"
-                android:includeFontPadding="false"
-                android:text="스터디 제목"
-                android:textColor="@color/main_black"
-                android:textSize="20sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <Button
-                android:id="@+id/register_btn"
-                android:layout_width="79dp"
-                android:layout_height="34dp"
-                android:background="@drawable/r50_solid_violet"
-                android:fontFamily="@font/notosanskr_bold"
-                android:includeFontPadding="false"
-                android:text="가입신청"
-                android:textColor="@color/white"
-                android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/spacing_xs"
-            android:background="@drawable/r4_stroke_line">
+            android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/imageView6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/spacing_xs"
-                android:layout_marginTop="@dimen/spacing_xxs"
-                android:layout_marginBottom="@dimen/spacing_xxs"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:id="@+id/image_group"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:contentDescription="@null"
+                android:src="@color/sub_gray" />
+
+            <ImageView
+                android:id="@+id/image_group_category"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:padding="@dimen/spacing_xxs"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/cheering_megaphone_1_f_4_e_3" />
 
-            <TextView
-                android:id="@+id/period_tV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/spacing_xs"
-                android:layout_marginTop="6dp"
-                android:layout_marginBottom="@dimen/spacing_xs"
-                android:fontFamily="@font/notosanskr_regular"
-                android:includeFontPadding="false"
-                android:text="소모임 모집 기간 : OO.OO.OO~OO.OO.OO"
-                android:textColor="@color/sub_black"
-                android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imageView6"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/dday_tV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="@dimen/spacing_m"
-                android:layout_marginBottom="5dp"
-                android:background="@drawable/r11_solid_subblack"
-                android:fontFamily="@font/notosanskr_regular"
-                android:includeFontPadding="false"
-                android:paddingLeft="@dimen/spacing_xs"
-                android:paddingTop="2dp"
-                android:paddingRight="@dimen/spacing_xs"
-                android:paddingBottom="2dp"
-                android:text="D-O"
-                android:textColor="@color/white"
-                android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:contentDescription="@null"
+                android:src="@drawable/writing_hand"
+                android:background="@drawable/ic_button_study"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
+    </androidx.cardview.widget.CardView>
+    
+    <TextView
+        android:id="@+id/tv_group_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_m"
+        android:layout_marginLeft="@dimen/spacing_m"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toEndOf="@id/cv_image_group"
+        app:layout_constraintTop_toTopOf="@id/cv_image_group"
+
+        android:text="서울 송파"
+        android:textSize="12sp"
+        android:textColor="#595c6a"
+        android:fontFamily="@font/notosanskr_regular"
+
+        android:includeFontPadding="false"
+        android:background="@drawable/ic_profile_rounded_rectangle" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_xs"
+        android:layout_marginLeft="@dimen/spacing_xs"
+        app:layout_constraintStart_toEndOf="@id/tv_group_location"
+        app:layout_constraintTop_toTopOf="@id/tv_group_location"
+        app:layout_constraintBottom_toBottomOf="@id/tv_group_location"
+
+        android:text="5"
+        android:textSize="12sp"
+        android:textColor="#7c7f90"
+        android:fontFamily="@font/notosanskr_regular"
+
+        android:drawablePadding="@dimen/spacing_xxs"
+        app:drawableStartCompat="@drawable/ic_group_gray"
+
+        android:includeFontPadding="false"
+        android:background="@drawable/ic_profile_rounded_rectangle" />
+
+    <TextView
+        android:id="@+id/tv_group_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="@id/tv_group_location"
+        app:layout_constraintTop_toBottomOf="@id/tv_group_location"
+
+
+        android:text="UX/UI 스터디"
+        android:textSize="20sp"
+        android:textColor="#33353d"
+        android:fontFamily="@font/notosanskr_bold"
+
+        android:includeFontPadding="false" />
+
+    <TextView
+        android:id="@+id/tv_group_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:layout_marginStart="@dimen/spacing_m"
+        android:layout_marginEnd="@dimen/spacing_m"
+        android:layout_marginTop="@dimen/spacing_l"
+        app:layout_constraintTop_toBottomOf="@id/cv_image_group"
+
+
+        android:text="서울 송파구에서 오프라인으로 만나 UX/UI에 대해   공부하는 스터디 입니다 :)"
+        android:textSize="14sp"
+        android:textColor="#7c7f90"
+        android:fontFamily="@font/notosanskr_regular"
+
+        android:includeFontPadding="false"
+        android:background="@drawable/r8_stroke_line" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_group_dday"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="@dimen/spacing_m"
+        app:layout_constraintTop_toBottomOf="@id/tv_group_content"
+
+        android:background="@drawable/ic_rounded_rectangle">
+
+        <TextView
+            android:id="@+id/tv_group_dday"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/spacing_xl">
+            android:layout_marginStart="@dimen/spacing_m"
+            android:layout_marginLeft="@dimen/spacing_m"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
 
-            <TextView
-                android:id="@+id/info_tV"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:background="@drawable/ic_rounded_rectangle"
-                android:fontFamily="@font/notosanskr_regular"
-                android:includeFontPadding="false"
-                android:padding="@dimen/spacing_m"
-                android:text="서울 송파구에서 오프라인으로 만나 UX에 대해 공부하는 스터디 입니다 :) 서비스 분석과 사용자 테스..."
-                android:textColor="@color/sub_black"
-                android:textSize="14sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+            android:text="소모임 모집 기간"
+            android:textSize="12sp"
+            android:textColor="#595c6a"
+            android:fontFamily="@font/notosanskr_bold"
 
-            <Button
-                android:id="@+id/button2"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:background="@drawable/down_gray"
-                app:layout_constraintBottom_toBottomOf="@+id/info_tV"
-                app:layout_constraintEnd_toEndOf="@+id/info_tV"
-                app:layout_constraintStart_toStartOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            android:includeFontPadding="false" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/tv_group_dday_date"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="14dp"
-            android:orientation="horizontal">
+            android:layout_marginTop="@dimen/spacing_xxs"
+            android:layout_marginBottom="10dp"
+            app:layout_constraintStart_toStartOf="@id/tv_group_dday"
+            app:layout_constraintTop_toBottomOf="@id/tv_group_dday"
+            app:layout_constraintBottom_toBottomOf="parent"
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/spacing_xs"
-                android:fontFamily="@font/notosanskr_bold"
-                android:includeFontPadding="false"
-                android:text="소모임 멤버"
-                android:textColor="@color/main_black"
-                android:textSize="12sp" />
+            android:text="20.09.12 ~ 09.18"
+            android:textSize="14sp"
+            android:textColor="#595c6a"
+            android:fontFamily="@font/notosanskr_regular"
 
-            <TextView
-                android:id="@+id/num_member_tV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/notosanskr_bold"
-                android:includeFontPadding="false"
-                android:text="4"
-                android:textColor="@color/playviolet"
-                android:textSize="12sp" />
-        </LinearLayout>
+            android:includeFontPadding="false" />
+
+        <Button
+            android:id="@+id/btn_group_register"
+            android:layout_width="wrap_content"
+            android:layout_height="34dp"
+            android:layout_marginEnd="@dimen/spacing_m"
+            android:layout_marginRight="@dimen/spacing_m"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+
+            android:text="가입 신청"
+            android:textSize="12sp"
+            android:textColor="@color/white"
+            android:fontFamily="@font/notosanskr_bold"
+
+            android:includeFontPadding="false"
+            style="?android:attr/borderlessButtonStyle"
+            android:background="@drawable/ic_button"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/tv_group_members"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_xxl_2"
+        app:layout_constraintStart_toStartOf="@id/layout_group_dday"
+        app:layout_constraintTop_toBottomOf="@id/layout_group_dday"
+
+
+        android:text="소모임원"
+        android:textSize="14sp"
+        android:textColor="#3b3e4a"
+        android:fontFamily="@font/notosanskr_bold"
+
+        android:includeFontPadding="false" />
+
+    <TextView
+        android:id="@+id/tv_member_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_xxs"
+        android:layout_marginLeft="@dimen/spacing_xxs"
+        app:layout_constraintStart_toEndOf="@id/tv_group_members"
+        app:layout_constraintTop_toTopOf="@id/tv_group_members"
+        app:layout_constraintBottom_toBottomOf="@id/tv_group_members"
+
+
+        android:text="5"
+        android:textSize="14sp"
+        android:textColor="@color/main_black"
+        android:fontFamily="@font/notosanskr_bold"
+
+        android:includeFontPadding="false" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_group_members"
+        android:layout_width="match_parent"
+        android:layout_height="78dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="@dimen/spacing_m"
+        app:layout_constraintTop_toBottomOf="@id/tv_member_number" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/spacing_xxl_2"
+        app:layout_constraintTop_toBottomOf="@id/rv_group_members"
+        app:layout_constraintBottom_toBottomOf="parent"
+
+        android:background="#f8f8fa">
+
+        <TextView
+            android:id="@+id/tv_user_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_m"
+            android:layout_marginLeft="@dimen/spacing_m"
+            android:layout_marginTop="@dimen/spacing_l"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+
+            android:text="모임 일정"
+            android:textSize="14sp"
+            android:textColor="#3b3e4a"
+            android:fontFamily="@font/notosanskr_bold"
+
+            android:includeFontPadding="false" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/spacing_m"
+            android:layout_marginRight="@dimen/spacing_m"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_user_group"
+            app:layout_constraintBottom_toBottomOf="@id/tv_user_group"
+
+            android:contentDescription="@null"
+            app:srcCompat="@drawable/ic_arrow_right" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/member_recycler"
+            android:id="@+id/rv_group_meeting"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="@dimen/spacing_m"
-            android:scrollbars="horizontal" />
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_m"
+            android:layout_marginEnd="@dimen/spacing_m"
+            android:layout_marginTop="@dimen/spacing_l"
+            app:layout_constraintTop_toBottomOf="@id/tv_user_group"/>
 
-    </LinearLayout>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/chat_btn"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="@dimen/spacing_m"
-        android:layout_marginBottom="@dimen/spacing_xxl_2"
-        android:clickable="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:fabSize="normal"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
