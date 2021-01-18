@@ -17,6 +17,7 @@ import com.doubleslash.playground.R;
 import com.doubleslash.playground.SendMail;
 import com.doubleslash.playground.databinding.ActivityRegister3Binding;
 import com.doubleslash.playground.retrofit.RetrofitClient;
+import com.doubleslash.playground.retrofit.Sign_upDTO;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -25,6 +26,7 @@ public class RegisterActivity3 extends AppCompatActivity {
     ActivityRegister3Binding binding;
     private RetrofitClient retrofitClient;
     private String emailAuth;
+    Sign_upDTO sign_upDTO;
     String user_email;
     String verification;
     String user_password;
@@ -36,7 +38,7 @@ public class RegisterActivity3 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityRegister3Binding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
+        sign_upDTO=(Sign_upDTO)getIntent().getSerializableExtra("sign_upDTO");
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
                 .permitDiskReads()
                 .permitDiskWrites()
@@ -68,9 +70,9 @@ public class RegisterActivity3 extends AppCompatActivity {
         binding.requestNumberBtn.setOnClickListener(v -> {
             if (isValidEmail(user_email)) {
                 timerStart();
-                SendMail sendMail = new SendMail();
-                System.out.println(binding.emailEdit.getText().toString());
-                emailAuth=sendMail.sendSecurityCode(getApplicationContext(),binding.emailEdit.getText().toString());
+                //SendMail sendMail = new SendMail();
+                //System.out.println(binding.emailEdit.getText().toString());
+                //emailAuth=sendMail.sendSecurityCode(getApplicationContext(),binding.emailEdit.getText().toString());
             } else {
                 Toast.makeText(getApplicationContext(), "올바른 이메일 주소가 아닙니다.", Toast.LENGTH_SHORT).show();
             }
@@ -95,11 +97,13 @@ public class RegisterActivity3 extends AppCompatActivity {
         });
 
         binding.okBtn.setOnClickListener(v -> {
+            binding.passwordLayout.setVisibility(View.VISIBLE);
+            /*
             if(emailAuth.equals(binding.numberEdit.getText().toString())){
                 binding.passwordLayout.setVisibility(View.VISIBLE);
             }else{
                 Toast.makeText(getApplicationContext(),"인증번호를 확인해 주세요",Toast.LENGTH_SHORT).show();
-            }
+            }*/
         });
 
         // 비밀번호 입력
@@ -131,13 +135,18 @@ public class RegisterActivity3 extends AppCompatActivity {
         binding.nextBtn.setOnClickListener(v -> {
             if(binding.emailEdit.getText().toString() != null && binding.passwordEdit.getText().toString() != null){
                 System.out.println(binding.emailEdit.getText().toString() + ",,,," + binding.passwordEdit.getText().toString());
-
+                sign_upDTO.setEmail(binding.emailEdit.getText().toString());
+                sign_upDTO.setPassword(binding.passwordEdit.getText().toString());
+                Intent intent = new Intent(getApplicationContext(), RegisterActivity4.class);
+                intent.putExtra("sign_upDTO",sign_upDTO);
+                startActivity(intent);
+                /*
                 int result= retrofitClient.post_sign_up(binding.emailEdit.getText().toString(), binding.passwordEdit.getText().toString());
 
                 if (result == 1){
                     Intent intent = new Intent(getApplicationContext(), RegisterActivity4.class);
                     startActivity(intent);
-                }
+                }*/
             }
         });
     }

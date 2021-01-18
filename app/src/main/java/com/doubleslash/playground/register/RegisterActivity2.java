@@ -8,10 +8,13 @@ import android.view.View;
 
 import com.doubleslash.playground.R;
 import com.doubleslash.playground.databinding.ActivityRegister2Binding;
+import com.doubleslash.playground.retrofit.Sign_upDTO;
 
 public class RegisterActivity2 extends AppCompatActivity {
     ActivityRegister2Binding binding;
-
+    String schoolname;
+    String schoolnum;
+    Sign_upDTO sign_upDTO;
     private boolean isCheck1On, isCheck2On, isCheck3On, isCheck4On;
 
     @Override
@@ -19,7 +22,7 @@ public class RegisterActivity2 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityRegister2Binding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
+        sign_upDTO=(Sign_upDTO)getIntent().getSerializableExtra("sign_upDTO");
         initUI();
     }
 
@@ -83,6 +86,7 @@ public class RegisterActivity2 extends AppCompatActivity {
 
         binding.nextBtn.setOnClickListener(v -> {
             Intent intent = new Intent(getApplicationContext(), RegisterActivity3.class);
+            intent.putExtra("sign_upDTO",sign_upDTO);
             startActivity(intent);
             finish();
         });

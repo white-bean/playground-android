@@ -125,22 +125,32 @@
         app:layout_constraintStart_toEndOf="@+id/woman_btn"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout4" />
 
-    <com.doubleslash.playground.customwidget.SearchEditText
-        android:id="@+id/search_edit"
+    <LinearLayout
         android:layout_width="0dp"
-        android:layout_height="56dp"
-        android:layout_marginLeft="@dimen/spacing_m"
-        android:layout_marginTop="@dimen/spacing_m"
-        android:layout_marginRight="@dimen/spacing_m"
-        android:hint="사는 지역을 설정해주세요."
-        android:includeFontPadding="false"
-        android:inputType="text"
-        android:textColor="@color/sub_black"
-        android:textColorHint="@color/gray"
-        android:textSize="16sp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/woman_btn" />
+        app:layout_constraintTop_toBottomOf="@+id/man_btn">
+
+        <com.doubleslash.playground.customwidget.SearchEditText
+            android:id="@+id/search_edit"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginLeft="@dimen/spacing_m"
+            android:layout_marginTop="@dimen/spacing_m"
+            android:layout_marginRight="@dimen/spacing_m"
+            android:hint="사는 지역을 설정해주세요. ex)마포구,김포시"
+            android:includeFontPadding="false"
+            android:inputType="text"
+            android:textColor="@color/sub_black"
+            android:textColorHint="@color/gray"
+            android:textSize="16sp" />
+        <ListView
+            android:id="@+id/schoollist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/next_btn"

@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 
 import com.doubleslash.playground.R;
 import com.doubleslash.playground.databinding.ActivityRegister1Binding;
+import com.doubleslash.playground.retrofit.Sign_upDTO;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -31,6 +32,7 @@ public class RegisterActivity1 extends AppCompatActivity {
     private List<String> list;
     private Search_school_Adapter adapter;
     private Context context;
+    Sign_upDTO sign_upDTO;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,8 +45,13 @@ public class RegisterActivity1 extends AppCompatActivity {
 
     private void initUI() {
         binding.yearEdit.setVisibility(View.INVISIBLE);
+        //다음버튼
         binding.nextBtn.setOnClickListener(v -> {
+            sign_upDTO=new Sign_upDTO();
+            sign_upDTO.setSchoolname(binding.univEdit.getText().toString());
+            sign_upDTO.setSchoolnum(binding.yearEdit.getText().toString());
             Intent intent = new Intent(getApplicationContext(), RegisterActivity2.class);
+            intent.putExtra("sign_upDTO",sign_upDTO);
             startActivity(intent);
             finish();
         });

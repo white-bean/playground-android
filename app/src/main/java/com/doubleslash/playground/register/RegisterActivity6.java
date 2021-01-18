@@ -1,26 +1,35 @@
 package com.doubleslash.playground.register;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 
 import com.doubleslash.playground.R;
 import com.doubleslash.playground.databinding.ActivityRegister6Binding;
+import com.doubleslash.playground.retrofit.Sign_upDTO;
+
+import java.util.ArrayList;
 
 public class RegisterActivity6 extends AppCompatActivity {
     ActivityRegister6Binding binding;
-
+    Uri[] uri=new Uri[3];
+    Sign_upDTO sign_upDTO;
     private boolean isStudyOn, isDietOn, isCulturalOn, isGameOn;
-
+    ArrayList<Uri> urilist = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityRegister6Binding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CONTACTS},1);
+        sign_upDTO=(Sign_upDTO)getIntent().getSerializableExtra("sign_upDTO");
+        urilist=getIntent().getParcelableArrayListExtra(Intent.EXTRA_STREAM);
         initUI();
     }
 
@@ -95,7 +104,16 @@ public class RegisterActivity6 extends AppCompatActivity {
         });
 
         binding.nextBtn.setOnClickListener(v -> {
+            String hobby="";
+            if(isStudyOn)  hobby+="스터디,";
+            if(isDietOn) hobby += "운동/다이어트,";
+            if(isCulturalOn) hobby += "문화생활,";
+            if(isGameOn) hobby += "게임";
+            sign_upDTO.setHobby(hobby);
             Intent intent = new Intent(getApplicationContext(), RegisterActivity7.class);
+            intent.setAction(Intent.ACTION_SEND_MULTIPLE);
+            intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM,urilist);
+            intent.putExtra("sign_upDTO",sign_upDTO);
             startActivity(intent);
             finish();
         });
