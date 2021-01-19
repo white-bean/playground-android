@@ -12,7 +12,7 @@ public class Sign_inDTO {
     private String password;
     @SerializedName("fcmToken")
     @Expose
-    private String fcm_token;
+    private String fcm_Token;
 
     public String getEmail() {
         return email;
@@ -30,11 +30,11 @@ public class Sign_inDTO {
         this.password = password;
     }
 
-    public String getFcm_token() {
-        return fcm_token;
+    public String getFcm_Token() {
+        return fcm_Token;
     }
 
-    public void setFcm_token(String fcm_token) {
-        this.fcm_token = fcm_token;
+    public void setFcm_Token(String fcm_Token) {
+        this.fcm_Token = fcm_Token;
     }
 }

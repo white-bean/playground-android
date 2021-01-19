@@ -68,14 +68,40 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout"
         style="?android:attr/borderlessButtonStyle" />
 
+        <ImageButton
+            android:id="@+id/check_btn"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="@android:color/transparent"
+            app:layout_constraintStart_toStartOf="@id/login_btn"
+            app:layout_constraintTop_toBottomOf="@id/login_btn"
+            android:layout_marginTop="@dimen/spacing_m"
+            app:srcCompat="@drawable/ic_disabled_check" />
+        <TextView
+            android:id="@+id/autologin"
+            android:layout_width="68dp"
+            android:layout_height="wrap_content"
+            android:textStyle="normal"
+            android:textSize="14sp"
+            android:fontFamily="@font/notosanskr_regular"
+            android:textColor="#7c7f90"
+            android:text="자동 로그인"
+            app:layout_constraintStart_toEndOf="@id/check_btn"
+            app:layout_constraintTop_toTopOf="@id/check_btn"
+            app:layout_constraintBottom_toBottomOf="@id/check_btn"
+            android:layout_marginStart="@dimen/spacing_xs"
+            android:layout_marginLeft="@dimen/spacing_xs"
+        />
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_l"
+        android:layout_marginTop="@dimen/spacing_xl"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_btn">
+        app:layout_constraintTop_toBottomOf="@+id/check_btn"
+        >
 
         <TextView
             android:id="@+id/find_IdPw_btn"

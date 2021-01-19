@@ -187,7 +187,9 @@ public class RetrofitClient {
             @Override
             public void run() {
                 try {
-                    body[0] = sign_in_service.sign_in(user_token,fcm_token).execute().body();
+                    System.out.println("");
+                    System.out.println(fcm_token);
+                    body[0] = sign_in_service.auto_sign_in("TOKEN " +user_token,fcm_token).execute().body();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -210,7 +212,7 @@ public class RetrofitClient {
             return -1;
         }
     }
-    public Sign_in_responseDTO post_login(final String email, final String password){
+    public Sign_in_responseDTO post_login(final String email, final String password,final String fcmToken){
         final Sign_in_responseDTO[] body = new Sign_in_responseDTO[1];
         Thread thread = new Thread() {
             @Override
@@ -218,6 +220,7 @@ public class RetrofitClient {
                 Sign_inDTO sign_in_dto = new Sign_inDTO();
                 sign_in_dto.setEmail(email);
                 sign_in_dto.setpassword(password);
+                sign_in_dto.setFcm_Token(fcmToken);
                 try {
                     body[0] = sign_in_service.sign_in(sign_in_dto).execute().body();
                 } catch (IOException e) {

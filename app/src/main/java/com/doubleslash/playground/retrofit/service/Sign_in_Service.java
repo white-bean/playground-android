@@ -13,7 +13,7 @@ public interface Sign_in_Service {
     @POST("/member/login")
     Call<Sign_in_responseDTO> sign_in(@Body Sign_inDTO sign_in_dto);
 
-    @POST("/member/loginagain")
-    Call<AutoLoginResponseDTO> sign_in(@Header("Authorization") String userToken,
+    @POST("/member/login/again")
+    Call<AutoLoginResponseDTO> auto_sign_in(@Header("Authorization") String userToken,
                                        @Body String fcmToken);
 }
