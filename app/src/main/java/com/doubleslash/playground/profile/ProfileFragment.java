@@ -82,6 +82,10 @@ public class ProfileFragment extends Fragment {
         });
          */
 
+        binding.logout.setOnClickListener(v -> {
+            //로그아웃 클릭했을 때
+        });
+
         return binding.getRoot();
     }
 }
