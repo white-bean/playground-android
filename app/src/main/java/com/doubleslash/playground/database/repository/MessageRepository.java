@@ -47,7 +47,7 @@ public class MessageRepository {
         }
     }
 
-    public void update(int id, int type, String from, String to, String text, String sendTime) {
+    public void update(int id, int type, String from, String to, String text, long sendTime) {
         Runnable runnable = () -> {
             MessageEntity message = messageDao.getItemById(id);
             message.setType(type);

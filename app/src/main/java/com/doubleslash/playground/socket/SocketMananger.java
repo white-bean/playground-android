@@ -39,6 +39,8 @@ public class SocketMananger {
                 @Override
                 public void onOpen(ServerHandshake handshakedata) {
                     Log.d("websocket", "Socket Opened : " + handshakedata);
+                    Message msg = new Message(Type.CONNECT, ClientApp.userEmail, System.currentTimeMillis());
+                    webSocketClient.send(msg.toString());
                 }
 
                 @Override
@@ -48,13 +50,7 @@ public class SocketMananger {
                     Message msg = gson.fromJson(message, Message.class);
                     // RoomId를 key로 사용함으로써, 해당 키가 존재하면 큐에 집어넣고 아니면 해당 키 추가
                     if (ClientApp.RoomMsgQueues.containsKey(msg.getTo())) {
-                        if (msg.getType() == Type.REQUEST) {
-
-                        } else if (msg.getType() == Type.ACCEPT) {
-
-                        } else {
-                            ClientApp.RoomMsgQueues.get(msg.getTo()).add(msg);
-                        }
+                        ClientApp.RoomMsgQueues.get(msg.getTo()).add(msg);
                     } else {
                         ClientApp.RoomMsgQueues.put(msg.getTo(), new LinkedList<>());
                         if (msg.getType() == Type.REQUEST) {

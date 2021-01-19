@@ -18,9 +18,9 @@ public class MessageEntity {
     @ColumnInfo(name = "text")
     private String text;
     @ColumnInfo(name = "sendTime")
-    private String sendTime;
+    private long sendTime;
 
-    public MessageEntity(int type, String from, String roomId, String text, String sendTime) {
+    public MessageEntity(int type, String from, String roomId, String text, long sendTime) {
         this.type = type;
         this.from = from;
         this.roomId = roomId;
@@ -68,11 +68,11 @@ public class MessageEntity {
         this.text = text;
     }
 
-    public String getSendTime() {
+    public Long getSendTime() {
         return sendTime;
     }
 
-    public void setSendTime(String sendTime) {
+    public void setSendTime(Long sendTime) {
         this.sendTime = sendTime;
     }
 }

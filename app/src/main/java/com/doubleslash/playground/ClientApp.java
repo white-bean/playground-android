@@ -9,8 +9,8 @@ import java.util.HashMap;
 import java.util.Queue;
 
 public class ClientApp extends Application {
-    public static String user_token;
-    public static String chat_token;
+    public static String userToken;
+    public static String userEmail;
     public static SocketMananger socketMananger;
     public static HashMap<String, Queue<Message>> RoomMsgQueues;
 
