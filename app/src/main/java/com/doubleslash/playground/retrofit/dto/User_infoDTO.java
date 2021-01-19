@@ -12,7 +12,7 @@ public class User_infoDTO {
 
     @SerializedName("imageUris")
     @Expose
-    private List<ImageDTO> imageUris;
+    private String[] imageUris;
 
     @SerializedName("location")
     @Expose
@@ -28,7 +28,7 @@ public class User_infoDTO {
 
     @SerializedName("myGroups")
     @Expose
-    private List<TeamDTO> myGroups;
+    private List<TeamInfoDTO> myGroups;
 
     public String getName() {
         return name;
@@ -38,13 +38,11 @@ public class User_infoDTO {
         this.name = name;
     }
 
-    public List<ImageDTO> getImageUris() {
+    public String[] getImageUris() {
         return imageUris;
     }
 
-    public void setImageUris(List<ImageDTO> imageUris) {
-        this.imageUris = imageUris;
-    }
+    public void setImageUris(String[] imageUris) { this.imageUris = imageUris; }
 
     public String getLocation() {
         return location;
@@ -70,11 +68,11 @@ public class User_infoDTO {
         this.introduction = introduction;
     }
 
-    public List<TeamDTO> getMyGroups() {
+    public List<TeamInfoDTO> getMyGroups() {
         return myGroups;
     }
 
-    public void setMyGroups(List<TeamDTO> myGroups) {
+    public void setMyGroups(List<TeamInfoDTO> myGroups) {
         this.myGroups = myGroups;
     }
 }
