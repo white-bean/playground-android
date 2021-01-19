@@ -1,10 +1,14 @@
 package com.doubleslash.playground.retrofit.dto;
 
+import com.doubleslash.playground.socket.model.Aria;
 import com.doubleslash.playground.socket.model.Type;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Send_chat_DTO {
+    @SerializedName("area")
+    @Expose
+    private Aria aria;
     @SerializedName("type")
     @Expose
     private Type type;
@@ -20,6 +24,10 @@ public class Send_chat_DTO {
     @SerializedName("sendTime")
     @Expose
     private long sendTime;
+
+    public Aria getAria() { return aria; }
+
+    public void setAria(Aria aria) { this.aria = aria; }
 
     public Type getType() {
         return type;

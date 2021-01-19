@@ -14,21 +14,22 @@ import com.doubleslash.playground.register.RegisterActivity7;
 import com.doubleslash.playground.retrofit.dto.Group_createDTO;
 import com.doubleslash.playground.retrofit.dto.Send_chat_DTO;
 import com.doubleslash.playground.retrofit.dto.Sign_upDTO;
-import com.doubleslash.playground.retrofit.dto.Sign_up_DTO;
+import com.doubleslash.playground.retrofit.dto.Sign_inDTO;
 import com.doubleslash.playground.retrofit.dto.response.Chatroom_info_responseDTO;
 import com.doubleslash.playground.retrofit.dto.response.Group_create_responseDTO;
 import com.doubleslash.playground.retrofit.dto.response.Send_chat_responseDTO;
-import com.doubleslash.playground.retrofit.dto.response.Sigh_up_responseDTO;
+import com.doubleslash.playground.retrofit.dto.response.Sign_in_responseDTO;
 import com.doubleslash.playground.retrofit.dto.response.Sign_up_responseDTO;
 import com.doubleslash.playground.retrofit.dto.response.Team_info_responseDTO;
 import com.doubleslash.playground.retrofit.dto.response.Total_group_responseDTO;
 import com.doubleslash.playground.retrofit.service.Chatroom_infoService;
 import com.doubleslash.playground.retrofit.service.Group_create_Service;
 import com.doubleslash.playground.retrofit.service.Send_chat_Service;
-import com.doubleslash.playground.retrofit.service.Sign_up_Service;
+import com.doubleslash.playground.retrofit.service.Sign_in_Service;
 import com.doubleslash.playground.retrofit.service.Studentcard_upload_Service;
 import com.doubleslash.playground.retrofit.service.Team_info_Service;
 import com.doubleslash.playground.retrofit.service.Total_group_Service;
+import com.doubleslash.playground.socket.model.Aria;
 import com.doubleslash.playground.socket.model.Type;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -46,7 +47,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitClient {
     private static RetrofitClient instance = null;
     private static Group_create_Service group_create_service;
-    private static Sign_up_Service sign_up_service;
+    private static Sign_in_Service sign_in_service;
     private static Total_group_Service total_group_service;
     private static Team_info_Service team_info_service;
     private static Chatroom_infoService chatroom_infoService;
@@ -59,7 +60,7 @@ public class RetrofitClient {
     public static Total_group_responseDTO total_group_responseDTO = null;
     public static Team_info_responseDTO team_info_responseDTO = null;
     public static Chatroom_info_responseDTO chatroom_infoDTO = null;
-    public static Sigh_up_responseDTO sigh_up_responseDTO;
+    public static Sign_up_responseDTO sign_up_responseDTO;
 
     public RetrofitClient() {
         Gson gson = new GsonBuilder().setLenient().create();
@@ -69,7 +70,7 @@ public class RetrofitClient {
                 .build();
 
         group_create_service = retrofit.create(Group_create_Service.class);
-        sign_up_service = retrofit.create(Sign_up_Service.class);
+        sign_in_service = retrofit.create(Sign_in_Service.class);
         total_group_service = retrofit.create(Total_group_Service.class);
         team_info_service = retrofit.create(Team_info_Service.class);
         chatroom_infoService = retrofit.create(Chatroom_infoService.class);
@@ -100,7 +101,7 @@ public class RetrofitClient {
             @Override
             public void run() {
                 try {
-                    sigh_up_responseDTO = studentcard_upload_service.uploadFile(createPartFromString(sign_upDTO.getSchoolname()),createPartFromString(sign_upDTO.getSchoolnum()),createPartFromString(sign_upDTO.getEmail()),createPartFromString(sign_upDTO.getPassword()),createPartFromString(sign_upDTO.getName()),createPartFromString(sign_upDTO.getSex()),
+                    sign_up_responseDTO = studentcard_upload_service.uploadFile(createPartFromString(sign_upDTO.getSchoolname()),createPartFromString(sign_upDTO.getSchoolnum()),createPartFromString(sign_upDTO.getEmail()),createPartFromString(sign_upDTO.getPassword()),createPartFromString(sign_upDTO.getName()),createPartFromString(sign_upDTO.getSex()),
                             createPartFromString(sign_upDTO.getAge()),createPartFromString(sign_upDTO.getRegion()),createPartFromString(sign_upDTO.getHobby()),studentcard,selfimage).execute().body();
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -135,6 +136,7 @@ public class RetrofitClient {
         return MultipartBody.Part.createFormData(partName, file.getName(), requestFile);
     }
 
+    // 수정해야 됨
     public void post_group(final String category, final String location, final String content, final int maxMemberCount, final String name, final String token) {
         final Group_create_responseDTO[] body = new Group_create_responseDTO[1];
         Thread thread = new Thread() {
@@ -148,7 +150,7 @@ public class RetrofitClient {
                 groupCreateDTO.setName(name);
                 groupCreateDTO.setToken(token);
                 try {
-                    body[0] = group_create_service.postData(groupCreateDTO, ClientApp.userToken).execute().body();
+                    body[0] = group_create_service.postData(groupCreateDTO, "TOKEN " + ClientApp.userToken).execute().body();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -175,15 +177,15 @@ public class RetrofitClient {
     }
 
     public int post_login(final String email, final String password){
-        final Sign_up_responseDTO[] body = new Sign_up_responseDTO[1];
+        final Sign_in_responseDTO[] body = new Sign_in_responseDTO[1];
         Thread thread = new Thread() {
             @Override
             public void run() {
-                Sign_up_DTO sign_up_dto = new Sign_up_DTO();
-                sign_up_dto.setEmail(email);
-                sign_up_dto.setpassword(password);
+                Sign_inDTO sign_in_dto = new Sign_inDTO();
+                sign_in_dto.setEmail(email);
+                sign_in_dto.setpassword(password);
                 try {
-                    body[0] = sign_up_service.sign_in(sign_up_dto).execute().body();
+                    body[0] = sign_in_service.sign_in(sign_in_dto).execute().body();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -200,38 +202,6 @@ public class RetrofitClient {
             } else {
                 Log.d("error", "Login failed");
             }
-            return result;
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-            return -1;
-        }
-    }
-
-    public int post_sign_up(final String email, final String password){
-        final Sign_up_responseDTO[] body = new Sign_up_responseDTO[1];
-        Thread thread = new Thread() {
-            @Override
-            public void run() {
-                Sign_up_DTO sign_up_dto = new Sign_up_DTO();
-                sign_up_dto.setEmail(email);
-                sign_up_dto.setpassword(password);
-                try {
-                    body[0] = sign_up_service.sign_up(sign_up_dto).execute().body();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-        thread.start();
-
-        try {
-            thread.join();
-            System.out.println("222" +result);
-            Log.d("data.getUserId()", body[0].getMessage() + "");
-            Log.d("data.getId()", body[0].getResult() + "");
-            Log.e("postData end3", "======================================");
-            result = body[0].getResult();
-            System.out.println("111" + result);
             return result;
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -263,6 +233,7 @@ public class RetrofitClient {
         }
     }
 
+    // 수정해야 됨
     public Team_info_responseDTO get_teaminfo(long id){
         Thread thread = new Thread() {
             @Override
@@ -287,6 +258,7 @@ public class RetrofitClient {
         }
     }
 
+    // 수정해야됨
     public Chatroom_info_responseDTO get_Chatroominfo(){
         Thread thread = new Thread() {
             @Override
@@ -311,19 +283,20 @@ public class RetrofitClient {
         }
     }
 
-    public void send_chat(final Type type, final String from, final String to, final String text, final long sendTime){
+    public void send_chat(final Aria aria, final Type type, final String from, final String to, final String text, final long sendTime){
         final Send_chat_responseDTO[] body = new Send_chat_responseDTO[1];
         Thread thread = new Thread() {
             @Override
             public void run() {
                 Send_chat_DTO send_chat_dto = new Send_chat_DTO();
+                send_chat_dto.setAria(aria);
                 send_chat_dto.setType(type);
                 send_chat_dto.setFrom(from);
                 send_chat_dto.setTo(to);
                 send_chat_dto.setText(text);
                 send_chat_dto.setSendTime(sendTime);
                 try {
-                    body[0] = send_chat_service.postData(send_chat_dto, ClientApp.userToken).execute().body();
+                    body[0] = send_chat_service.postData(send_chat_dto, "TOKEN " + ClientApp.userToken).execute().body();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -340,4 +313,36 @@ public class RetrofitClient {
             e.printStackTrace();
         }
     }
+
+    public void group_request_accept(final Aria aria, final Type type, final String from, final String to) {
+        final Send_chat_responseDTO[] body = new Send_chat_responseDTO[1];
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                Send_chat_DTO send_chat_dto = new Send_chat_DTO();
+                send_chat_dto.setAria(aria);
+                send_chat_dto.setType(type);
+                send_chat_dto.setFrom(from);
+                send_chat_dto.setTo(to);
+                try {
+                    body[0] = send_chat_service.postData(send_chat_dto, "TOKEN " + ClientApp.userToken).execute().body();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        thread.start();
+        try {
+            thread.join();
+            if(body[0].getResult() != null){
+                Log.d("notice", "send message success");
+            }
+        } catch (InterruptedException e) {
+            Log.d("error", "send message failed");
+            e.printStackTrace();
+        }
+    }
+
+    // 리퀘스트 "Aria" : "GROUP", "Type" : "REQUEST", "from" : "가입신청 유저", "to" : "teamId"
+    // 어셉트 "Aria" : "GROUP", "TYPE" :"ACCEPT", "from" : "가입신청 유저", "to" : "teamId"
 }

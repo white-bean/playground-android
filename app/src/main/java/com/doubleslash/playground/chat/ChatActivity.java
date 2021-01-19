@@ -14,6 +14,7 @@ import com.doubleslash.playground.database.entity.MessageEntity;
 import com.doubleslash.playground.database.repository.MessageRepository;
 import com.doubleslash.playground.databinding.ActivityChatBinding;
 import com.doubleslash.playground.retrofit.RetrofitClient;
+import com.doubleslash.playground.socket.model.Aria;
 import com.doubleslash.playground.socket.model.Message;
 import com.doubleslash.playground.socket.model.Type;
 import java.text.SimpleDateFormat;
@@ -33,7 +34,7 @@ public class ChatActivity extends AppCompatActivity{
     private List<MessageEntity> databaseMsgs;
 
     private static MessageRepository messageRepository;
-    private String roomId;
+    private String teamId;
 
     private boolean menuOn;
 
@@ -52,8 +53,9 @@ public class ChatActivity extends AppCompatActivity{
         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         binding.recyclerView.setLayoutManager(layoutManager);
 
+        // 채팅 목록에서 인텐트로 teamId 받아옴
         Intent intent = getIntent();
-        roomId = intent.getStringExtra("roomId");
+        teamId = intent.getStringExtra("teamId");
 
         // 플러스 버튼으로 메뉴 열고 닫기
         binding.menuLayout.setVisibility(GONE);
@@ -73,7 +75,7 @@ public class ChatActivity extends AppCompatActivity{
         Thread thread = new Thread() {
             @Override
             public void run() {
-                databaseMsgs = messageRepository.getMessagesByRoomId(roomId);
+                databaseMsgs = messageRepository.getMessagesByRoomId(teamId);
                 for (MessageEntity msg : databaseMsgs) {
                     if (msg.getType() == ChatType.ViewType.CENTER_CONTENT) {
                         chats.add(new ChatItem(msg.getFrom(), msg.getText(), dateConvert(msg.getSendTime()), ChatType.ViewType.CENTER_CONTENT));
@@ -117,7 +119,7 @@ public class ChatActivity extends AppCompatActivity{
 
     private void sendMessage(String msg) {
         retrofitClient = RetrofitClient.getInstance();
-        retrofitClient.send_chat(Type.SEND, ClientApp.userEmail, roomId, msg, System.currentTimeMillis());
+        retrofitClient.send_chat(Aria.GROUP, Type.SEND, ClientApp.userEmail, teamId, msg, System.currentTimeMillis());
     }
 
     // System.currentTimeMillis를 몇시:몇분 am/pm 형태의 문자열로 반환
@@ -130,8 +132,8 @@ public class ChatActivity extends AppCompatActivity{
         @Override
         public void run() {
             while (true) {
-                if (ClientApp.RoomMsgQueues.containsKey(roomId)) {
-                    Queue<Message> unloadedMsgs = ClientApp.RoomMsgQueues.get(roomId);
+                if (ClientApp.RoomMsgQueues.containsKey(teamId)) {
+                    Queue<Message> unloadedMsgs = ClientApp.RoomMsgQueues.get(teamId);
 
                     if (unloadedMsgs.size() > 0) {
                         while (!unloadedMsgs.isEmpty()) {

@@ -10,9 +10,6 @@ public class Sign_up_responseDTO {
     @SerializedName("message")
     @Expose
     private String message;
-    @SerializedName("token")
-    @Expose
-    private String token;
 
     public Integer getResult() {
         return result;
@@ -30,7 +27,4 @@ public class Sign_up_responseDTO {
         this.message = message;
     }
 
-    public String getToken() { return token; }
-
-    public void setToken(String token) { this.token = token; }
 }

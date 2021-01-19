@@ -54,9 +54,7 @@ public class SocketMananger {
                     } else {
                         ClientApp.RoomMsgQueues.put(msg.getTo(), new LinkedList<>());
                         if (msg.getType() == Type.REQUEST) {
-
-                        } else if (msg.getType() == Type.ACCEPT) {
-
+                            // 리퀘스트를 받을 때의 행동
                         } else {
                             ClientApp.RoomMsgQueues.get(msg.getTo()).add(msg);
                         }
