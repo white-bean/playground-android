@@ -4,11 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 
 import com.doubleslash.playground.R;
 import com.doubleslash.playground.databinding.ActivityRegister2Binding;
-import com.doubleslash.playground.retrofit.Sign_upDTO;
+import com.doubleslash.playground.retrofit.dto.Sign_upDTO;
 
 public class RegisterActivity2 extends AppCompatActivity {
     ActivityRegister2Binding binding;

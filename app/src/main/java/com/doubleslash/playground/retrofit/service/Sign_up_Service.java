@@ -1,7 +1,7 @@
-package com.doubleslash.playground.retrofit;
+package com.doubleslash.playground.retrofit.service;
 
 import com.doubleslash.playground.retrofit.dto.Sign_up_DTO;
-import com.doubleslash.playground.retrofit.dto.Sign_up_responseDTO;
+import com.doubleslash.playground.retrofit.dto.response.Sign_up_responseDTO;
 
 import retrofit2.Call;
 import retrofit2.http.Body;

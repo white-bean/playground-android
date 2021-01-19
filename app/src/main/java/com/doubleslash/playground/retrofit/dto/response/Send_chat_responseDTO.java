@@ -1,11 +1,13 @@
-package com.doubleslash.playground.retrofit.dto;
+package com.doubleslash.playground.retrofit.dto.response;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-public class Sigh_up_responseDTO {
+
+public class Send_chat_responseDTO {
     @SerializedName("result")
     @Expose
     private Integer result;
+
     @SerializedName("message")
     @Expose
     private String message;
@@ -25,5 +27,4 @@ public class Sigh_up_responseDTO {
     public void setMessage(String message) {
         this.message = message;
     }
-
 }

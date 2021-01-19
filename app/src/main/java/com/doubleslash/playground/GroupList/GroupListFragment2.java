@@ -1,7 +1,6 @@
 package com.doubleslash.playground.GroupList;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,14 +15,11 @@ import com.bumptech.glide.load.MultiTransformation;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
-import com.doubleslash.playground.R;
 import com.doubleslash.playground.databinding.FragmentGroupList2Binding;
 import com.doubleslash.playground.infoGroup.InfoGroupActivity;
-import com.doubleslash.playground.profile.MyGroup;
-import com.doubleslash.playground.profile.MyGroupAdapter;
 import com.doubleslash.playground.retrofit.RetrofitClient;
-import com.doubleslash.playground.retrofit.dto.Total_group_responseDTO;
-import com.doubleslash.playground.retrofit.dto.User_info_responseDTO;
+import com.doubleslash.playground.retrofit.dto.response.Total_group_responseDTO;
+import com.doubleslash.playground.retrofit.dto.response.User_info_responseDTO;
 
 import java.util.Objects;
 

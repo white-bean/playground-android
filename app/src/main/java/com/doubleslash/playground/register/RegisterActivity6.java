@@ -8,11 +8,10 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
 
 import com.doubleslash.playground.R;
 import com.doubleslash.playground.databinding.ActivityRegister6Binding;
-import com.doubleslash.playground.retrofit.Sign_upDTO;
+import com.doubleslash.playground.retrofit.dto.Sign_upDTO;
 
 import java.util.ArrayList;
 

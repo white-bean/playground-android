@@ -12,12 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
-import com.doubleslash.playground.GroupList.Group;
 import com.doubleslash.playground.databinding.FragmentProfileBinding;
 import com.doubleslash.playground.infoGroup.InfoGroupActivity;
 import com.doubleslash.playground.retrofit.RetrofitClient;
-import com.doubleslash.playground.retrofit.dto.Total_group_responseDTO;
-import com.doubleslash.playground.retrofit.dto.User_info_responseDTO;
+import com.doubleslash.playground.retrofit.dto.response.User_info_responseDTO;
 
 public class ProfileFragment extends Fragment {
     private FragmentProfileBinding binding;

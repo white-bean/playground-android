@@ -16,7 +16,7 @@ import com.doubleslash.playground.FindGroupActivity;
 import com.doubleslash.playground.R;
 import com.doubleslash.playground.databinding.FragmentGroupList1Binding;
 import com.doubleslash.playground.retrofit.RetrofitClient;
-import com.doubleslash.playground.retrofit.dto.Total_group_responseDTO;
+import com.doubleslash.playground.retrofit.dto.response.Total_group_responseDTO;
 import com.doubleslash.playground.infoGroup.InfoGroupActivity;
 
 public class GroupListFragment1 extends Fragment {

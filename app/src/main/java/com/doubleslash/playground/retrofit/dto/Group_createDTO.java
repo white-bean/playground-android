@@ -2,8 +2,8 @@ package com.doubleslash.playground.retrofit.dto;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-public class Group_createDTO {
 
+public class Group_createDTO {
     @SerializedName("token")
     @Expose
     private String token;
@@ -13,18 +13,18 @@ public class Group_createDTO {
     @SerializedName("content")
     @Expose
     private String content;
-    @SerializedName("city")
+    @SerializedName("location")
     @Expose
-    private String city;
-    @SerializedName("street")
-    @Expose
-    private String street;
+    private String location;
     @SerializedName("category")
     @Expose
     private String category;
     @SerializedName("maxMemberCount")
     @Expose
     private Integer maxMemberCount;
+    @SerializedName("date")
+    @Expose
+    private String date;
 
     public String getToken() {
         return token;
@@ -50,20 +50,20 @@ public class Group_createDTO {
         this.content = content;
     }
 
-    public String getCity() {
-        return city;
+    public String getLocation() {
+        return location;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
-    public String getStreet() {
-        return street;
+    public String getDate() {
+        return date;
     }
 
-    public void setStreet(String street) {
-        this.street = street;
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getCategory() {
@@ -83,4 +83,3 @@ public class Group_createDTO {
     }
 
 }
-

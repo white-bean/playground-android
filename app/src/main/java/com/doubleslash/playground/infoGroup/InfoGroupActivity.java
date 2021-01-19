@@ -1,7 +1,6 @@
 package com.doubleslash.playground.infoGroup;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
@@ -13,7 +12,7 @@ import android.widget.TextView;
 import com.doubleslash.playground.R;
 import com.doubleslash.playground.databinding.ActivityInfoGroupBinding;
 import com.doubleslash.playground.retrofit.RetrofitClient;
-import com.doubleslash.playground.retrofit.dto.Team_info_responseDTO;
+import com.doubleslash.playground.retrofit.dto.response.Team_info_responseDTO;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class InfoGroupActivity extends AppCompatActivity {

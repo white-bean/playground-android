@@ -1,6 +1,6 @@
-package com.doubleslash.playground.retrofit;
+package com.doubleslash.playground.retrofit.service;
 
-import com.doubleslash.playground.retrofit.dto.Team_info_responseDTO;
+import com.doubleslash.playground.retrofit.dto.response.Team_info_responseDTO;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

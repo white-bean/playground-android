@@ -1,6 +1,7 @@
-package com.doubleslash.playground.retrofit.dto;
+package com.doubleslash.playground.retrofit.dto.response;
 
 
+import com.doubleslash.playground.retrofit.dto.TeamDTO;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 

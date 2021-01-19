@@ -1,13 +1,13 @@
 package com.doubleslash.playground.retrofit.dto;
 
+import com.doubleslash.playground.socket.model.Type;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Send_chat_DTO {
-
     @SerializedName("type")
     @Expose
-    private String type;
+    private Type type;
     @SerializedName("from")
     @Expose
     private String from;
@@ -17,12 +17,15 @@ public class Send_chat_DTO {
     @SerializedName("text")
     @Expose
     private String text;
+    @SerializedName("sendTime")
+    @Expose
+    private long sendTime;
 
-    public String getType() {
+    public Type getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(Type type) {
         this.type = type;
     }
 
@@ -50,6 +53,11 @@ public class Send_chat_DTO {
         this.text = text;
     }
 
+    public long getSendTime() {
+        return sendTime;
+    }
 
-
+    public void setSendTime(long sendTime) {
+        this.sendTime = sendTime;
+    }
 }

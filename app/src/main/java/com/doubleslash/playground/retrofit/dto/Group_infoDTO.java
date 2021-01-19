@@ -13,12 +13,9 @@ public class Group_infoDTO {
     @SerializedName("content")
     @Expose
     private String content;
-    @SerializedName("city")
+    @SerializedName("location")
     @Expose
-    private String city;
-    @SerializedName("street")
-    @Expose
-    private String street;
+    private String location;
     @SerializedName("category")
     @Expose
     private String category;
@@ -50,20 +47,12 @@ public class Group_infoDTO {
         this.content = content;
     }
 
-    public String getCity() {
-        return city;
+    public String getLocation() {
+        return location;
     }
 
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getStreet() {
-        return street;
-    }
-
-    public void setStreet(String street) {
-        this.street = street;
+    public void setLocation(String city) {
+        this.location = city;
     }
 
     public String getCategory() {
