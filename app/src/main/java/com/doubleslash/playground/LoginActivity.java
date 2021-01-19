@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +15,8 @@ import android.widget.Toast;
 import com.doubleslash.playground.databinding.ActivityLoginBinding;
 import com.doubleslash.playground.register.RegisterActivity1;
 import com.doubleslash.playground.retrofit.RetrofitClient;
+import com.doubleslash.playground.retrofit.dto.response.Sign_in_responseDTO;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.Objects;
@@ -20,7 +24,7 @@ import java.util.Objects;
 public class LoginActivity extends AppCompatActivity {
     ActivityLoginBinding binding;
     private RetrofitClient retrofitClient;
-
+    private String user_token;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,18 +46,33 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void initUI() {
+        SharedPreferences auto = getSharedPreferences("playground", Activity.MODE_PRIVATE);
+        user_token=auto.getString("user_token",null);
         retrofitClient = RetrofitClient.getInstance();
 
         binding.loginBtn.setOnClickListener(v -> {
             int result=0;
-            if (binding.emailEdit.getText().toString() != null && binding.passwordEdit.getText().toString() != null) {
-                result = retrofitClient.post_login(binding.emailEdit.getText().toString(), binding.passwordEdit.getText().toString());
-                System.out.println(result);
+            if(user_token!=null){
+                result= retrofitClient.post_autologin(user_token, FirebaseInstanceId.getInstance().getToken());
                 if (result == 1) {
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intent);
+                    // 토큰 생성하기
+                }
+                else{
+                    Log.e("error","result=0");
+                }
+            }
+            if (binding.emailEdit.getText().toString() != null && binding.passwordEdit.getText().toString() != null) {
+                Sign_in_responseDTO sign_in_responseDTO = retrofitClient.post_login(binding.emailEdit.getText().toString(), binding.passwordEdit.getText().toString());
+                System.out.println(result);
+                if (sign_in_responseDTO.getResult() == 1) {
+                    SharedPreferences.Editor autoLogin = auto.edit();
+                    autoLogin.putString("user_token",sign_in_responseDTO.getToken());
+                    autoLogin.commit();
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     intent.putExtra("email", binding.emailEdit.getText().toString());
                     startActivity(intent);
-
                     // 토큰 생성하기
                     FirebaseMessaging.getInstance().getToken()
                             .addOnCompleteListener(task -> {
