@@ -15,6 +15,7 @@ import com.doubleslash.playground.retrofit.dto.Group_createDTO;
 import com.doubleslash.playground.retrofit.dto.Send_chat_DTO;
 import com.doubleslash.playground.retrofit.dto.Sign_upDTO;
 import com.doubleslash.playground.retrofit.dto.Sign_inDTO;
+import com.doubleslash.playground.retrofit.dto.TeamDTO;
 import com.doubleslash.playground.retrofit.dto.response.Chatroom_info_responseDTO;
 import com.doubleslash.playground.retrofit.dto.response.Group_create_responseDTO;
 import com.doubleslash.playground.retrofit.dto.response.Send_chat_responseDTO;
@@ -141,21 +142,22 @@ public class RetrofitClient {
         return MultipartBody.Part.createFormData(partName, file.getName(), requestFile);
     }
 
-    // 수정해야 됨
-    public void post_group(final String category, final String location, final String content, final int maxMemberCount, final String name, final String token) {
+    public void post_group(final String category, final String location, final String content, final int maxMemberCount, final String name, final String startDate, final String endDate, final String groupimage) {
         final Group_create_responseDTO[] body = new Group_create_responseDTO[1];
         Thread thread = new Thread() {
             @Override
             public void run() {
-                Group_createDTO groupCreateDTO = new Group_createDTO();
-                groupCreateDTO.setCategory(category);
-                groupCreateDTO.setLocation(location);
-                groupCreateDTO.setContent(content);
-                groupCreateDTO.setMaxMemberCount(maxMemberCount);
-                groupCreateDTO.setName(name);
-                groupCreateDTO.setToken(token);
+                TeamDTO teamDTO = new TeamDTO();
+                teamDTO.setCategory(category);
+                teamDTO.setLocation(location);
+                teamDTO.setContent(content);
+                teamDTO.setMaxMemberCount(maxMemberCount);
+                teamDTO.setName(name);
+                teamDTO.setStartDate(startDate);
+                teamDTO.setEndDate(endDate);
+                teamDTO.setImageUri(groupimage);
                 try {
-                    body[0] = group_create_service.postData(groupCreateDTO, "TOKEN " + ClientApp.userToken).execute().body();
+                    body[0] = group_create_service.postData(teamDTO, ClientApp.userToken).execute().body();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -172,7 +174,6 @@ public class RetrofitClient {
                 Log.d("content : ", body[0].getGroup_infoDTO().getContent());
                 Log.d("MaxMemberCount", body[0].getGroup_infoDTO().getMaxMemberCount().toString());
                 Log.d("Name", body[0].getGroup_infoDTO().getName() + "");
-                Log.d("Token", body[0].getGroup_infoDTO().getToken() + "");
             } else {
                 Log.d("error", "Cannot create group");
             }
