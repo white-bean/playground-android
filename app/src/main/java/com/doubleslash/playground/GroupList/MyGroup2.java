@@ -1,6 +1,6 @@
 package com.doubleslash.playground.GroupList;
 
-public class Group {
+public class MyGroup2 {
     String location;    // 위치
     String category;    // 카테고리
     Integer current_num; // 현재 인원 수
@@ -9,7 +9,7 @@ public class Group {
     String content; // 그룹 소개
     String imageUri;     // 그룹 사진 이미지
 
-    public Group(String location, String category, Integer current_num, Integer max_num, String name, String content, String imageUri) {
+    public MyGroup2(String location, String category, Integer current_num, Integer max_num, String name, String content, String imageUri) {
         this.location = location;
         this.category = category;
         this.current_num = current_num;
