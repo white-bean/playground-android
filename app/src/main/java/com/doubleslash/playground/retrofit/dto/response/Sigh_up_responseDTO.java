@@ -1,9 +1,8 @@
-package com.doubleslash.playground.retrofit.dto;
+package com.doubleslash.playground.retrofit.dto.response;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
-public class Sign_up_responseDTO {
+public class Sigh_up_responseDTO {
     @SerializedName("result")
     @Expose
     private Integer result;

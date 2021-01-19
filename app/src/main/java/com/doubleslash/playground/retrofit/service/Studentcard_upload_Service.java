@@ -1,4 +1,4 @@
-package com.doubleslash.playground.retrofit;
+package com.doubleslash.playground.retrofit.service;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;

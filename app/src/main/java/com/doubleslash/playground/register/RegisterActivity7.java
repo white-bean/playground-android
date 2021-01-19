@@ -10,8 +10,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.Settings;
-import android.view.View;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.MultiTransformation;
@@ -22,7 +20,7 @@ import com.doubleslash.playground.MainActivity;
 import com.doubleslash.playground.R;
 import com.doubleslash.playground.databinding.ActivityRegister7Binding;
 import com.doubleslash.playground.retrofit.RetrofitClient;
-import com.doubleslash.playground.retrofit.Sign_upDTO;
+import com.doubleslash.playground.retrofit.dto.Sign_upDTO;
 
 import java.util.ArrayList;
 

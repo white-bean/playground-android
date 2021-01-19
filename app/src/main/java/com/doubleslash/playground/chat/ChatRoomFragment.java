@@ -10,14 +10,12 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.doubleslash.playground.ClientApp;
 import com.doubleslash.playground.databinding.FragmentChatListBinding;
-import com.doubleslash.playground.retrofit.dto.Chatroom_info_responseDTO;
+import com.doubleslash.playground.retrofit.dto.response.Chatroom_info_responseDTO;
 import com.doubleslash.playground.retrofit.RetrofitClient;
 import com.doubleslash.playground.socket.model.Message;
 
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.Queue;
 
 public class ChatRoomFragment extends Fragment {

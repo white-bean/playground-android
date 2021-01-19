@@ -12,7 +12,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.View;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.MultiTransformation;
@@ -22,7 +21,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.doubleslash.playground.R;
 import com.doubleslash.playground.databinding.ActivityRegister5Binding;
 import com.doubleslash.playground.retrofit.RetrofitClient;
-import com.doubleslash.playground.retrofit.Sign_upDTO;
+import com.doubleslash.playground.retrofit.dto.Sign_upDTO;
 
 import java.util.ArrayList;
 

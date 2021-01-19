@@ -15,7 +15,7 @@ import android.widget.AdapterView;
 
 import com.doubleslash.playground.R;
 import com.doubleslash.playground.databinding.ActivityRegister4Binding;
-import com.doubleslash.playground.retrofit.Sign_upDTO;
+import com.doubleslash.playground.retrofit.dto.Sign_upDTO;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;

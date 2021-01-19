@@ -1,7 +1,9 @@
-package com.doubleslash.playground.retrofit.dto;
+package com.doubleslash.playground.retrofit.dto.response;
 
 
 import java.util.List;
+
+import com.doubleslash.playground.retrofit.dto.Chatroom_infoDTO;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 public class Chatroom_info_responseDTO {
