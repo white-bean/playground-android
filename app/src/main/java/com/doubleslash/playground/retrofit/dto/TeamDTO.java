@@ -7,31 +7,24 @@ public class TeamDTO {
     @SerializedName("id")
     @Expose
     private Integer id;
-
     @SerializedName("name")
     @Expose
     private String name;
-
     @SerializedName("content")
     @Expose
     private String content;
-
     @SerializedName("location")
     @Expose
     private String location;
-
     @SerializedName("category")
     @Expose
     private String category;
-
     @SerializedName("currentMemberCount")
     @Expose
     private Integer currentMemberCount;
-
     @SerializedName("maxMemberCount")
     @Expose
     private Integer maxMemberCount;
-
     @SerializedName("imageUri")
     @Expose
     private String imageUri;

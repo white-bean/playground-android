@@ -3,7 +3,7 @@ package com.doubleslash.playground.retrofit.dto;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Sign_up_DTO {
+public class Sign_inDTO {
     @SerializedName("email")
     @Expose
     private String email;

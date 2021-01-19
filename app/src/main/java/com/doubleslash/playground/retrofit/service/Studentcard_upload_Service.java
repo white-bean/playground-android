@@ -1,6 +1,6 @@
 package com.doubleslash.playground.retrofit.service;
 
-import com.doubleslash.playground.retrofit.dto.response.Sigh_up_responseDTO;
+import com.doubleslash.playground.retrofit.dto.response.Sign_up_responseDTO;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -20,7 +20,7 @@ public interface Studentcard_upload_Service {
 
     @Multipart
     @POST("/member/join")
-    Call<Sigh_up_responseDTO> uploadFile(
+    Call<Sign_up_responseDTO> uploadFile(
             @Part("university") RequestBody university,
             @Part("studentNumber") RequestBody studentNumber,
             @Part("email") RequestBody email,

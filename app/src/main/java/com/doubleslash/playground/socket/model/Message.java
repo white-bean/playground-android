@@ -3,6 +3,7 @@ package com.doubleslash.playground.socket.model;
 import com.google.gson.Gson;
 
 public class Message {
+    private Aria aria;
     private Type type;
     private String from;
     private String to;
@@ -16,20 +17,31 @@ public class Message {
         this.sendTime = sendTime;
     }
 
-    public Message(Type type, String from, String to, long sendTime) {
+    public Message(Aria aria, Type type, String from, long sendTime) {
+        this.aria = aria;
+        this.type = type;
+        this.from = from;
+        this.sendTime = sendTime;
+    }
+
+    public Message(Aria aria, Type type, String from, String to, long sendTime) {
+        this.aria = aria;
         this.type = type;
         this.from = from;
         this.to = to;
         this.sendTime = sendTime;
     }
 
-    public Message(Type type, String from, String to, String text, long sendTime) {
+    public Message(Aria aria, Type type, String from, String to, String text, long sendTime) {
+        this.aria = aria;
         this.type = type;
         this.from = from;
         this.to = to;
         this.text = text;
         this.sendTime = sendTime;
     }
+
+    public Aria getAria() { return aria; }
 
     public Type getType() {
         return type;

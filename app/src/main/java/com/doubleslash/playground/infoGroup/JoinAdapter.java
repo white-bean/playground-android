@@ -8,17 +8,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RestrictTo;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.doubleslash.playground.ClientApp;
 import com.doubleslash.playground.R;
+import com.doubleslash.playground.retrofit.RetrofitClient;
+import com.doubleslash.playground.socket.model.Aria;
 import com.doubleslash.playground.socket.model.Message;
 import com.doubleslash.playground.socket.model.Type;
 
 import java.util.ArrayList;
 
 public class JoinAdapter extends RecyclerView.Adapter<JoinAdapter.ViewHolder>{
-    ArrayList<Join> items = new ArrayList<Join>();
+    private ArrayList<Join> items = new ArrayList<Join>();
 
     @NonNull
     @Override
@@ -53,11 +56,12 @@ public class JoinAdapter extends RecyclerView.Adapter<JoinAdapter.ViewHolder>{
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder{
-        ImageView profileImage;
-        TextView name;
-        TextView location;
-        TextView univ;
-        Button acceptBtn;
+        private RetrofitClient retrofitClient;
+        private ImageView profileImage;
+        private TextView name;
+        private TextView location;
+        private TextView univ;
+        private Button acceptBtn;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -75,8 +79,10 @@ public class JoinAdapter extends RecyclerView.Adapter<JoinAdapter.ViewHolder>{
             location.setText(item.getLocation());
             univ.setText(item.getUniv());
 
+            retrofitClient = RetrofitClient.getInstance();
+
             acceptBtn.setOnClickListener(v -> {
-                //ClientApp.socketMananger.sendMessage(new Message(Type.REQUEST, ClientApp.userEmail, ));
+                retrofitClient.group_request_accept(Aria.GROUP, Type.ACCEPT, "가입신청한 유저 이메일", "teamId");
             });
         }
     }

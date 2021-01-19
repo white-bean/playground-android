@@ -6,9 +6,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.doubleslash.playground.databinding.ActivityJoinAcceptBinding;
+import com.doubleslash.playground.retrofit.RetrofitClient;
 
 public class JoinAcceptActivity extends AppCompatActivity {
     private ActivityJoinAcceptBinding binding;
+    private RetrofitClient retrofitClient;
     private JoinAdapter adapter;
 
     @Override
@@ -19,6 +21,8 @@ public class JoinAcceptActivity extends AppCompatActivity {
     }
 
     private void initUI() {
+        retrofitClient = RetrofitClient.getInstance();
+
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
         adapter = new JoinAdapter();
