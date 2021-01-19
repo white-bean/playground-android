@@ -3,6 +3,8 @@ package com.doubleslash.playground.retrofit.dto;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class TeamInfoDTO {
     @SerializedName("id")
     @Expose
@@ -19,9 +21,9 @@ public class TeamInfoDTO {
     @SerializedName("endDate")
     @Expose
     private String endDate;
-//    @SerializedName("id")
-//    @Expose
-//    private List<ResponseFindTeamMemberDto> teamMembers;
+    @SerializedName("teamMembers")
+    @Expose
+    private List<MemberDTO> teamMembers;
     @SerializedName("currentMemberSize")
     @Expose
     private Integer currentMemberSize;

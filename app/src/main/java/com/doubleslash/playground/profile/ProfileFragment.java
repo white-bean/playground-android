@@ -33,6 +33,7 @@ public class ProfileFragment extends Fragment {
 
         User_info_responseDTO body = retrofitClient.get_userinfo(userId);
 
+        /*
         // 사용자 정보
         Glide.with(getContext())
                 .load(body.getData().getImageUri1())
@@ -60,11 +61,11 @@ public class ProfileFragment extends Fragment {
             myGroupAdapter.addItem(new MyGroup(
                     body.getData().getMyGroups().get(i).getLocation(),
                     body.getData().getMyGroups().get(i).getCategory(),
-                    body.getData().getMyGroups().get(i).getCurrentMemberCount(),
-                    body.getData().getMyGroups().get(i).getMaxMemberCount(),
+                    body.getData().getMyGroups().get(i).getCurrentMemberSize(),
+                    body.getData().getMyGroups().get(i).getMaxMemberSize(),
                     body.getData().getMyGroups().get(i).getName(),
                     body.getData().getMyGroups().get(i).getContent(),
-                    body.getData().getMyGroups().get(i).getImageUri()));
+                    body.getData().getMyGroups().get(i).getTeamImageUrl()));
         }
 
         binding.rvUserGroup.setAdapter(myGroupAdapter);
@@ -79,6 +80,7 @@ public class ProfileFragment extends Fragment {
 
             startActivity(intent);
         });
+         */
 
         return binding.getRoot();
     }

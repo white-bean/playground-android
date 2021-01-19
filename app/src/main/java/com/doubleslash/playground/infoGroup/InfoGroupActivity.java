@@ -39,6 +39,10 @@ public class InfoGroupActivity extends AppCompatActivity {
         retrofitClient = RetrofitClient.getInstance();
         Team_info_responseDTO body = retrofitClient.get_teaminfo(1);
 
+        binding.tvGroupLocation.setText(body.getTeamInfoDTO().getLocation());
+        binding.tvGroupName.setText(body.getTeamInfoDTO().getName());
+        binding.tvGroupContent.setText(body.getTeamInfoDTO().getContent());
+        binding.tvMemberNumber.setText(body.getTeamInfoDTO().getCurrentMemberSize());
 
         //가입신청버튼눌렀을 때
         binding.btnGroupRegister.setOnClickListener(v -> {

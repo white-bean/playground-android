@@ -70,7 +70,7 @@ public class LoginActivity extends AppCompatActivity {
                     SharedPreferences.Editor autoLogin = auto.edit();
                     autoLogin.putString("user_token",sign_in_responseDTO.getToken());
                     autoLogin.commit();
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), CreateGroupActivity.class);
                     intent.putExtra("email", binding.emailEdit.getText().toString());
                     startActivity(intent);
                     // 토큰 생성하기
