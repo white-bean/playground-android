@@ -141,7 +141,6 @@ public class RetrofitClient {
         return MultipartBody.Part.createFormData(partName, file.getName(), requestFile);
     }
 
-    /* 작동이 아직 안되네 ㅎㅎ
     public void post_group(CreateTeamDTO createTeamDTO, MultipartBody.Part teamImageUrl) {
         final Group_create_responseDTO[] body = new Group_create_responseDTO[1];
         Thread thread = new Thread() {
@@ -174,7 +173,6 @@ public class RetrofitClient {
             e.printStackTrace();
         }
     }
-     */
 
     public int post_login(final String email, final String password){
         final Sign_in_responseDTO[] body = new Sign_in_responseDTO[1];
@@ -263,7 +261,7 @@ public class RetrofitClient {
             @Override
             public void run() {
                 try {
-                    user_info_responseDTO = user_info_service.getData(id).execute().body();
+                    user_info_responseDTO = user_info_service.getData("TOKEN " + ClientApp.userToken).execute().body();
                     Log.d("data.getUserId()", user_info_responseDTO.getResult() + "");
                     //Log.d("data.getId()", body.getData() + "");
                     Log.e("postData end3", "======================================");

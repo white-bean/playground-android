@@ -10,25 +10,25 @@ public class User_infoDTO {
     @Expose
     private String name;
 
-    @SerializedName("imageUris")
+    @SerializedName("images")
     @Expose
-    private String[] imageUris;
+    private List<String> images;
 
     @SerializedName("location")
     @Expose
     private String location;
 
-    @SerializedName("school")
+    @SerializedName("university")
     @Expose
-    private String school;
+    private String university;
 
     @SerializedName("introduction")
     @Expose
     private String introduction;
 
-    @SerializedName("myGroups")
+    @SerializedName("myteams")
     @Expose
-    private List<TeamInfoDTO> myGroups;
+    private List<TeamInfoDTO> myteams;
 
     public String getName() {
         return name;
@@ -38,11 +38,11 @@ public class User_infoDTO {
         this.name = name;
     }
 
-    public String[] getImageUris() {
-        return imageUris;
+    public List<String> getImages() {
+        return images;
     }
 
-    public void setImageUris(String[] imageUris) { this.imageUris = imageUris; }
+    public void setImages(List<String> images) { this.images = images; }
 
     public String getLocation() {
         return location;
@@ -52,12 +52,12 @@ public class User_infoDTO {
         this.location = location;
     }
 
-    public String getSchool() {
-        return school;
+    public String getUniversity() {
+        return university;
     }
 
-    public void setSchool(String school) {
-        this.school = school;
+    public void setUniversity(String university) {
+        this.university = university;
     }
 
     public String getIntroduction() {
@@ -68,11 +68,11 @@ public class User_infoDTO {
         this.introduction = introduction;
     }
 
-    public List<TeamInfoDTO> getMyGroups() {
-        return myGroups;
+    public List<TeamInfoDTO> getMyteams() {
+        return myteams;
     }
 
-    public void setMyGroups(List<TeamInfoDTO> myGroups) {
-        this.myGroups = myGroups;
+    public void setMyGroups(List<TeamInfoDTO> myteams) {
+        this.myteams = myteams;
     }
 }
