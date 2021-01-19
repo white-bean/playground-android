@@ -28,7 +28,7 @@ public class User_infoDTO {
 
     @SerializedName("myteams")
     @Expose
-    private List<TeamInfoDTO> myteams;
+    private List<MyTeamDTO> myteams;
 
     public String getName() {
         return name;
@@ -42,7 +42,9 @@ public class User_infoDTO {
         return images;
     }
 
-    public void setImages(List<String> images) { this.images = images; }
+    public void setImages(List<String> images) {
+        this.images = images;
+    }
 
     public String getLocation() {
         return location;
@@ -68,11 +70,11 @@ public class User_infoDTO {
         this.introduction = introduction;
     }
 
-    public List<TeamInfoDTO> getMyteams() {
+    public List<MyTeamDTO> getMyteams() {
         return myteams;
     }
 
-    public void setMyGroups(List<TeamInfoDTO> myteams) {
+    public void setMyteams(List<MyTeamDTO> myteams) {
         this.myteams = myteams;
     }
 }

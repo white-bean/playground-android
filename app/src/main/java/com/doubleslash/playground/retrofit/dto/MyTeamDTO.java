@@ -7,36 +7,84 @@ public class MyTeamDTO {
     @SerializedName("id")
     @Expose
     private Long id;
+
     @SerializedName("teamImageUrl")
     @Expose
     private String teamImageUrl;
-    @SerializedName("name")
+
+    @SerializedName("category")
     @Expose
-    private String name;
-    @SerializedName("currentMemberSize")
-    @Expose
-    private Integer currentMemberSize;
+    private String category;
+
     @SerializedName("location")
     @Expose
     private String location;
 
-    public Long getId() { return id; }
+    @SerializedName("name")
+    @Expose
+    private String name;
 
-    public void setId(Long id) { this.id = id; }
+    @SerializedName("currentMemberSize")
+    @Expose
+    private Integer currentMemberSize;
 
-    public String getTeamImageUrl() { return teamImageUrl; }
+    @SerializedName("maximumMemberSize")
+    @Expose
+    private Integer maximumMemberSize;
 
-    public void setTeamImageUrl(String teamImageUrl) { this.teamImageUrl = teamImageUrl; }
+    public Long getId() {
+        return id;
+    }
 
-    public String getName() { return name; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public void setName(String name) { this.name = name; }
+    public String getTeamImageUrl() {
+        return teamImageUrl;
+    }
 
-    public Integer getCurrentMemberSize() { return currentMemberSize; }
+    public void setTeamImageUrl(String teamImageUrl) {
+        this.teamImageUrl = teamImageUrl;
+    }
 
-    public void setCurrentMemberSize(Integer currentMemberSize) { this.currentMemberSize = currentMemberSize; }
+    public String getLocation() {
+        return location;
+    }
 
-    public String getLocation() { return location; }
+    public void setLocation(String location) {
+        this.location = location;
+    }
 
-    public void setLocation(String location) { this.location = location; }
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Integer getCurrentMemberSize() {
+        return currentMemberSize;
+    }
+
+    public void setCurrentMemberSize(Integer currentMemberSize) {
+        this.currentMemberSize = currentMemberSize;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public Integer getMaximumMemberSize() {
+        return maximumMemberSize;
+    }
+
+    public void setMaximumMemberSize(Integer maximumMemberSize) {
+        this.maximumMemberSize = maximumMemberSize;
+    }
 }

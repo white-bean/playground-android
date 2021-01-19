@@ -67,7 +67,7 @@ public class LoginActivity extends AppCompatActivity {
                         System.out.println(token);
                         result= retrofitClient.post_autologin(user_token, token);
                         if (result == 1) {
-                            Intent intent = new Intent(getApplicationContext(), CreateGroupActivity.class);
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(intent);
                             finish();
                         }
