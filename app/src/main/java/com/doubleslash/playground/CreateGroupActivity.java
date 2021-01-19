@@ -3,8 +3,12 @@ package com.doubleslash.playground;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
@@ -20,16 +24,27 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.doubleslash.playground.databinding.ActivityCreateGroupBinding;
+import com.doubleslash.playground.retrofit.RetrofitClient;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
+import okhttp3.MultipartBody;
 
 public class CreateGroupActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     ActivityCreateGroupBinding binding;
+    DatePickerDialog Dpicker;
+    TimePickerDialog Tpicker;
+    Uri selectedImageUri;
+    final Calendar cal = Calendar.getInstance();
+    private RetrofitClient retrofitClient;
+    MultipartBody.Part groupimage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityCreateGroupBinding.inflate(getLayoutInflater());
-        View view = binding.getRoot();
-        setContentView(view);
+        setContentView(binding.getRoot());
 
         initUI();
     }
@@ -52,16 +67,11 @@ public class CreateGroupActivity extends AppCompatActivity implements AdapterVie
     }
 
     private void initUI() {
-        binding.registerPicBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                binding.registerPicBtn.setVisibility(View.INVISIBLE);
-                binding.registerPicIV.setVisibility(View.VISIBLE);
-                openGallery();
-            }
+        binding.registerPicIv.setOnClickListener(v -> { // 소모임 사진
+            openGallery();
         });
 
-        binding.GroupNameEdit.addTextChangedListener(new TextWatcher() {
+        binding.GroupNameEdit.addTextChangedListener(new TextWatcher() {    // 소모임 이름
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -86,11 +96,25 @@ public class CreateGroupActivity extends AppCompatActivity implements AdapterVie
             }
         });
 
-        binding.checkBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //중복확인하기
-            }
+        binding.checkBtn.setOnClickListener(v -> {
+            //중복확인하기
+        });
+
+        binding.createBtn.setOnClickListener(v -> {
+            retrofitClient = RetrofitClient.getInstance();
+
+            String groupimage = selectedImageUri.toString();
+            String category = binding.categorySpinner.getSelectedItem().toString();
+            String location = binding.locationEdit.getText().toString();
+            String content = binding.infoEdit.getText().toString();
+            String maxMember = binding.memberSpinner.getSelectedItem().toString();
+            maxMember = maxMember.substring(0, maxMember.length() - 1);
+            int maxMemberCount = Integer.parseInt(maxMember);
+            String name = binding.GroupNameEdit.getText().toString();
+            String startDate = binding.startDate.getText().toString();
+            String endDate = binding.endDate.getText().toString();
+
+            retrofitClient.post_group(category, location, content, maxMemberCount, name, startDate, endDate, groupimage);
         });
 
         bindEditTextScrolling(binding.infoEdit);
@@ -105,6 +129,7 @@ public class CreateGroupActivity extends AppCompatActivity implements AdapterVie
 
             }
 
+            @SuppressLint({"SetTextI18n", "UseCompatLoadingForDrawables"})
             @Override
             public void afterTextChanged(Editable s) {
                 findViewById(R.id.info_edit).setBackground(getResources().getDrawable(R.drawable.focus_box));
@@ -165,6 +190,33 @@ public class CreateGroupActivity extends AppCompatActivity implements AdapterVie
         binding.subCategorySpinner.setOnItemSelectedListener(this);
 
 
+        binding.switch1.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if(isChecked) {//On
+                binding.startDate.setTextColor(Color.parseColor("#33353d"));
+                binding.startTime.setTextColor(Color.parseColor("#33353d"));
+                binding.endDate.setTextColor(Color.parseColor("#33353d"));
+                binding.endTime.setTextColor(Color.parseColor("#33353d"));
+                binding.startDate.setOnClickListener(v -> {
+                    showDate(1);
+                });
+                binding.startTime.setOnClickListener(v -> {
+                    showTime(1);
+                });
+                binding.endDate.setOnClickListener(v -> {
+                    showDate(2);
+                });
+                binding.endTime.setOnClickListener(v -> {
+                    showTime(2);
+                });
+            }
+            else {//Off
+                binding.startDate.setTextColor(getResources().getColor(R.color.sub_gray));
+                binding.startTime.setTextColor(getResources().getColor(R.color.sub_gray));
+                binding.endDate.setTextColor(getResources().getColor(R.color.sub_gray));
+                binding.endTime.setTextColor(getResources().getColor(R.color.sub_gray));
+            }
+        });
+
     }
 
 
@@ -172,13 +224,13 @@ public class CreateGroupActivity extends AppCompatActivity implements AdapterVie
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         switch (parent.getId()){
             case R.id.member_spinner:
-                Toast.makeText(CreateGroupActivity.this,"선택된 아이템 : "+ binding.memberSpinner.getItemAtPosition(position),Toast.LENGTH_SHORT).show();
+                Toast.makeText(CreateGroupActivity.this,"선택된 아이템 : "+binding.memberSpinner.getItemAtPosition(position),Toast.LENGTH_SHORT).show();
                 break;
             case R.id.category_spinner:
-                Toast.makeText(CreateGroupActivity.this,"선택된 아이템 : "+ binding.categorySpinner.getItemAtPosition(position),Toast.LENGTH_SHORT).show();
+                Toast.makeText(CreateGroupActivity.this,"선택된 아이템 : "+binding.categorySpinner.getItemAtPosition(position),Toast.LENGTH_SHORT).show();
                 break;
             case R.id.sub_category_spinner:
-                Toast.makeText(CreateGroupActivity.this,"선택된 아이템 : "+ binding.subCategorySpinner.getItemAtPosition(position),Toast.LENGTH_SHORT).show();
+                Toast.makeText(CreateGroupActivity.this,"선택된 아이템 : "+binding.subCategorySpinner.getItemAtPosition(position),Toast.LENGTH_SHORT).show();
                 break;
         }//Toast는 그저 확인용
     }//이 오버라이드 메소드에서 position은 몇번째 값이 클릭됐는지 알 수 있음
@@ -189,6 +241,7 @@ public class CreateGroupActivity extends AppCompatActivity implements AdapterVie
 
     }
 
+    @SuppressLint("IntentReset")
     public void openGallery(){
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE);
@@ -198,38 +251,31 @@ public class CreateGroupActivity extends AppCompatActivity implements AdapterVie
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        Uri selectedImageUri;
 
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && data != null && data.getData() != null) {
-            switch(requestCode) {
-                case 101:
-                    selectedImageUri = data.getData();
-                    Glide.with(getApplicationContext()).asBitmap().load(selectedImageUri).into(binding.registerPicIV);
-                    break;
+            if (requestCode == 101) {
+                selectedImageUri = data.getData();
+                Glide.with(getApplicationContext()).asBitmap().load(selectedImageUri).into(binding.registerPicIv);
             }
         }
     }
+    @SuppressLint("ClickableViewAccessibility")
     public static void bindEditTextScrolling(EditText view)
     {
-        view.setOnTouchListener(new View.OnTouchListener()
-        {
-            @Override
-            public boolean onTouch(View v, MotionEvent event)
+        view.setOnTouchListener((v, event) -> {
+            switch (event.getAction() & MotionEvent.ACTION_MASK)
             {
-                switch (event.getAction() & MotionEvent.ACTION_MASK)
-                {
-                    // 터치가 눌렸을때 터치 이벤트를 활성화한다.
-                    case MotionEvent.ACTION_DOWN:
-                        v.getParent().requestDisallowInterceptTouchEvent(true);
-                        break;
-                    // 터치가 끝났을때 터치 이벤트를 비활성화한다 [원상복구]
-                    case MotionEvent.ACTION_UP:
-                        v.getParent().requestDisallowInterceptTouchEvent(false);
-                        break;
-                }
-                return false;
+                // 터치가 눌렸을때 터치 이벤트를 활성화한다.
+                case MotionEvent.ACTION_DOWN:
+                    v.getParent().requestDisallowInterceptTouchEvent(true);
+                    break;
+                // 터치가 끝났을때 터치 이벤트를 비활성화한다 [원상복구]
+                case MotionEvent.ACTION_UP:
+                    v.getParent().requestDisallowInterceptTouchEvent(false);
+                    break;
             }
+            return false;
         });
     }
 
@@ -245,5 +291,64 @@ public class CreateGroupActivity extends AppCompatActivity implements AdapterVie
         binding.createBtn.setBackgroundResource(R.drawable.ic_disabled_button);
         binding.createBtn.setTextColor(getResources().getColor(R.color.sub_gray));
         binding.createBtn.setEnabled(false);
+    }
+    private void showDate(int id){
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+        int month = cal.get(Calendar.MONTH);
+        int year = cal.get(Calendar.YEAR);
+
+        Dpicker = new DatePickerDialog(CreateGroupActivity.this, android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                (view, year1, monthOfYear, dayOfMonth) -> {
+                    cal.set(year1, monthOfYear, dayOfMonth);
+                    int weekDay = cal.get(Calendar.DAY_OF_WEEK);
+                    String weekday = dayofweek(weekDay);
+                    switch (id){
+                        case 1:
+                            binding.startDate.setText(year1 + "년 " + (monthOfYear + 1) + "월 " + dayOfMonth + "일 " + weekday);
+                            break;
+                        case 2:
+                            binding.endDate.setText(year1 + "년 " + (monthOfYear + 1) + "월 " + dayOfMonth + "일 " + weekday);
+                            break;
+                    }
+                }, year, month, day);
+        Dpicker.show();
+    }
+    private void showTime(int id){
+
+        Tpicker = new TimePickerDialog(CreateGroupActivity.this, android.R.style.Theme_Holo_Light_Dialog_NoActionBar,
+                (TimePickerDialog.OnTimeSetListener) (timePicker, hour, min) -> {
+                    String status = ((hour>12))? "오후":"오전";
+                    String format = String.format("%s %02d:%02d", status, hour % 12, min);
+                    switch (id){
+                        case 1:
+                            binding.startTime.setText(format);
+                            break;
+                        case 2:
+                            binding.endTime.setText(format);
+                            break;
+                    }
+                }, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), false);
+
+        Tpicker.show();
+    }
+    private String dayofweek(int weekDay){
+        switch (weekDay){
+            case 2:
+                return "월요일";
+            case 3:
+                return "화요일";
+            case 4:
+                return "수요일";
+            case 5:
+                return "목요일";
+            case 6:
+                return "금요일";
+            case 7:
+                return "토요일";
+            case 1:
+                return "일요일";
+            default:
+                return "error";
+        }
     }
 }

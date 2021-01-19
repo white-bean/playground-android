@@ -9,5 +9,5 @@ import retrofit2.http.POST;
 
 public interface Group_create_Service {
     @POST("/add/team")
-    Call<Group_create_responseDTO> postData(@Body Group_createDTO groupcreate, @Header("Authorization") String token);
+    Call<Group_create_responseDTO> postData(@Body TeamDTO teamDTO, @Header("Authorization") String token);
 }
