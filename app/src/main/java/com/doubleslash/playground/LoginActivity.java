@@ -7,11 +7,15 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.doubleslash.playground.databinding.ActivityLoginBinding;
 import com.doubleslash.playground.register.RegisterActivity1;
 import com.doubleslash.playground.retrofit.RetrofitClient;
+import com.google.firebase.messaging.FirebaseMessaging;
+
+import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
     ActivityLoginBinding binding;
@@ -49,6 +53,22 @@ public class LoginActivity extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     intent.putExtra("email", binding.emailEdit.getText().toString());
                     startActivity(intent);
+
+                    // 토큰 생성하기
+                    FirebaseMessaging.getInstance().getToken()
+                            .addOnCompleteListener(task -> {
+                                if (!task.isSuccessful()) {
+                                    Log.w("bjyoo", "Fetching FCM registration token failed");
+                                    return;
+                                }
+
+                                // Get new FCM registration token
+                                String token = task.getResult();
+                                Log.w("bjyoo", "Fetching FCM registration token success!");
+
+                                MyFirebaseMessagingService service = new MyFirebaseMessagingService();
+                                service.onNewToken(Objects.requireNonNull(token));
+                            });
                 } else {
                     Toast.makeText(getApplicationContext(), "아이디와 패스워드를 다시 한 번 확인해주세요.", Toast.LENGTH_SHORT).show();
                 }
