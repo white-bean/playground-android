@@ -49,10 +49,6 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.ViewHolder> 
         items.add(item);
     }
 
-    public void setItems(ArrayList<Group> items){
-        this.items = items;
-    }
-
     public Group getItem(int position){
         return items.get(position);
     }

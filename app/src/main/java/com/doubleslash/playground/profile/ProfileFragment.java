@@ -31,28 +31,24 @@ public class ProfileFragment extends Fragment {
 
         retrofitClient = RetrofitClient.getInstance();
 
-        // 미완성 (userId 어떻게?)
-        long userId = 1;
+        User_info_responseDTO body = retrofitClient.get_userinfo();
 
-        User_info_responseDTO body = retrofitClient.get_userinfo(userId);
-
-        /*
         // 사용자 정보
         Glide.with(getContext())
-                .load(body.getData().getImageUri1())
+                .load(body.getData().getImages().get(0))
                 .into(binding.imageUser01);
 
         Glide.with(getContext())
-                .load(body.getData().getImageUri2())
+                .load(body.getData().getImages().get(1))
                 .into(binding.imageUser02);
 
         Glide.with(getContext())
-                .load(body.getData().getImageUri3())
+                .load(body.getData().getImages().get(2))
                 .into(binding.imageUser03);
 
         binding.tvUserName.setText(body.getData().getName());
         binding.tvUserLocation.setText(body.getData().getLocation());
-        binding.tvUserSchool.setText(body.getData().getSchool());
+        binding.tvUserSchool.setText(body.getData().getUniversity());
         binding.tvUserContent.setText(body.getData().getIntroduction());
 
         // 가입한 소모임 목록 가져오기
@@ -60,15 +56,14 @@ public class ProfileFragment extends Fragment {
 
         MyGroupAdapter myGroupAdapter = new MyGroupAdapter(getContext());
 
-        for (int i = 0; i < body.getData().getMyGroups().size(); i++) {
+        for (int i = 0; i < body.getData().getMyteams().size(); i++) {
             myGroupAdapter.addItem(new MyGroup(
-                    body.getData().getMyGroups().get(i).getLocation(),
-                    body.getData().getMyGroups().get(i).getCategory(),
-                    body.getData().getMyGroups().get(i).getCurrentMemberSize(),
-                    body.getData().getMyGroups().get(i).getMaxMemberSize(),
-                    body.getData().getMyGroups().get(i).getName(),
-                    body.getData().getMyGroups().get(i).getContent(),
-                    body.getData().getMyGroups().get(i).getTeamImageUrl()));
+                    body.getData().getMyteams().get(i).getName(),
+                    null,
+                    body.getData().getMyteams().get(i).getLocation(),
+                    body.getData().getMyteams().get(i).getTeamImageUrl(),
+                    body.getData().getMyteams().get(i).getCurrentMemberSize(),
+                    null));
         }
 
         binding.rvUserGroup.setAdapter(myGroupAdapter);
@@ -83,7 +78,6 @@ public class ProfileFragment extends Fragment {
 
             startActivity(intent);
         });
-         */
 
         binding.logout.setOnClickListener(v -> {
             //로그아웃 클릭했을 때
