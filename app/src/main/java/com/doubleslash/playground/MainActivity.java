@@ -44,8 +44,6 @@ public class MainActivity extends AppCompatActivity {
         initUI();
 
         ClientApp.socketMananger = new SocketMananger();
-
-        ClientApp.userToken = "donghyeon";
     }// onCreate()..
 
     private void initUI() {

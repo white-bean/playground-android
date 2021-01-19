@@ -25,8 +25,8 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.doubleslash.playground.databinding.ActivityCreateGroupBinding;
 import com.doubleslash.playground.retrofit.RetrofitClient;
+import com.doubleslash.playground.retrofit.dto.CreateTeamDTO;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import okhttp3.MultipartBody;
@@ -103,18 +103,24 @@ public class CreateGroupActivity extends AppCompatActivity implements AdapterVie
         binding.createBtn.setOnClickListener(v -> {
             retrofitClient = RetrofitClient.getInstance();
 
-            String groupimage = selectedImageUri.toString();
-            String category = binding.categorySpinner.getSelectedItem().toString();
-            String location = binding.locationEdit.getText().toString();
-            String content = binding.infoEdit.getText().toString();
+            MultipartBody.Part teamImage = retrofitClient.prepareFilePart("file", selectedImageUri, getApplicationContext());
             String maxMember = binding.memberSpinner.getSelectedItem().toString();
             maxMember = maxMember.substring(0, maxMember.length() - 1);
-            int maxMemberCount = Integer.parseInt(maxMember);
-            String name = binding.GroupNameEdit.getText().toString();
-            String startDate = binding.startDate.getText().toString();
-            String endDate = binding.endDate.getText().toString();
+            Integer maxMemberCount = Integer.parseInt(maxMember);
 
-            retrofitClient.post_group(category, location, content, maxMemberCount, name, startDate, endDate, groupimage);
+            CreateTeamDTO createTeamDTO = new CreateTeamDTO();
+            createTeamDTO.setTeamImageUrl(selectedImageUri.toString());
+            createTeamDTO.setCategory(binding.categorySpinner.getSelectedItem().toString());
+            createTeamDTO.setLocation(binding.locationEdit.getText().toString());
+            createTeamDTO.setContent(binding.infoEdit.getText().toString());
+            createTeamDTO.setMaxMemberSize(maxMemberCount);
+            createTeamDTO.setName(binding.GroupNameEdit.getText().toString());
+            createTeamDTO.setStartDate(binding.startDate.getText().toString());
+            createTeamDTO.setEndDate(binding.endDate.getText().toString());
+
+            retrofitClient.post_group(createTeamDTO, teamImage);
+
+            finish();
         });
 
         bindEditTextScrolling(binding.infoEdit);

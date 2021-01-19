@@ -51,6 +51,7 @@ public class GroupListFragment2 extends Fragment {
 
         MultiTransformation multiOption = new MultiTransformation(new CenterCrop(), new RoundedCorners(8));
 
+        /*
         Glide.with(Objects.requireNonNull(getActivity()))
                 .asBitmap()
                 .load(body.getData().getImageUri1())
@@ -69,11 +70,11 @@ public class GroupListFragment2 extends Fragment {
             myGroupAdapter2.addItem(new MyGroup2(
                     body.getData().getMyGroups().get(i).getLocation(),
                     body.getData().getMyGroups().get(i).getCategory(),
-                    body.getData().getMyGroups().get(i).getCurrentMemberCount(),
-                    body.getData().getMyGroups().get(i).getMaxMemberCount(),
+                    body.getData().getMyGroups().get(i).getCurrentMemberSize(),
+                    body.getData().getMyGroups().get(i).getMaxMemberSize(),
                     body.getData().getMyGroups().get(i).getName(),
                     body.getData().getMyGroups().get(i).getContent(),
-                    body.getData().getMyGroups().get(i).getImageUri()));
+                    body.getData().getMyGroups().get(i).getTeamImageUrl()));
         }
 
         binding.rvUserGroup.setAdapter(myGroupAdapter2);
@@ -104,6 +105,7 @@ public class GroupListFragment2 extends Fragment {
         binding.btnSettings.setOnClickListener(v -> {
             // 미완성
         });
+         */
     }
 
     private void addItems(String category){
