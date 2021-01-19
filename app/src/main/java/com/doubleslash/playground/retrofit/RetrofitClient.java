@@ -22,6 +22,7 @@ import com.doubleslash.playground.retrofit.dto.response.Sign_in_responseDTO;
 import com.doubleslash.playground.retrofit.dto.response.Sign_up_responseDTO;
 import com.doubleslash.playground.retrofit.dto.response.Team_info_responseDTO;
 import com.doubleslash.playground.retrofit.dto.response.Total_group_responseDTO;
+import com.doubleslash.playground.retrofit.dto.response.User_info_responseDTO;
 import com.doubleslash.playground.retrofit.service.Chatroom_infoService;
 import com.doubleslash.playground.retrofit.service.Group_create_Service;
 import com.doubleslash.playground.retrofit.service.Send_chat_Service;
@@ -57,11 +58,11 @@ public class RetrofitClient {
     private static Send_chat_Service send_chat_service;
 
     public static final String API_URL = "http://222.251.129.150/";
-    public static int result =- 1;
+    public static int result = -1;
 
     public static Total_group_responseDTO total_group_responseDTO = null;
     public static Team_info_responseDTO team_info_responseDTO = null;
-    public static User_info_Service user_info_responseDTO = null;
+    public static User_info_responseDTO user_info_responseDTO = null;
     public static Chatroom_info_responseDTO chatroom_infoDTO = null;
     public static Sign_up_responseDTO sign_up_responseDTO;
 

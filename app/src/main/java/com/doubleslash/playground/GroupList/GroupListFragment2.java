@@ -44,7 +44,7 @@ public class GroupListFragment2 extends Fragment {
         // 미완성 (userId 어떻게?)
         long userId = 1;
 
-//        User_info_responseDTO body = retrofitClient.get_userinfo(userId);
+        User_info_responseDTO body = retrofitClient.get_userinfo(userId);
 
         // 사용자 이름 & 사진
         binding.tvUserName.setText(body.getData().getName() + "님");
