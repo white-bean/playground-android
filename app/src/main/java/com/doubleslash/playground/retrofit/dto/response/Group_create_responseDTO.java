@@ -1,30 +1,30 @@
 package com.doubleslash.playground.retrofit.dto.response;
 
-import com.doubleslash.playground.retrofit.dto.Group_infoDTO;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Group_create_responseDTO {
-    @SerializedName("chatRoomId")
+    @SerializedName("result")
     @Expose
-    private String chatRoomId;
-    @SerializedName("team")
+    private Integer result;
+
+    @SerializedName("message")
     @Expose
-    private Group_infoDTO group_infoDTO;
+    private String message;
 
-    public String getChatRoomId() {
-        return chatRoomId;
+    public Integer getResult() {
+        return result;
     }
 
-    public void setChatRoomId(String chatRoomId) {
-        this.chatRoomId = chatRoomId;
+    public void setResult(Integer result) {
+        this.result = result;
     }
 
-    public Group_infoDTO getGroup_infoDTO() {
-        return group_infoDTO;
+    public String getMessage() {
+        return message;
     }
 
-    public void setGroup_infoDTO(Group_infoDTO group_infoDTO) {
-        this.group_infoDTO = group_infoDTO;
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

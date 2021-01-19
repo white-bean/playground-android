@@ -1,6 +1,5 @@
 package com.doubleslash.playground.retrofit.service;
 
-import com.doubleslash.playground.retrofit.dto.Group_createDTO;
 import com.doubleslash.playground.retrofit.dto.response.Group_create_responseDTO;
 
 import retrofit2.Call;

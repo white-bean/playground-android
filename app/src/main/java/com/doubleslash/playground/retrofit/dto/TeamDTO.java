@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 public class TeamDTO {
     @SerializedName("id")
     @Expose
-    private Integer id;
+    private Long id;
     @SerializedName("name")
     @Expose
     private String name;
@@ -16,6 +16,12 @@ public class TeamDTO {
     @SerializedName("location")
     @Expose
     private String location;
+    @SerializedName("startDate")
+    @Expose
+    private String startDate;
+    @SerializedName("endDate")
+    @Expose
+    private String endDate;
     @SerializedName("category")
     @Expose
     private String category;
@@ -29,11 +35,11 @@ public class TeamDTO {
     @Expose
     private String imageUri;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -41,9 +47,7 @@ public class TeamDTO {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    public void setName(String name) { this.name = name; }
 
     public String getContent() {
         return content;
@@ -60,6 +64,14 @@ public class TeamDTO {
     public void setLocation(String location) {
         this.location = location;
     }
+
+    public String getStartDate() { return startDate; }
+
+    public void setStartDate(String startDate) { this.startDate = startDate; }
+
+    public String getEndDate() { return endDate; }
+
+    public void setEndDate(String endDate) { this.endDate = endDate; }
 
     public String getCategory() {
         return category;
@@ -81,15 +93,9 @@ public class TeamDTO {
         return currentMemberCount;
     }
 
-    public void setCurrentMemberCount(Integer currentMemberCount) {
-        this.currentMemberCount = currentMemberCount;
-    }
+    public void setCurrentMemberCount(Integer currentMemberCount) { this.currentMemberCount = currentMemberCount; }
 
-    public String getImageUri() {
-        return imageUri;
-    }
+    public String getImageUri() { return imageUri; }
 
-    public void setImageUri(String imageUri) {
-        this.imageUri = imageUri;
-    }
+    public void setImageUri(String imageUri) { this.imageUri = imageUri; }
 }

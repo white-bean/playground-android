@@ -1,6 +1,5 @@
 package com.doubleslash.playground.retrofit.dto;
 
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -65,9 +64,7 @@ public class Total_group_dataDTO {
         return currentMemberCount;
     }
 
-    public void setCurrentMemberCount(Integer currentMemberCount) {
-        this.currentMemberCount = currentMemberCount;
-    }
+    public void setCurrentMemberCount(Integer currentMemberCount) { this.currentMemberCount = currentMemberCount; }
 
     public Integer getMaxMemberCount() {
         return maxMemberCount;
