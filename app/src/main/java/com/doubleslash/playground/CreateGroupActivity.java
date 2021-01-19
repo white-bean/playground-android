@@ -103,7 +103,7 @@ public class CreateGroupActivity extends AppCompatActivity implements AdapterVie
         binding.createBtn.setOnClickListener(v -> {
             retrofitClient = RetrofitClient.getInstance();
 
-            MultipartBody.Part teamImage = retrofitClient.prepareFilePart("teamImageUrl", selectedImageUri, getApplicationContext());
+            MultipartBody.Part teamImage = retrofitClient.prepareFilePart("file", selectedImageUri, getApplicationContext());
             String maxMember = binding.memberSpinner.getSelectedItem().toString();
             maxMember = maxMember.substring(0, maxMember.length() - 1);
             Integer maxMemberCount = Integer.parseInt(maxMember);
@@ -119,6 +119,8 @@ public class CreateGroupActivity extends AppCompatActivity implements AdapterVie
             createTeamDTO.setEndDate(binding.endDate.getText().toString());
 
             retrofitClient.post_group(createTeamDTO, teamImage);
+
+            finish();
         });
 
         bindEditTextScrolling(binding.infoEdit);
