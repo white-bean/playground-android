@@ -1,5 +1,6 @@
 package com.doubleslash.playground.retrofit;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
@@ -13,6 +14,7 @@ import com.doubleslash.playground.retrofit.dto.Group_createDTO;
 import com.doubleslash.playground.retrofit.dto.Group_create_responseDTO;
 import com.doubleslash.playground.retrofit.dto.Send_chat_DTO;
 import com.doubleslash.playground.retrofit.dto.Send_chat_responseDTO;
+import com.doubleslash.playground.retrofit.dto.Sigh_up_responseDTO;
 import com.doubleslash.playground.retrofit.dto.Sign_up_DTO;
 import com.doubleslash.playground.retrofit.dto.Sign_up_responseDTO;
 import com.doubleslash.playground.retrofit.dto.Team_info_responseDTO;
@@ -45,6 +47,7 @@ public class RetrofitClient {
     public static Total_group_responseDTO total_group_responseDTO = null;
     public static Team_info_responseDTO team_info_responseDTO = null;
     public static Chatroom_info_responseDTO chatroom_infoDTO = null;
+    public static Sigh_up_responseDTO sigh_up_responseDTO;
 
     public RetrofitClient() {
         Gson gson = new GsonBuilder().setLenient().create();
@@ -80,15 +83,14 @@ public class RetrofitClient {
     }
 
 
-    public void uploadImage(Uri uri){
+
+    public void uploadSign_up(Sign_upDTO sign_upDTO,MultipartBody.Part studentcard,MultipartBody.Part[] selfimage){
         Thread thread = new Thread() {
             @Override
             public void run() {
-                File file = new File(getRealPathFromURI(uri));
-                final RequestBody description = createPartFromString("add text?");
-                final MultipartBody.Part body1 = prepareFilePart("image", uri);
                 try {
-                    ResponseBody body =studentcard_upload_service.uploadFile(description,body1).execute().body();
+                    sigh_up_responseDTO =studentcard_upload_service.uploadFile(createPartFromString(sign_upDTO.getSchoolname()),createPartFromString(sign_upDTO.getSchoolnum()),createPartFromString(sign_upDTO.getEmail()),createPartFromString(sign_upDTO.getPassword()),createPartFromString(sign_upDTO.getName()),createPartFromString(sign_upDTO.getSex()),
+                            createPartFromString(sign_upDTO.getAge()),createPartFromString(sign_upDTO.getRegion()),createPartFromString(sign_upDTO.getHobby()),studentcard,selfimage).execute().body();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -97,19 +99,30 @@ public class RetrofitClient {
         thread.start();
     }
 
-    public static final String MULTIPART_FORM_DATA = "multipart/form-data";
+    private String getRealPathFromURI(Uri contentUri,Context context) {
+        String[] proj = { MediaStore.Images.Media.DATA };
+        CursorLoader loader = new CursorLoader(context, contentUri, proj, null, null, null);
+        Cursor cursor = loader.loadInBackground();
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        String result = cursor.getString(column_index);
+        cursor.close();
+        return result;
+    }
+
+
 
 
     @NonNull
     private RequestBody createPartFromString(String descriptionString) {
         return RequestBody.create(
-                MediaType.parse(MULTIPART_FORM_DATA), descriptionString);
+                MediaType.parse("text/plain"), descriptionString);
     }
 
     @NonNull
-    private MultipartBody.Part prepareFilePart(String partName, Uri fileUri) {
-        File file = new File(getRealPathFromURI(fileUri));
-        RequestBody requestFile = RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), file);
+    public MultipartBody.Part prepareFilePart(String partName, Uri fileUri, Context context) {
+        File file = new File(getRealPathFromURI(fileUri,context));
+        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
         return MultipartBody.Part.createFormData(partName, file.getName(), requestFile);
     }
 
