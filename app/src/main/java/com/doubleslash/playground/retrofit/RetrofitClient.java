@@ -11,12 +11,12 @@ import androidx.loader.content.CursorLoader;
 
 import com.doubleslash.playground.ClientApp;
 import com.doubleslash.playground.register.RegisterActivity7;
-import com.doubleslash.playground.retrofit.dto.Group_createDTO;
+import com.doubleslash.playground.retrofit.dto.CreateTeamDTO;
 import com.doubleslash.playground.retrofit.dto.Send_chat_DTO;
 import com.doubleslash.playground.retrofit.dto.Sign_upDTO;
 import com.doubleslash.playground.retrofit.dto.Sign_inDTO;
+import com.doubleslash.playground.retrofit.dto.TeamInfoDTO;
 import com.doubleslash.playground.retrofit.dto.response.AutoLoginResponseDTO;
-import com.doubleslash.playground.retrofit.dto.TeamDTO;
 import com.doubleslash.playground.retrofit.dto.response.Chatroom_info_responseDTO;
 import com.doubleslash.playground.retrofit.dto.response.Group_create_responseDTO;
 import com.doubleslash.playground.retrofit.dto.response.Send_chat_responseDTO;
@@ -65,7 +65,7 @@ public class RetrofitClient {
     public static Team_info_responseDTO team_info_responseDTO = null;
     public static User_info_responseDTO user_info_responseDTO = null;
     public static Chatroom_info_responseDTO chatroom_infoDTO = null;
-    public static Sign_up_responseDTO sign_up_responseDTO;
+    public static Sign_up_responseDTO sign_up_responseDTO = null;
 
     public RetrofitClient() {
         Gson gson = new GsonBuilder().setLenient().create();
@@ -128,7 +128,6 @@ public class RetrofitClient {
         return result;
     }
 
-
     @NonNull
     private RequestBody createPartFromString(String descriptionString) {
         return RequestBody.create(
@@ -142,22 +141,22 @@ public class RetrofitClient {
         return MultipartBody.Part.createFormData(partName, file.getName(), requestFile);
     }
 
-    public void post_group(final String category, final String location, final String content, final int maxMemberCount, final String name, final String startDate, final String endDate, final String groupimage) {
+    /* 작동이 아직 안되네 ㅎㅎ
+    public void post_group(CreateTeamDTO createTeamDTO, MultipartBody.Part teamImageUrl) {
         final Group_create_responseDTO[] body = new Group_create_responseDTO[1];
         Thread thread = new Thread() {
             @Override
             public void run() {
-                TeamDTO teamDTO = new TeamDTO();
-                teamDTO.setCategory(category);
-                teamDTO.setLocation(location);
-                teamDTO.setContent(content);
-                teamDTO.setMaxMemberCount(maxMemberCount);
-                teamDTO.setName(name);
-                teamDTO.setStartDate(startDate);
-                teamDTO.setEndDate(endDate);
-                teamDTO.setImageUri(groupimage);
                 try {
-                    body[0] = group_create_service.postData(teamDTO, ClientApp.userToken).execute().body();
+                    body[0] = group_create_service.postData(createPartFromString(createTeamDTO.getName()),
+                                                    createPartFromString(createTeamDTO.getContent()),
+                                                    createPartFromString(createTeamDTO.getStartDate()),
+                                                    createPartFromString(createTeamDTO.getEndDate()),
+                                                    createTeamDTO.getMaxMemberSize(),
+                                                    createPartFromString(createTeamDTO.getCategory()),
+                                                    createPartFromString(createTeamDTO.getLocation()),
+                                                    teamImageUrl,
+                                                    "TOKEN " + ClientApp.userToken).execute().body();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -166,21 +165,16 @@ public class RetrofitClient {
         thread.start();
         try {
             thread.join();
-            if (body[0].getChatRoomId() != null) {
-                Log.d("notice", "Create group");
-                Log.d("RoomId : ", body[0].getChatRoomId());
-                Log.d("Category(", body[0].getGroup_infoDTO().getCategory());
-                Log.d("Location", body[0].getGroup_infoDTO().getLocation());
-                Log.d("content : ", body[0].getGroup_infoDTO().getContent());
-                Log.d("MaxMemberCount", body[0].getGroup_infoDTO().getMaxMemberCount().toString());
-                Log.d("Name", body[0].getGroup_infoDTO().getName() + "");
+            if (body[0].getResult() == 1) {
+                Log.d("notice", "Create group success " + body[0].getMessage());
             } else {
-                Log.d("error", "Cannot create group");
+                Log.d("error", "Cannot create group failed " + body[0].getMessage());
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
+     */
 
     public int post_autologin(final String user_token, final String fcm_token){
         final AutoLoginResponseDTO[] body = new AutoLoginResponseDTO[1];
@@ -365,7 +359,7 @@ public class RetrofitClient {
         thread.start();
         try {
             thread.join();
-            if(body[0].getResult() != null){
+            if(body[0].getResult() != null) {
                 Log.d("notice", "send message success");
             }
         } catch (InterruptedException e) {

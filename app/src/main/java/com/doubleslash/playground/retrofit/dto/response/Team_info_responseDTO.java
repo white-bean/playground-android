@@ -1,7 +1,7 @@
 package com.doubleslash.playground.retrofit.dto.response;
 
 
-import com.doubleslash.playground.retrofit.dto.TeamDTO;
+import com.doubleslash.playground.retrofit.dto.TeamInfoDTO;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -11,7 +11,7 @@ public class Team_info_responseDTO {
     private String roomId;
     @SerializedName("teamDTO")
     @Expose
-    private TeamDTO teamDTO;
+    private TeamInfoDTO teamInfoDTO;
 
     public String getRoomId() {
         return roomId;
@@ -21,11 +21,11 @@ public class Team_info_responseDTO {
         this.roomId = roomId;
     }
 
-    public TeamDTO getTeamDTO() {
-        return teamDTO;
+    public TeamInfoDTO getTeamInfoDTO() {
+        return teamInfoDTO;
     }
 
-    public void setTeamDTO(TeamDTO teamDTO) {
-        this.teamDTO = teamDTO;
+    public void setTeamInfoDTO(TeamInfoDTO teamInfoDTO) {
+        this.teamInfoDTO = teamInfoDTO;
     }
 }

@@ -13,7 +13,6 @@ public class Total_group_responseDTO {
     private Integer result;
     @SerializedName("data")
     @Expose
-
     private List<Total_group_dataDTO> data = null;
 
     public Integer getResult() {

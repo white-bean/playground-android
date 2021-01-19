@@ -10,6 +10,7 @@ public class Chatroom_info_responseDTO {
     @SerializedName("result")
     @Expose
     private Integer result;
+
     @SerializedName("data")
     @Expose
     private List<Chatroom_infoDTO> data = null;
