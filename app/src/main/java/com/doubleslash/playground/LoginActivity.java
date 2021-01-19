@@ -24,7 +24,9 @@ import java.util.Objects;
 public class LoginActivity extends AppCompatActivity {
     ActivityLoginBinding binding;
     private RetrofitClient retrofitClient;
-    private String user_token;
+    private String user_token,token;
+    private boolean isCheckOn;
+    private int result;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,52 +48,79 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void initUI() {
+        isCheckOn=false;
         SharedPreferences auto = getSharedPreferences("playground", Activity.MODE_PRIVATE);
         user_token=auto.getString("user_token",null);
         retrofitClient = RetrofitClient.getInstance();
-
+        result=0;
+        if(user_token!=null){
+            FirebaseMessaging.getInstance().getToken()
+                    .addOnCompleteListener(task -> {
+                        if (!task.isSuccessful()) {
+                            Log.w("bjyoo", "Fetching FCM registration token failed");
+                            return;
+                        }
+                        // Get new FCM registration token
+                        token = task.getResult();
+                        Log.w("bjyoo", "Fetching FCM registration token success!");
+                        System.out.println(user_token);
+                        System.out.println(token);
+                        result= retrofitClient.post_autologin(user_token, token);
+                        if (result == 1) {
+                            Intent intent = new Intent(getApplicationContext(), CreateGroupActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                        else{
+                            Log.e("AutoLoginError : ","토큰값이 다릅니다.");
+                        }
+                        MyFirebaseMessagingService service = new MyFirebaseMessagingService();
+                        service.onNewToken(Objects.requireNonNull(token));
+                    });
+            // 토큰 생성하기
+        }
+        binding.checkBtn.setOnClickListener(v -> {
+            if (!isCheckOn) {
+                onCheck();
+            } else {
+                offCheck();
+            }
+        });
         binding.loginBtn.setOnClickListener(v -> {
-            int result=0;
-            if(user_token!=null){
-                result= retrofitClient.post_autologin(user_token, FirebaseInstanceId.getInstance().getToken());
-                if (result == 1) {
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(intent);
-                    // 토큰 생성하기
-                }
-                else{
-                    Log.e("error","result=0");
-                }
-            }
-            if (binding.emailEdit.getText().toString() != null && binding.passwordEdit.getText().toString() != null) {
-                Sign_in_responseDTO sign_in_responseDTO = retrofitClient.post_login(binding.emailEdit.getText().toString(), binding.passwordEdit.getText().toString());
-                System.out.println(result);
-                if (sign_in_responseDTO.getResult() == 1) {
-                    SharedPreferences.Editor autoLogin = auto.edit();
-                    autoLogin.putString("user_token",sign_in_responseDTO.getToken());
-                    autoLogin.commit();
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    intent.putExtra("email", binding.emailEdit.getText().toString());
-                    startActivity(intent);
-                    // 토큰 생성하기
-                    FirebaseMessaging.getInstance().getToken()
-                            .addOnCompleteListener(task -> {
-                                if (!task.isSuccessful()) {
-                                    Log.w("bjyoo", "Fetching FCM registration token failed");
-                                    return;
+            FirebaseMessaging.getInstance().getToken()
+                    .addOnCompleteListener(task -> {
+                        if (!task.isSuccessful()) {
+                            Log.w("bjyoo", "Fetching FCM registration token failed");
+                            return;
+                        }
+
+                        // Get new FCM registration token
+                        String token = task.getResult();
+                        Log.w("bjyoo", "Fetching FCM registration token success!");
+
+                        if (binding.emailEdit.getText().toString() != null && binding.passwordEdit.getText().toString() != null) {
+                            result=0;
+                            Sign_in_responseDTO sign_in_responseDTO = retrofitClient.post_login(binding.emailEdit.getText().toString(), binding.passwordEdit.getText().toString(),token);
+                            System.out.println(result);
+                            if (sign_in_responseDTO.getResult() == 1) {
+                                if(isCheckOn) {
+                                    SharedPreferences.Editor autoLogin = auto.edit();
+                                    autoLogin.putString("user_token", sign_in_responseDTO.getToken());
+                                    autoLogin.commit();
                                 }
+                                Intent intent = new Intent(getApplicationContext(), CreateGroupActivity.class);
+                                intent.putExtra("email", binding.emailEdit.getText().toString());
+                                startActivity(intent);
+                                finish();
+                                // 토큰 생성하기
+                            } else {
+                                Toast.makeText(getApplicationContext(), "아이디와 패스워드를 다시 한 번 확인해주세요.", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                        MyFirebaseMessagingService service = new MyFirebaseMessagingService();
+                        service.onNewToken(Objects.requireNonNull(token));
+                    });
 
-                                // Get new FCM registration token
-                                String token = task.getResult();
-                                Log.w("bjyoo", "Fetching FCM registration token success!");
-
-                                MyFirebaseMessagingService service = new MyFirebaseMessagingService();
-                                service.onNewToken(Objects.requireNonNull(token));
-                            });
-                } else {
-                    Toast.makeText(getApplicationContext(), "아이디와 패스워드를 다시 한 번 확인해주세요.", Toast.LENGTH_SHORT).show();
-                }
-            }
         });
 
         binding.findIdPwBtn.setOnClickListener(v -> {
@@ -103,5 +132,13 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), RegisterActivity1.class);
             startActivity(intent);
         });
+    }
+    private void onCheck() {
+        isCheckOn = true;
+        binding.checkBtn.setImageResource(R.drawable.ic_check2);
+    }
+    private void offCheck() {
+        isCheckOn = false;
+        binding.checkBtn.setImageResource(R.drawable.ic_disabled_check2);
     }
 }
