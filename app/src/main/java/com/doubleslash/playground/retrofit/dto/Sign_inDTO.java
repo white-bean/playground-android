@@ -10,6 +10,9 @@ public class Sign_inDTO {
     @SerializedName("password")
     @Expose
     private String password;
+    @SerializedName("fcmToken")
+    @Expose
+    private String fcm_token;
 
     public String getEmail() {
         return email;
@@ -25,5 +28,13 @@ public class Sign_inDTO {
 
     public void setpassword(String password) {
         this.password = password;
+    }
+
+    public String getFcm_token() {
+        return fcm_token;
+    }
+
+    public void setFcm_token(String fcm_token) {
+        this.fcm_token = fcm_token;
     }
 }
