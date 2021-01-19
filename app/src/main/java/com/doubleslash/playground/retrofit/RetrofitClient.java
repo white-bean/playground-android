@@ -16,6 +16,7 @@ import com.doubleslash.playground.retrofit.dto.Send_chat_DTO;
 import com.doubleslash.playground.retrofit.dto.Sign_upDTO;
 import com.doubleslash.playground.retrofit.dto.Sign_inDTO;
 import com.doubleslash.playground.retrofit.dto.TeamInfoDTO;
+import com.doubleslash.playground.retrofit.dto.response.AutoLoginResponseDTO;
 import com.doubleslash.playground.retrofit.dto.response.Chatroom_info_responseDTO;
 import com.doubleslash.playground.retrofit.dto.response.Group_create_responseDTO;
 import com.doubleslash.playground.retrofit.dto.response.Send_chat_responseDTO;
@@ -57,7 +58,6 @@ public class RetrofitClient {
     private static Chatroom_infoService chatroom_infoService;
     private static Studentcard_upload_Service studentcard_upload_service;
     private static Send_chat_Service send_chat_service;
-
     public static final String API_URL = "http://222.251.129.150/";
     public static int result = -1;
 
@@ -176,7 +176,36 @@ public class RetrofitClient {
     }
      */
 
-    public int post_login(final String email, final String password){
+    public int post_autologin(final String user_token, final String fcm_token){
+        final AutoLoginResponseDTO[] body = new AutoLoginResponseDTO[1];
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    body[0] = sign_in_service.sign_in(user_token,fcm_token).execute().body();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        thread.start();
+        try {
+            thread.join();
+            // 로그인할 때 유저 토큰 받아옴
+            ClientApp.userToken = user_token;
+            result = body[0].getResult();
+            if (result == 1) {
+                Log.d("notice", "Login success");
+            } else {
+                Log.d("error", "Login failed");
+            }
+            return result;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+    public Sign_in_responseDTO post_login(final String email, final String password){
         final Sign_in_responseDTO[] body = new Sign_in_responseDTO[1];
         Thread thread = new Thread() {
             @Override
@@ -202,10 +231,10 @@ public class RetrofitClient {
             } else {
                 Log.d("error", "Login failed");
             }
-            return result;
+            return body[0];
         } catch (InterruptedException e) {
             e.printStackTrace();
-            return -1;
+            return null;
         }
     }
 
