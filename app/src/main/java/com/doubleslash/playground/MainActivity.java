@@ -12,6 +12,7 @@ import android.view.View;
 import com.doubleslash.playground.GroupList.GroupListFragment2;
 import com.doubleslash.playground.chat.ChatRoomFragment;
 import com.doubleslash.playground.databinding.ActivityMainBinding;
+import com.doubleslash.playground.profile.ProfileFragment;
 import com.doubleslash.playground.socket.SocketMananger;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 

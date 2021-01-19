@@ -15,13 +15,13 @@ import com.doubleslash.playground.R;
 
 import java.util.ArrayList;
 
-public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.ViewHolder> implements OnGroupItemClickListener{
-    ArrayList<Group> items = new ArrayList<Group>();
-    OnGroupItemClickListener listener;
+public class MyGroupAdapter2 extends RecyclerView.Adapter<MyGroupAdapter2.ViewHolder> implements OnMyGroupItem2ClickListener {
+    ArrayList<MyGroup2> items = new ArrayList<MyGroup2>();
+    OnMyGroupItem2ClickListener listener;
 
     private Context context;
 
-    public GroupAdapter(Context context) {
+    public MyGroupAdapter2(Context context) {
         this.context = context;
     }
 
@@ -29,14 +29,14 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.ViewHolder> 
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View itemView = inflater.inflate(R.layout.group_item, parent, false);
+        View itemView = inflater.inflate(R.layout.my_group_item2, parent, false);
 
         return new ViewHolder(itemView, this);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Group item = items.get(position);
+        MyGroup2 item = items.get(position);
         holder.setItem(context, item);
     }
 
@@ -45,19 +45,19 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.ViewHolder> 
         return items.size();
     }
 
-    public void addItem(Group item){
+    public void addItem(MyGroup2 item){
         items.add(item);
     }
 
-    public void setItems(ArrayList<Group> items){
+    public void setItems(ArrayList<MyGroup2> items){
         this.items = items;
     }
 
-    public Group getItem(int position){
+    public MyGroup2 getItem(int position){
         return items.get(position);
     }
 
-    public void setOnItemClickListener(OnGroupItemClickListener listener){
+    public void setOnItemClickListener(OnMyGroupItem2ClickListener listener){
         this.listener = listener;
     }
 
@@ -77,7 +77,7 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.ViewHolder> 
         TextView content;
         ImageView image_group;
 
-        public ViewHolder(View itemView, final OnGroupItemClickListener listener){
+        public ViewHolder(View itemView, final OnMyGroupItem2ClickListener listener){
             super(itemView);
 
             location = itemView.findViewById(R.id.location_tV);          // 위치
@@ -97,7 +97,7 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.ViewHolder> 
             });
         }
 
-        public void setItem(Context context, Group item) {
+        public void setItem(Context context, MyGroup2 item) {
             location.setText(item.getLocation());
 
             switch (item.getCategory()) {

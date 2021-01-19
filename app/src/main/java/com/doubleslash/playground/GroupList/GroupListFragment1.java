@@ -32,6 +32,8 @@ public class GroupListFragment1 extends Fragment {
 
         initUI();
 
+        addItems("전체");
+
         return binding.getRoot();
     }
 
@@ -122,20 +124,20 @@ public class GroupListFragment1 extends Fragment {
     private void addItems(String category){
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        GroupAdapter adapter = new GroupAdapter();
+        GroupAdapter adapter = new GroupAdapter(getContext());
 
         Total_group_responseDTO body = retrofitClient.get_grouplist();
 
         for (int i = 0; i < body.getData().size(); i++) {
             if (category.equals("전체") || body.getData().get(i).getCategory().equals(category)) {
                 adapter.addItem(new Group(
-                        body.getData().get(i).getLocation().getCity() + " " + body.getData().get(i).getLocation().getStreet(),
+                        body.getData().get(i).getLocation(),
                         body.getData().get(i).getCategory(),
-                        "1", // 미완성 (소모임 현재 인원수)
-                        body.getData().get(i).getMaxMemberCount().toString(),
+                        body.getData().get(i).getCurrentMemberCount(),
+                        body.getData().get(i).getMaxMemberCount(),
                         body.getData().get(i).getName(),
                         body.getData().get(i).getContent(),
-                        R.drawable.img_join));
+                        body.getData().get(i).getImageUri()));
             }
         }
 

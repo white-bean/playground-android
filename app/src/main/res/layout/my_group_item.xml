@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_marginBottom="@dimen/spacing_m">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_image_group"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+
+            app:cardElevation="0dp"
+            app:cardCornerRadius="8dp">
+
+            <ImageView
+                android:id="@+id/group_pic"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:contentDescription="@null" />
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/location_tV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_xs"
+            android:layout_marginLeft="@dimen/spacing_xs"
+            android:layout_marginTop="7dp"
+            app:layout_constraintStart_toEndOf="@id/cv_image_group"
+            app:layout_constraintTop_toTopOf="@id/cv_image_group"
+
+            android:text="서울 송파"
+            android:textSize="12sp"
+            android:textColor="#595c6a"
+            android:fontFamily="@font/notosanskr_regular"
+
+            android:includeFontPadding="false"
+            android:background="@drawable/ic_profile_rounded_rectangle_white" />
+
+        <TextView
+            android:id="@+id/subject_tV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_xxs"
+            app:layout_constraintStart_toStartOf="@id/location_tV"
+            app:layout_constraintTop_toBottomOf="@id/location_tV"
+
+            android:text="UX/UI 스터디"
+            android:textSize="18sp"
+            android:textColor="@color/main_black"
+            android:fontFamily="@font/notosanskr_bold"
+
+            android:includeFontPadding="false" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/spacing_xxs"
+            android:layout_marginRight="@dimen/spacing_xxs"
+            app:layout_constraintEnd_toStartOf="@id/curr_tV"
+            app:layout_constraintTop_toTopOf="@id/curr_tV"
+            app:layout_constraintBottom_toBottomOf="@id/curr_tV"
+
+            android:contentDescription="@null"
+            app:srcCompat="@drawable/ic_group_subgray" />
+
+        <TextView
+            android:id="@+id/curr_tV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/location_tV"
+            app:layout_constraintBottom_toBottomOf="@id/location_tV"
+
+            android:text="3"
+            android:textSize="10sp"
+            android:textColor="#7c7f90"
+            android:fontFamily="@font/notosanskr_bold"
+
+            android:includeFontPadding="false"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

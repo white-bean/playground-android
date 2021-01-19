@@ -19,8 +19,11 @@ import com.bumptech.glide.request.RequestOptions;
 import com.doubleslash.playground.R;
 import com.doubleslash.playground.databinding.FragmentGroupList2Binding;
 import com.doubleslash.playground.infoGroup.InfoGroupActivity;
+import com.doubleslash.playground.profile.MyGroup;
+import com.doubleslash.playground.profile.MyGroupAdapter;
 import com.doubleslash.playground.retrofit.RetrofitClient;
 import com.doubleslash.playground.retrofit.dto.Total_group_responseDTO;
+import com.doubleslash.playground.retrofit.dto.User_info_responseDTO;
 
 import java.util.Objects;
 
@@ -42,24 +45,56 @@ public class GroupListFragment2 extends Fragment {
     }
 
     private void initUI() {
-        // 사용자 이름 & 사진
-        String user_name = ""; // 서버에서 사용자 이름 가져오기
-        binding.tvUserName.setText(user_name + "님");
+        // 미완성 (userId 어떻게?)
+        long userId = 1;
 
-        Uri image_user = null; // 서버에서 사용자 사진 가져오기
+        User_info_responseDTO body = retrofitClient.get_userinfo(userId);
+
+        // 사용자 이름 & 사진
+        binding.tvUserName.setText(body.getData().getName() + "님");
+
         MultiTransformation multiOption = new MultiTransformation(new CenterCrop(), new RoundedCorners(8));
 
         Glide.with(Objects.requireNonNull(getActivity()))
                 .asBitmap()
-                .load(image_user)
+                .load(body.getData().getImageUri1())
                 .apply(RequestOptions.bitmapTransform(multiOption))
                 .into(binding.imageUser);
 
         // 1. 가입한 소모임 목록
-        // 미완성 (서버에서 가져오기)
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+
+        binding.rvUserGroup.setLayoutManager(layoutManager);
+
+        MyGroupAdapter2 myGroupAdapter2 = new MyGroupAdapter2(getContext());
+
+        for (int i = 0; i < body.getData().getMyGroups().size(); i++) {
+            myGroupAdapter2.addItem(new MyGroup2(
+                    body.getData().getMyGroups().get(i).getLocation(),
+                    body.getData().getMyGroups().get(i).getCategory(),
+                    body.getData().getMyGroups().get(i).getCurrentMemberCount(),
+                    body.getData().getMyGroups().get(i).getMaxMemberCount(),
+                    body.getData().getMyGroups().get(i).getName(),
+                    body.getData().getMyGroups().get(i).getContent(),
+                    body.getData().getMyGroups().get(i).getImageUri()));
+        }
+
+        binding.rvUserGroup.setAdapter(myGroupAdapter2);
+
+        myGroupAdapter2.setOnItemClickListener((holder, view, position) -> {
+            MyGroup2 item = myGroupAdapter2.getItem(position);
+
+            Intent intent = new Intent(getActivity(), InfoGroupActivity.class);
+
+            // 미완성
+            // 소모임 정보 넘겨주기
+
+            startActivity(intent);
+        });
 
         // 2. 예정된 모임 일정
-        // 미완성 (서버에서 가져오기)
+        // 미완성
 
         // 3. 소모임 추천 목록
         addItems("스터디");
@@ -78,20 +113,20 @@ public class GroupListFragment2 extends Fragment {
     private void addItems(String category){
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        GroupAdapter adapter = new GroupAdapter();
+        GroupAdapter adapter = new GroupAdapter(getContext());
 
         Total_group_responseDTO body = retrofitClient.get_grouplist();
 
         for (int i = 0; i < body.getData().size(); i++) {
             if (category.equals("전체") || body.getData().get(i).getCategory().equals(category)) {
                 adapter.addItem(new Group(
-                        body.getData().get(i).getLocation().getCity() + " " + body.getData().get(i).getLocation().getStreet(),
+                        body.getData().get(i).getLocation(),
                         body.getData().get(i).getCategory(),
-                        "1", // 미완성 (소모임 현재 인원수)
-                        body.getData().get(i).getMaxMemberCount().toString(),
+                        body.getData().get(i).getCurrentMemberCount(),
+                        body.getData().get(i).getMaxMemberCount(),
                         body.getData().get(i).getName(),
                         body.getData().get(i).getContent(),
-                        R.drawable.img_join));
+                        body.getData().get(i).getImageUri()));
             }
         }
 
