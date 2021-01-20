@@ -129,8 +129,8 @@ public class MyGroupAdapter2 extends RecyclerView.Adapter<MyGroupAdapter2.ViewHo
             name.setText(item.getName());
             location.setText(item.getLocation());
 
-            curr_num.setText(item.getCurrent_num());
-            max_num.setText(item.getMaximum_num());
+            curr_num.setText(item.getCurrent_num().toString());
+            max_num.setText(item.getMaximum_num().toString());
         }
     }
 }

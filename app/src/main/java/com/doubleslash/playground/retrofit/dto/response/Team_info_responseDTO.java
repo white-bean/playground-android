@@ -6,26 +6,26 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Team_info_responseDTO {
-    @SerializedName("roomId")
+    @SerializedName("result")
     @Expose
-    private String roomId;
-    @SerializedName("teamDTO")
+    private Integer result;
+    @SerializedName("data")
     @Expose
-    private TeamInfoDTO teamInfoDTO;
+    private TeamInfoDTO data;
 
-    public String getRoomId() {
-        return roomId;
+    public Integer getResult() {
+        return result;
     }
 
-    public void setRoomId(String roomId) {
-        this.roomId = roomId;
+    public void setResult(Integer result) {
+        this.result = result;
     }
 
-    public TeamInfoDTO getTeamInfoDTO() {
-        return teamInfoDTO;
+    public TeamInfoDTO getData() {
+        return data;
     }
 
-    public void setTeamInfoDTO(TeamInfoDTO teamInfoDTO) {
-        this.teamInfoDTO = teamInfoDTO;
+    public void setData(TeamInfoDTO data) {
+        this.data = data;
     }
 }

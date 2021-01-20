@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Queue;
 
 public class ClientApp extends Application {
-    public static final String API_URL = "http://222.251.129.150/";
+    public static final String API_URL = "http://222.251.129.150";
     public static String userToken;
     public static String userEmail;
     public static SocketMananger socketMananger;

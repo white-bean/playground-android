@@ -7,15 +7,12 @@ public class MemberDTO {
     @SerializedName("id")
     @Expose
     private Long id;
-    @SerializedName("teamImageUrl")
+    @SerializedName("imageUrl")
     @Expose
-    private String teamImageUrl;
-    @SerializedName("name")
+    private String imageUrl;
+    @SerializedName("nickname")
     @Expose
-    private String name;
-    @SerializedName("currentMemberSize")
-    @Expose
-    private Integer currentMemberSize;
+    private String nickname;
 
     public Long getId() {
         return id;
@@ -25,27 +22,19 @@ public class MemberDTO {
         this.id = id;
     }
 
-    public String getTeamImageUrl() {
-        return teamImageUrl;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setTeamImageUrl(String teamImageUrl) {
-        this.teamImageUrl = teamImageUrl;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
-    public String getName() {
-        return name;
+    public String getNickname() {
+        return nickname;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getCurrentMemberSize() {
-        return currentMemberSize;
-    }
-
-    public void setCurrentMemberSize(Integer currentMemberSize) {
-        this.currentMemberSize = currentMemberSize;
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 }

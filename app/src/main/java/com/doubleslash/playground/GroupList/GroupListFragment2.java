@@ -2,6 +2,7 @@ package com.doubleslash.playground.GroupList;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,7 +69,7 @@ public class GroupListFragment2 extends Fragment {
                     body.getData().getMyteams().get(i).getName(),
                     body.getData().getMyteams().get(i).getCategory(),
                     body.getData().getMyteams().get(i).getLocation(),
-                    null,
+                    body.getData().getImages().get(i),
                     body.getData().getMyteams().get(i).getCurrentMemberSize(),
                     body.getData().getMyteams().get(i).getMaximumMemberSize()));
         }
@@ -120,6 +121,7 @@ public class GroupListFragment2 extends Fragment {
                         body.getData().get(i).getName(),
                         body.getData().get(i).getContent(),
                         body.getData().get(i).getImageUri()));
+                Log.d("group", body.getData().get(i).getLocation());
             }
         }
 
@@ -129,7 +131,7 @@ public class GroupListFragment2 extends Fragment {
             Group item = adapter.getItem(position);
 
             Intent intent = new Intent(getActivity(), InfoGroupActivity.class);
-
+            intent.putExtra("teamId", body.getData().get(position).getTeamId());
             // 미완성 (소모임 정보 넘겨주기)
 
             startActivity(intent);

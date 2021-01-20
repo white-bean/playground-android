@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.doubleslash.playground.ClientApp;
 import com.doubleslash.playground.R;
 
 import java.util.ArrayList;
@@ -111,14 +112,14 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.ViewHolder> 
                     break;
             }
 
-            curr_num.setText(item.getCurrent_num());
-            max_num.setText(item.getMax_num());
+            curr_num.setText(item.getCurrent_num().toString());
+            max_num.setText(item.getMax_num().toString());
 
             name.setText(item.getName());
             content.setText(item.getContent());
 
             Glide.with(context)
-                    .load(item.getImageUri())
+                    .load(ClientApp.API_URL + item.getImageUri())
                     .into(image_group);
         }
     }

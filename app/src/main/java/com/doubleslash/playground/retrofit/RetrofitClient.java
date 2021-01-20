@@ -15,7 +15,6 @@ import com.doubleslash.playground.retrofit.dto.CreateTeamDTO;
 import com.doubleslash.playground.retrofit.dto.Send_chat_DTO;
 import com.doubleslash.playground.retrofit.dto.Sign_upDTO;
 import com.doubleslash.playground.retrofit.dto.Sign_inDTO;
-import com.doubleslash.playground.retrofit.dto.TeamInfoDTO;
 import com.doubleslash.playground.retrofit.dto.response.AutoLoginResponseDTO;
 import com.doubleslash.playground.retrofit.dto.response.Chatroom_info_responseDTO;
 import com.doubleslash.playground.retrofit.dto.response.Group_create_responseDTO;
@@ -50,6 +49,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
     private static RetrofitClient instance = null;
+    
+    private static final String API_URL = "http://222.251.129.150/";
+            
     private static Group_create_Service group_create_service;
     private static Sign_in_Service sign_in_service;
     private static Total_group_Service total_group_service;
@@ -58,6 +60,7 @@ public class RetrofitClient {
     private static Chatroom_infoService chatroom_infoService;
     private static Studentcard_upload_Service studentcard_upload_service;
     private static Send_chat_Service send_chat_service;
+    
     public static int result = -1;
 
     public static Total_group_responseDTO total_group_responseDTO = null;
@@ -69,7 +72,7 @@ public class RetrofitClient {
     public RetrofitClient() {
         Gson gson = new GsonBuilder().setLenient().create();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(ClientApp.API_URL)
+                .baseUrl(API_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
@@ -140,6 +143,7 @@ public class RetrofitClient {
         return MultipartBody.Part.createFormData(partName, file.getName(), requestFile);
     }
 
+    // 그룹 생성 (CreateGroupActivity)
     public void post_group(CreateTeamDTO createTeamDTO, MultipartBody.Part teamImageUrl) {
         final Group_create_responseDTO[] body = new Group_create_responseDTO[1];
         Thread thread = new Thread() {
@@ -173,6 +177,7 @@ public class RetrofitClient {
         }
     }
 
+    // 자동 로그인 (LoginActivity)
     public int post_autologin(final String user_token, final String fcm_token){
         final AutoLoginResponseDTO[] body = new AutoLoginResponseDTO[1];
         Thread thread = new Thread() {
@@ -204,6 +209,8 @@ public class RetrofitClient {
             return -1;
         }
     }
+
+    // 로그인 (LoginActivity)
     public Sign_in_responseDTO post_login(final String email, final String password,final String fcmToken){
         final Sign_in_responseDTO[] body = new Sign_in_responseDTO[1];
         Thread thread = new Thread() {
@@ -238,6 +245,7 @@ public class RetrofitClient {
         }
     }
 
+    // 소모임 정보 가져오기 (GroupListFragment)
     public Total_group_responseDTO get_grouplist(){
         Thread thread = new Thread() {
             @Override
@@ -266,14 +274,18 @@ public class RetrofitClient {
         }
     }
 
-    // 수정해야 됨
+    // 상세보기 (InfoGroupActivity)
     public Team_info_responseDTO get_teaminfo(long id){
         Thread thread = new Thread() {
             @Override
             public void run() {
                 try {
-                    team_info_responseDTO = team_info_service.getData(id).execute().body();
-                    Log.d("notice", "team info fetch success");
+                    team_info_responseDTO = team_info_service.getData("TOKEN " + ClientApp.userToken, id).execute().body();
+                    if (team_info_responseDTO.getResult() == 1) {
+                        Log.d("notice", "team info fetch success");
+                    } else {
+                        Log.d("error", "team info fetch failed");
+                    }
                 } catch (IOException e) {
                     Log.d("error", "team info fetch failed");
                     e.printStackTrace();
@@ -291,6 +303,7 @@ public class RetrofitClient {
         }
     }
 
+    // 프로필 정보 보기 (ProfileFragment)
     public User_info_responseDTO get_userinfo(){
         Thread thread = new Thread() {
             @Override
@@ -316,7 +329,7 @@ public class RetrofitClient {
         }
     }
 
-    // 수정해야됨
+    // 채팅방 정보 가져오기 (ChatRoomFragment)
     public Chatroom_info_responseDTO get_Chatroominfo(){
         Thread thread = new Thread() {
             @Override
@@ -341,6 +354,7 @@ public class RetrofitClient {
         }
     }
 
+    // 채팅 메시지 보내기 (ChatActivity)
     public void send_chat(final Aria aria, final Type type, final String from, final String to, final String text, final long sendTime){
         final Send_chat_responseDTO[] body = new Send_chat_responseDTO[1];
         Thread thread = new Thread() {
@@ -363,8 +377,10 @@ public class RetrofitClient {
         thread.start();
         try {
             thread.join();
-            if(body[0].getResult() != null) {
+            if(body[0].getResult() == 1) {
                 Log.d("notice", "send message success");
+            } else {
+                Log.d("error", "send message failed");
             }
         } catch (InterruptedException e) {
             Log.d("error", "send message failed");
@@ -372,6 +388,7 @@ public class RetrofitClient {
         }
     }
 
+    // 그룹 참여 요청, 수락 (AcceptActivity, InfoGroupActivity)
     public void group_request_accept(final Aria aria, final Type type, final String from, final String to) {
         final Send_chat_responseDTO[] body = new Send_chat_responseDTO[1];
         Thread thread = new Thread() {
@@ -392,8 +409,10 @@ public class RetrofitClient {
         thread.start();
         try {
             thread.join();
-            if(body[0].getResult() != null){
+            if(body[0].getResult() == 1){
                 Log.d("notice", "send message success");
+            } else {
+                Log.d("error", "send message failed");
             }
         } catch (InterruptedException e) {
             Log.d("error", "send message failed");

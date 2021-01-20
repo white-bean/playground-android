@@ -4,12 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
 import com.bumptech.glide.Glide;
 import com.doubleslash.playground.ClientApp;
+import com.doubleslash.playground.MainActivity;
 import com.doubleslash.playground.databinding.ActivityInfoGroupBinding;
 import com.doubleslash.playground.retrofit.RetrofitClient;
 import com.doubleslash.playground.retrofit.dto.response.Team_info_responseDTO;
@@ -36,6 +38,11 @@ public class InfoGroupActivity extends AppCompatActivity {
         binding.btnSetting.setVisibility(View.GONE);
         binding.btnAcceptPage.setVisibility(View.GONE);
 
+        binding.btnAcceptPage.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), JoinAcceptActivity.class);
+            startActivity(intent);
+        });
+
         // GroupListFragment로부터 teamId를 넘겨받음
         Intent intent = getIntent();
         teamId = intent.getLongExtra("teamId", -1);
@@ -44,23 +51,24 @@ public class InfoGroupActivity extends AppCompatActivity {
         Team_info_responseDTO body = retrofitClient.get_teaminfo(teamId);
 
         Glide.with(this)
-                .load(ClientApp.API_URL + body.getTeamInfoDTO().getTeamImageUrl())
+                .load(ClientApp.API_URL + body.getData().getTeamImageUrl())
                 .into(binding.imageGroup);
-        binding.tvGroupLocation.setText(body.getTeamInfoDTO().getLocation());
-        binding.tvGroupName.setText(body.getTeamInfoDTO().getName());
-        binding.tvGroupContent.setText(body.getTeamInfoDTO().getContent());
-        binding.tvMemberNumber.setText(body.getTeamInfoDTO().getCurrentMemberSize());
+        binding.tvGroupLocation.setText(body.getData().getLocation());
+        binding.tvGroupName.setText(body.getData().getName());
+        binding.tvGroupContent.setText(body.getData().getContent());
+        binding.tvMemberNumber.setText(Integer.toString(body.getData().getCurrentMemberSize()));
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(RecyclerView.HORIZONTAL);
         binding.rvGroupMembers.setLayoutManager(layoutManager);
 
         MemberAdapter adapter = new MemberAdapter();
-        for (int i = 0; i < body.getTeamInfoDTO().getTeamMembers().size(); i++) {
+        for (int i = 0; i < body.getData().getTeamMembers().size(); i++) {
             adapter.addItem(new Member(
-                    body.getTeamInfoDTO().getTeamMembers().get(i).getTeamImageUrl(),
-                    body.getTeamInfoDTO().getTeamMembers().get(i).getName()));
+                    body.getData().getTeamMembers().get(i).getImageUrl(),
+                    body.getData().getTeamMembers().get(i).getNickname()));
         }
+        binding.rvGroupMembers.setAdapter(adapter);
 
         //가입신청버튼눌렀을 때
         binding.btnGroupRegister.setOnClickListener(v -> {
