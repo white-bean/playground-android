@@ -1,6 +1,8 @@
 package com.doubleslash.playground.profile;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
+import com.doubleslash.playground.LoginActivity;
 import com.doubleslash.playground.ClientApp;
 import com.doubleslash.playground.databinding.FragmentProfileBinding;
 import com.doubleslash.playground.infoGroup.InfoGroupActivity;
@@ -83,6 +86,15 @@ public class ProfileFragment extends Fragment {
 
         binding.logout.setOnClickListener(v -> {
             //로그아웃 클릭했을 때
+
+            SharedPreferences auto = this.getActivity().getSharedPreferences("playground", Activity.MODE_PRIVATE);
+            SharedPreferences.Editor editor = auto.edit();
+            //editor.clear()는 auto에 들어있는 모든 정보를 기기에서 지웁니다.
+            editor.clear();
+            editor.commit();
+            Intent intent =new Intent(getActivity(), LoginActivity.class);
+            startActivity(intent);
+            getActivity().finish();
         });
 
         return binding.getRoot();
