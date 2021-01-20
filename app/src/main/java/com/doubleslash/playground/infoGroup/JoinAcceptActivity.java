@@ -40,8 +40,10 @@ public class JoinAcceptActivity extends AppCompatActivity {
 
         if (adapter.getItemCount() > 0) {
             binding.tvNoMember.setVisibility(View.GONE);
+            binding.imageNoMember.setVisibility(View.GONE);
         } else {
             binding.tvNoMember.setVisibility(View.VISIBLE);
+            binding.imageNoMember.setVisibility(View.VISIBLE);
         }
     }
 }

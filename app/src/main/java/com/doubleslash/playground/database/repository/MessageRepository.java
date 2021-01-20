@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData;
 import com.doubleslash.playground.database.AppDatabase;
 import com.doubleslash.playground.database.dao.MessageDao;
 import com.doubleslash.playground.database.entity.MessageEntity;
+import com.doubleslash.playground.socket.model.Message;
 import com.doubleslash.playground.socket.model.Type;
 
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.concurrent.Executors;
 
 public class MessageRepository {
     private MessageDao messageDao;
+    private MessageEntity message;
     private List<MessageEntity> messages;
 
     public MessageRepository(Application application) {
@@ -30,6 +32,11 @@ public class MessageRepository {
     public List<MessageEntity> getMessagesByRoomId(String roomId) {
         messages = messageDao.getItemByroomId(roomId);
         return messages;
+    }
+
+    public MessageEntity getLastMessage(String roomId) {
+        message = messageDao.getLastItemByroomId(roomId);
+        return message;
     }
 
     public void insert(final MessageEntity message) {

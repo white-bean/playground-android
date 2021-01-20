@@ -2,7 +2,6 @@ package com.doubleslash.playground.chat;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,21 +9,21 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.doubleslash.playground.ClientApp;
+import com.doubleslash.playground.database.entity.MessageEntity;
+import com.doubleslash.playground.database.repository.MessageRepository;
 import com.doubleslash.playground.databinding.FragmentChatListBinding;
-import com.doubleslash.playground.retrofit.dto.response.Chatroom_info_responseDTO;
-import com.doubleslash.playground.retrofit.RetrofitClient;
 import com.doubleslash.playground.socket.model.Message;
 
-import java.util.HashMap;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Queue;
 
 public class ChatRoomFragment extends Fragment {
     private FragmentChatListBinding binding;
-    private RetrofitClient retrofitClient;
     private ChatRoomAdapter adapter;
-
-    public static HashMap<String, Queue<Message>> RoomMsgs;     // Key는 RoomID, Value는 Message 큐
-    private Queue<Message> messageQueue;
+    private MessageRepository repository;
+    private MessageEntity lastMsg;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -37,24 +36,45 @@ public class ChatRoomFragment extends Fragment {
     }
 
     private void initUI() {
-        retrofitClient = RetrofitClient.getInstance();
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         binding.recyclerView.setLayoutManager(layoutManager);
 
+        repository = new MessageRepository(getActivity().getApplication());
+
         adapter = new ChatRoomAdapter();
-        Chatroom_info_responseDTO body = retrofitClient.get_Chatroominfo();
-        for (int i = 0; i < body.getData().size(); i++) {
-            Log.d("Room info", body.getData().get(i).getRoomId());
-            adapter.addItem(new ChatRoomItem(body.getData().get(i).getName(), body.getData().get(i).getName(), "123", 5));
+
+        // 마지막으로 읽은 메세지, 안 읽은 메세지 수 세팅
+        if (ClientApp.RoomMsgQueues.containsKey("1") && ClientApp.RoomMsgQueues.get("1").size() != 0) {
+            Queue<Message> queue = ClientApp.RoomMsgQueues.get("1");
+            adapter.addItem(new ChatRoomItem("소모임", queue.peek().getText(), dateConvert(queue.peek().getSendTime()), queue.size()));
+        } else {
+            Thread thread = new Thread() {
+                @Override
+                public void run() {
+                    lastMsg = repository.getLastMessage("1");
+                }
+            };
+            thread.start();
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            adapter.addItem(new ChatRoomItem("소모임", lastMsg.getText(), dateConvert(lastMsg.getSendTime()), 0));
         }
+
         adapter.setOnItemClickListener((holder, view1, position) -> {
             // 눌렀을 때
             Intent intent = new Intent(getContext(), ChatActivity.class);
-            intent.putExtra("roomId", body.getData().get(position).getRoomId());
-            Log.d("roomId : ", body.getData().get(position).getRoomId());
+            intent.putExtra("teamId", "1");
             startActivity(intent);
         });
 
         binding.recyclerView.setAdapter(adapter);
+    }
+
+    // System.currentTimeMillis를 몇시:몇분 am/pm 형태의 문자열로 반환
+    private String dateConvert(long currentMiliis) {
+        return new SimpleDateFormat("hh:mm a").format(new Date(currentMiliis));
     }
 }

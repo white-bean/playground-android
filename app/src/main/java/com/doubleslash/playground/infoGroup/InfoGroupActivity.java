@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -15,7 +14,7 @@ import com.doubleslash.playground.ClientApp;
 import com.doubleslash.playground.EditGroupActivity;
 import com.doubleslash.playground.R;
 import com.doubleslash.playground.databinding.ActivityInfoGroupBinding;
-import com.doubleslash.playground.profile.MyGroup;
+import com.doubleslash.playground.profile.ProfileOtherActivity;
 import com.doubleslash.playground.retrofit.RetrofitClient;
 import com.doubleslash.playground.retrofit.dto.response.Team_info_responseDTO;
 import com.doubleslash.playground.retrofit.dto.response.User_info_responseDTO;
@@ -24,11 +23,10 @@ import com.doubleslash.playground.socket.model.Type;
 
 public class InfoGroupActivity extends AppCompatActivity {
     private ActivityInfoGroupBinding binding;
+
     private RetrofitClient retrofitClient;
 
     private long teamId;
-
-    private boolean admin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,13 +63,22 @@ public class InfoGroupActivity extends AppCompatActivity {
         layoutManager.setOrientation(RecyclerView.HORIZONTAL);
         binding.rvGroupMembers.setLayoutManager(layoutManager);
 
-        MemberAdapter adapter = new MemberAdapter();
+        MemberAdapter memberAdapter = new MemberAdapter();
         for (int i = 0; i < body.getData().getTeamMembers().size(); i++) {
-            adapter.addItem(new Member(
+            memberAdapter.addItem(new Member(
                     body.getData().getTeamMembers().get(i).getImageUrl(),
                     body.getData().getTeamMembers().get(i).getNickname()));
         }
-        binding.rvGroupMembers.setAdapter(adapter);
+
+        binding.rvGroupMembers.setAdapter(memberAdapter);
+
+        memberAdapter.setOnItemClickListener((holder, view, position) -> {
+            Intent intent2 = new Intent(this, ProfileOtherActivity.class);
+            intent2.putExtra("memberId", body.getData().getTeamMembers().get(position).getId());
+
+            startActivity(intent2);
+        });
+
 
         switch (body.getData().getCategory()) {
             case "스터디":

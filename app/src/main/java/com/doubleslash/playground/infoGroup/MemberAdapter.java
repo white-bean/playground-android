@@ -16,8 +16,9 @@ import com.doubleslash.playground.R;
 
 import java.util.ArrayList;
 
-public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder>{
+public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder> implements OnMemberItemClickListener{
     ArrayList<Member> items = new ArrayList<Member>();
+    OnMemberItemClickListener listener;
 
     @NonNull
     @Override
@@ -25,7 +26,7 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View itemView = inflater.inflate(R.layout.member_item, parent, false);
 
-        return new ViewHolder(itemView);
+        return new ViewHolder(itemView, this);
     }
 
     @Override
@@ -51,16 +52,35 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder
         return items.get(position);
     }
 
+    public void setOnItemClickListener(OnMemberItemClickListener listener){
+        this.listener = listener;
+    }
+
+    @Override
+    public void onItemClick(ViewHolder holder, View view, int position) {
+        if (listener != null){
+            listener.onItemClick(holder, view, position);
+        }
+    }
+
     static class ViewHolder extends RecyclerView.ViewHolder{
         ImageView member_image;
         TextView name;
         RequestOptions option = new RequestOptions().circleCrop();
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView, final OnMemberItemClickListener listener) {
             super(itemView);
 
             member_image = itemView.findViewById(R.id.member_image);
             name = itemView.findViewById(R.id.name);
+
+            itemView.setOnClickListener(view -> {
+                int position = getAdapterPosition();
+
+                if (listener != null){
+                    listener.onItemClick(MemberAdapter.ViewHolder.this, view, position);
+                }
+            });
         }
 
         public void setItem(Member item){
