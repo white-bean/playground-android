@@ -115,7 +115,7 @@
         android:layout_marginTop="@dimen/spacing_m"
         android:layout_marginRight="@dimen/spacing_m"
         android:fontFamily="@font/notosanskr_regular"
-        android:hint="출생년도 (나이)"
+        android:hint="출생년도 ex) 1997"
         android:includeFontPadding="false"
         android:inputType="number"
         android:textColor="@color/sub_black"
@@ -149,7 +149,8 @@
         <ListView
             android:id="@+id/schoollist"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_rounded_rectangle"/>
     </LinearLayout>
 
     <Button

@@ -65,7 +65,7 @@ public class RegisterActivity4 extends AppCompatActivity {
             String text1 = binding.nicknameEdit.getText().toString();
             String text2 = binding.birthYearEdit.getText().toString();
             String text3 = binding.searchEdit.getText().toString();
-            if (text1.length() > 0 && text2.length() > 0 && text3.length() > 0) {
+            if (text1.length() > 0 && text2.length() ==4 && text3.length() > 0) {
                 onNextBtn();
             }
         });
@@ -82,7 +82,7 @@ public class RegisterActivity4 extends AppCompatActivity {
             String text1 = binding.nicknameEdit.getText().toString();
             String text2 = binding.birthYearEdit.getText().toString();
             String text3 = binding.searchEdit.getText().toString();
-            if (text1.length() > 0 && text2.length() > 0 && text3.length() > 0) {
+            if (text1.length() > 0 && text2.length() ==4 && text3.length() > 0) {
                 onNextBtn();
             }
         });
@@ -104,7 +104,7 @@ public class RegisterActivity4 extends AppCompatActivity {
                 String text1 = s.toString();
                 String text2 = binding.birthYearEdit.getText().toString();
                 String text3 = binding.searchEdit.getText().toString();
-                if (text1.length() > 0 && text2.length() > 0 && text3.length() > 0 && (isMan || isWoman)) {
+                if (text1.length() > 0 && text2.length() ==4 && text3.length() > 0 && (isMan || isWoman)) {
                     onNextBtn();
                 }
                 else {
@@ -129,7 +129,7 @@ public class RegisterActivity4 extends AppCompatActivity {
                 String text1 = s.toString();
                 String text2 = binding.nicknameEdit.getText().toString();
                 String text3 = binding.searchEdit.getText().toString();
-                if (text1.length() > 0 && text2.length() > 0 && text3.length() > 0 && (isMan || isWoman)) {
+                if (text1.length() ==4 && text2.length() > 0 && text3.length() > 0 && (isMan || isWoman)) {
                     onNextBtn();
                 }
                 else {
@@ -154,7 +154,7 @@ public class RegisterActivity4 extends AppCompatActivity {
                 String text1 = s.toString();
                 String text2 = binding.nicknameEdit.getText().toString();
                 String text3 = binding.birthYearEdit.getText().toString();
-                if (text1.length() > 0 && text2.length() > 0 && text3.length() > 0 && (isMan || isWoman)) {
+                if (text1.length() > 0 && text2.length() > 0 && text3.length() ==4 && (isMan || isWoman)) {
                     onNextBtn();
                 }
                 else {
