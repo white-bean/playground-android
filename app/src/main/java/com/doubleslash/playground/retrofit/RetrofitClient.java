@@ -245,7 +245,11 @@ public class RetrofitClient {
             public void run() {
                 try {
                     total_group_responseDTO = total_group_service.getData().execute().body();
-                    Log.e("notice", "group list fetch success");
+                    if (total_group_responseDTO.getResult() == 1) {
+                        Log.d("notice", "group list fetch success");
+                    } else {
+                        Log.e("error", "group list fetch failed");
+                    }
                 } catch (IOException e) {
                     Log.e("error", "group list fetch failed");
                     e.printStackTrace();

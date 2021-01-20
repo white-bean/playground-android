@@ -28,7 +28,7 @@ public class User_infoDTO {
 
     @SerializedName("myteams")
     @Expose
-    private List<TeamInfoDTO> myteams;
+    private List<MyTeamDTO> myteams;
 
     public String getName() {
         return name;
@@ -68,11 +68,11 @@ public class User_infoDTO {
         this.introduction = introduction;
     }
 
-    public List<TeamInfoDTO> getMyteams() {
+    public List<MyTeamDTO> getMyteams() {
         return myteams;
     }
 
-    public void setMyGroups(List<TeamInfoDTO> myteams) {
+    public void setMyGroups(List<MyTeamDTO> myteams) {
         this.myteams = myteams;
     }
 }
