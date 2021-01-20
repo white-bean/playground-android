@@ -27,6 +27,7 @@ import com.doubleslash.playground.databinding.ActivityCreateGroupBinding;
 import com.doubleslash.playground.retrofit.RetrofitClient;
 import com.doubleslash.playground.retrofit.dto.CreateTeamDTO;
 import com.doubleslash.playground.retrofit.dto.response.Group_create_responseDTO;
+import com.doubleslash.playground.retrofit.dto.response.Team_info_responseDTO;
 
 import java.util.Calendar;
 
@@ -40,13 +41,12 @@ public class EditGroupActivity extends AppCompatActivity implements AdapterView.
     final Calendar cal = Calendar.getInstance();
     private RetrofitClient retrofitClient;
     public static String API_URL = "http://222.251.129.150/";
-
+    Team_info_responseDTO team_info_responseDTO;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityCreateGroupBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
         setUI();    // 소모임 생성할 때 넣었던 정보 가져옴
         initUI();
     }
@@ -120,7 +120,7 @@ public class EditGroupActivity extends AppCompatActivity implements AdapterView.
             createTeamDTO.setStartDate(binding.startDate.getText().toString());
             createTeamDTO.setEndDate(binding.endDate.getText().toString());
 
-            retrofitClient.post_group(createTeamDTO, teamImage);
+            retrofitClient.update_group(createTeamDTO, teamImage);
 
             finish();
         });
@@ -361,16 +361,17 @@ public class EditGroupActivity extends AppCompatActivity implements AdapterView.
     }
 
     private void setUI(){
-        binding.createBtn.setText("수정 완료");
-        RetrofitClient retrofitClient2 = RetrofitClient.getInstance();
-        //Group_create_responseDTO body = retrofitClient2.get_setgroup();
-/*
-        Glide.with(getApplicationContext()).asBitmap().load(API_URL + "/" + body.getGroup_infoDTO().getImageUri()).into(binding.registerPicIv);
-        binding.GroupNameEdit.setText(body.getGroup_infoDTO().getName());
-        binding.infoEdit.setText(body.getGroup_infoDTO().getContent());
-        binding.startDate.setText(body.getGroup_infoDTO().getStartDate());
-        binding.endDate.setText(body.getGroup_infoDTO().getEndDate());
-        binding.locationEdit.setText(body.getGroup_infoDTO().getLocation());
- */
+        Bundle bundle=getIntent().getExtras();
+        binding.GroupNameEdit.setText(bundle.getString("name"));
+        binding.infoEdit.setText(bundle.getString("content"));
+        binding.locationEdit.setText(bundle.getString("location"));
+        binding.startDate.setText(bundle.getString("startdate"));
+        binding.endDate.setText(bundle.getString("enddate"));
+        selectedImageUri=Uri.parse(bundle.getString("url"));
+
+        Glide.with(this)
+                .load(ClientApp.API_URL + bundle.getString("url"))
+                .into(binding.registerPicIv);
+
     }
 }

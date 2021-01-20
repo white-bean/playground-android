@@ -36,9 +36,9 @@
         <activity android:name=".register.RegisterActivity2" />
         <activity android:name=".register.RegisterActivity1" />
         <activity android:name=".infoGroup.InfoGroupActivity"/>
+        <activity android:name=".EditGroupActivity"/>
         <activity android:name=".profile.ProfileOtherActivity"/>
         <activity android:name=".infoGroup.JoinAcceptActivity"/>
-
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
