@@ -16,6 +16,7 @@ import com.bumptech.glide.load.MultiTransformation;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
+import com.doubleslash.playground.CreateGroupActivity;
 import com.doubleslash.playground.MainActivity;
 import com.doubleslash.playground.R;
 import com.doubleslash.playground.databinding.ActivityRegister7Binding;
@@ -68,9 +69,9 @@ public class RegisterActivity7 extends AppCompatActivity {
 
         binding.nextBtn.setOnClickListener(v -> {
             RetrofitClient my_retrofit=new RetrofitClient();
-            studentcard=my_retrofit.prepareFilePart("studentCard",selectedImageUri,context);
+            studentcard=my_retrofit.prepareFilePart("studentCard", selectedImageUri, context);
             for(int i=0;i<3;i++){
-                selfimage[i]=my_retrofit.prepareFilePart("profile",urilist.get(i),context);
+                selfimage[i]=my_retrofit.prepareFilePart("profile", urilist.get(i), context);
             }
             my_retrofit.uploadSign_up(sign_upDTO,studentcard,selfimage);
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);

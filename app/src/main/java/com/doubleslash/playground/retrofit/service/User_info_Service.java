@@ -7,6 +7,6 @@ import retrofit2.http.Header;
 import retrofit2.http.POST;
 
 public interface User_info_Service {
-    @POST("/myinfo")
+    @POST("/my/info")
     Call<User_info_responseDTO> getData(@Header("Authorization") String token);
 }

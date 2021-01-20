@@ -292,7 +292,7 @@ public class RetrofitClient {
         }
     }
 
-    public User_info_responseDTO get_userinfo(long id){
+    public User_info_responseDTO get_userinfo(){
         Thread thread = new Thread() {
             @Override
             public void run() {

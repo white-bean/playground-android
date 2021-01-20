@@ -42,7 +42,9 @@ public class User_infoDTO {
         return images;
     }
 
-    public void setImages(List<String> images) { this.images = images; }
+    public void setImages(List<String> images) {
+        this.images = images;
+    }
 
     public String getLocation() {
         return location;
@@ -72,7 +74,7 @@ public class User_infoDTO {
         return myteams;
     }
 
-    public void setMyGroups(List<MyTeamDTO> myteams) {
+    public void setMyteams(List<MyTeamDTO> myteams) {
         this.myteams = myteams;
     }
 }

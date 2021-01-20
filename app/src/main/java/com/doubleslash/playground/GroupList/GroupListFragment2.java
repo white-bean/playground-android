@@ -17,6 +17,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.doubleslash.playground.databinding.FragmentGroupList2Binding;
 import com.doubleslash.playground.infoGroup.InfoGroupActivity;
+import com.doubleslash.playground.profile.MyGroup;
 import com.doubleslash.playground.retrofit.RetrofitClient;
 import com.doubleslash.playground.retrofit.dto.response.Total_group_responseDTO;
 import com.doubleslash.playground.retrofit.dto.response.User_info_responseDTO;
@@ -41,20 +42,16 @@ public class GroupListFragment2 extends Fragment {
     }
 
     private void initUI() {
-        // 미완성 (userId 어떻게?)
-        long userId = 1;
-
-        User_info_responseDTO body = retrofitClient.get_userinfo(userId);
+        User_info_responseDTO body = retrofitClient.get_userinfo();
 
         // 사용자 이름 & 사진
         binding.tvUserName.setText(body.getData().getName() + "님");
 
         MultiTransformation multiOption = new MultiTransformation(new CenterCrop(), new RoundedCorners(8));
 
-        /*
         Glide.with(Objects.requireNonNull(getActivity()))
                 .asBitmap()
-                .load(body.getData().getImageUri1())
+                .load(body.getData().getImages().get(0))
                 .apply(RequestOptions.bitmapTransform(multiOption))
                 .into(binding.imageUser);
 
@@ -66,21 +63,20 @@ public class GroupListFragment2 extends Fragment {
 
         MyGroupAdapter2 myGroupAdapter2 = new MyGroupAdapter2(getContext());
 
-        for (int i = 0; i < body.getData().getMyGroups().size(); i++) {
-            myGroupAdapter2.addItem(new MyGroup2(
-                    body.getData().getMyGroups().get(i).getLocation(),
-                    body.getData().getMyGroups().get(i).getCategory(),
-                    body.getData().getMyGroups().get(i).getCurrentMemberSize(),
-                    body.getData().getMyGroups().get(i).getMaxMemberSize(),
-                    body.getData().getMyGroups().get(i).getName(),
-                    body.getData().getMyGroups().get(i).getContent(),
-                    body.getData().getMyGroups().get(i).getTeamImageUrl()));
+        for (int i = 0; i < body.getData().getMyteams().size(); i++) {
+            myGroupAdapter2.addItem(new MyGroup(
+                    body.getData().getMyteams().get(i).getName(),
+                    body.getData().getMyteams().get(i).getCategory(),
+                    body.getData().getMyteams().get(i).getLocation(),
+                    null,
+                    body.getData().getMyteams().get(i).getCurrentMemberSize(),
+                    body.getData().getMyteams().get(i).getMaximumMemberSize()));
         }
 
         binding.rvUserGroup.setAdapter(myGroupAdapter2);
 
         myGroupAdapter2.setOnItemClickListener((holder, view, position) -> {
-            MyGroup2 item = myGroupAdapter2.getItem(position);
+            MyGroup item = myGroupAdapter2.getItem(position);
 
             Intent intent = new Intent(getActivity(), InfoGroupActivity.class);
 
@@ -105,7 +101,6 @@ public class GroupListFragment2 extends Fragment {
         binding.btnSettings.setOnClickListener(v -> {
             // 미완성
         });
-         */
     }
 
     private void addItems(String category){

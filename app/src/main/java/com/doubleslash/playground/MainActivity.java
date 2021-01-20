@@ -13,6 +13,8 @@ import com.doubleslash.playground.GroupList.GroupListFragment2;
 import com.doubleslash.playground.chat.ChatRoomFragment;
 import com.doubleslash.playground.databinding.ActivityMainBinding;
 import com.doubleslash.playground.profile.ProfileFragment;
+import com.doubleslash.playground.retrofit.RetrofitClient;
+import com.doubleslash.playground.retrofit.dto.response.User_info_responseDTO;
 import com.doubleslash.playground.socket.SocketMananger;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -30,12 +32,16 @@ public class MainActivity extends AppCompatActivity {
 
     Menu menu;
 
+    private RetrofitClient retrofitClient;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+
+        retrofitClient = RetrofitClient.getInstance();
 
         groupListFragment1 = new GroupListFragment1();
         groupListFragment2 = new GroupListFragment2();
@@ -47,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
     }// onCreate()..
 
     private void initUI() {
+        User_info_responseDTO body = retrofitClient.get_userinfo();
+
         groupListFragment1 = new GroupListFragment1();
         groupListFragment2 = new GroupListFragment2();
         chatRoomFragment = new ChatRoomFragment();
@@ -56,10 +64,9 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigation.setItemIconTintList(null);
         menu=bottomNavigation.getMenu();
 
-        bottomNavigation.setOnNavigationItemSelectedListener(new ItemSelectedListener());
+        bottomNavigation.setOnNavigationItemSelectedListener(new ItemSelectedListener(body));
 
-        // 미완성 (소모임 그룹 가입 전후)
-        if (true) {
+        if (body.getData().getMyteams().size() == 0) {
             getSupportFragmentManager().beginTransaction().replace(R.id.container, groupListFragment1).commit();
         } else {
             getSupportFragmentManager().beginTransaction().replace(R.id.container, groupListFragment2).commit();
@@ -67,6 +74,12 @@ public class MainActivity extends AppCompatActivity {
     }// onCreate()..
 
     class ItemSelectedListener implements BottomNavigationView.OnNavigationItemSelectedListener{
+        User_info_responseDTO body;
+
+        ItemSelectedListener(User_info_responseDTO body) {
+            this.body = body;
+        }
+
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
             switch(menuItem.getItemId())
@@ -77,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
                     menu.findItem(R.id.profile).setIcon(R.drawable.profile);
 
                     // 미완성 (소모임 그룹 가입 전후)
-                    if (true) {
+                    if (body.getData().getMyteams().size() == 0) {
                         getSupportFragmentManager().beginTransaction().replace(R.id.container, groupListFragment1).commit();
                     } else {
                         getSupportFragmentManager().beginTransaction().replace(R.id.container, groupListFragment2).commit();
