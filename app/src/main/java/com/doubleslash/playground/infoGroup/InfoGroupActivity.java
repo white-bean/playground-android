@@ -6,10 +6,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.bumptech.glide.Glide;
 import com.doubleslash.playground.ClientApp;
+import com.doubleslash.playground.R;
 import com.doubleslash.playground.databinding.ActivityInfoGroupBinding;
 import com.doubleslash.playground.retrofit.RetrofitClient;
 import com.doubleslash.playground.retrofit.dto.response.Team_info_responseDTO;
@@ -50,6 +52,10 @@ public class InfoGroupActivity extends AppCompatActivity {
         binding.tvGroupName.setText(body.getTeamInfoDTO().getName());
         binding.tvGroupContent.setText(body.getTeamInfoDTO().getContent());
         binding.tvMemberNumber.setText(body.getTeamInfoDTO().getCurrentMemberSize());
+        binding.tvMemberNumber2.setText(body.getTeamInfoDTO().getCurrentMemberSize());
+
+        String ddayDate = body.getTeamInfoDTO().getStartDate() + "~" + body.getTeamInfoDTO().getEndDate();
+        binding.tvGroupDdayDate.setText(ddayDate);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(RecyclerView.HORIZONTAL);
@@ -60,6 +66,29 @@ public class InfoGroupActivity extends AppCompatActivity {
             adapter.addItem(new Member(
                     body.getTeamInfoDTO().getTeamMembers().get(i).getTeamImageUrl(),
                     body.getTeamInfoDTO().getTeamMembers().get(i).getName()));
+        }
+
+        switch (body.getTeamInfoDTO().getCategory()) {
+            case "스터디":
+                binding.imageGroupCategory.setImageResource(R.drawable.writing_hand);
+                binding.imageGroupCategory.setBackgroundResource(R.drawable.ic_button_study);
+                break;
+            case "운동/다이어트":
+                binding.imageGroupCategory.setImageResource(R.drawable.diet);
+                binding.imageGroupCategory.setBackgroundResource(R.drawable.ic_button_diet);
+                break;
+            case "문화생활":
+                binding.imageGroupCategory.setImageResource(R.drawable.draw);
+                binding.imageGroupCategory.setBackgroundResource(R.drawable.ic_button_cultural);
+                break;
+            case "게임":
+                binding.imageGroupCategory.setImageResource(R.drawable.game);
+                binding.imageGroupCategory.setBackgroundResource(R.drawable.ic_button_game);
+                break;
+            default:
+                binding.imageGroupCategory.setImageResource(R.drawable.ic_camera);
+                binding.imageGroupCategory.setBackgroundResource(R.drawable.ic_button_study);
+                break;
         }
 
         //가입신청버튼눌렀을 때

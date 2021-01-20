@@ -28,7 +28,7 @@ public class MyTeamDTO {
     @Expose
     private Integer currentMemberSize;
 
-    @SerializedName("maximumMemberSize")
+    @SerializedName("maxMemberSize")
     @Expose
     private Integer maximumMemberSize;
 
