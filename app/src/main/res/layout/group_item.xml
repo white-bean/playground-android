@@ -34,7 +34,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
 
-                    android:contentDescription="@null" />
+                    android:contentDescription="@null"
+                    android:scaleType="centerCrop"
+                    android:src="@color/sub_gray" />
 
                 <ImageView
                     android:id="@+id/image_group_category"

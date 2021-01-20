@@ -135,10 +135,10 @@ public class LoginActivity extends AppCompatActivity {
     }
     private void onCheck() {
         isCheckOn = true;
-        binding.checkBtn.setImageResource(R.drawable.ic_check2);
+        binding.checkBtn.setImageResource(R.drawable.ic_check);
     }
     private void offCheck() {
         isCheckOn = false;
-        binding.checkBtn.setImageResource(R.drawable.ic_disabled_check2);
+        binding.checkBtn.setImageResource(R.drawable.ic_disabled_check);
     }
 }

@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.doubleslash.playground.LoginActivity;
+import com.doubleslash.playground.ClientApp;
 import com.doubleslash.playground.databinding.FragmentProfileBinding;
 import com.doubleslash.playground.infoGroup.InfoGroupActivity;
 import com.doubleslash.playground.retrofit.RetrofitClient;
@@ -35,15 +36,15 @@ public class ProfileFragment extends Fragment {
 
         // 사용자 정보
         Glide.with(getContext())
-                .load(body.getData().getImages().get(0))
+                .load(ClientApp.API_URL + body.getData().getImages().get(0))
                 .into(binding.imageUser01);
 
         Glide.with(getContext())
-                .load(body.getData().getImages().get(1))
+                .load(ClientApp.API_URL + body.getData().getImages().get(1))
                 .into(binding.imageUser02);
 
         Glide.with(getContext())
-                .load(body.getData().getImages().get(2))
+                .load(ClientApp.API_URL + body.getData().getImages().get(2))
                 .into(binding.imageUser03);
 
         binding.tvUserName.setText(body.getData().getName());
@@ -66,15 +67,19 @@ public class ProfileFragment extends Fragment {
                     null));
         }
 
+        if (myGroupAdapter.getItemCount() > 0) {
+            binding.layoutCaution.setVisibility(View.GONE);
+        } else {
+            binding.layoutCaution.setVisibility(View.VISIBLE);
+        }
+
         binding.rvUserGroup.setAdapter(myGroupAdapter);
 
         myGroupAdapter.setOnItemClickListener((holder, view, position) -> {
             MyGroup item = myGroupAdapter.getItem(position);
 
             Intent intent = new Intent(getActivity(), InfoGroupActivity.class);
-
-            // 미완성
-            // 소모임 정보 넘겨주기
+            intent.putExtra("teamId", body.getData().getMyteams().get(position).getId());
 
             startActivity(intent);
         });

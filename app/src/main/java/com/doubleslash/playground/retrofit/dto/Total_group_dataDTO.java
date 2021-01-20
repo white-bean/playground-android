@@ -32,7 +32,7 @@ public class Total_group_dataDTO {
     @Expose
     private String category;
 
-    @SerializedName("imageUri")
+    @SerializedName("teamImageUrl")
     @Expose
     private String imageUri;
 

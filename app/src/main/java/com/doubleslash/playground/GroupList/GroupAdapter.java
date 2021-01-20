@@ -1,6 +1,7 @@
 package com.doubleslash.playground.GroupList;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.doubleslash.playground.ClientApp;
 import com.doubleslash.playground.R;
 
 import java.util.ArrayList;
@@ -99,26 +101,34 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.ViewHolder> 
             switch (item.getCategory()) {
                 case "스터디":
                     category.setImageResource(R.drawable.writing_hand);
+                    category.setBackgroundResource(R.drawable.ic_button_study);
                     break;
                 case "운동/다이어트":
                     category.setImageResource(R.drawable.diet);
+                    category.setBackgroundResource(R.drawable.ic_button_diet);
                     break;
                 case "문화생활":
                     category.setImageResource(R.drawable.draw);
+                    category.setBackgroundResource(R.drawable.ic_button_cultural);
                     break;
                 case "게임":
                     category.setImageResource(R.drawable.game);
+                    category.setBackgroundResource(R.drawable.ic_button_game);
+                    break;
+                default:
+                    category.setImageResource(R.drawable.ic_camera);
+                    category.setBackgroundResource(R.drawable.ic_button_study);
                     break;
             }
 
-            curr_num.setText(item.getCurrent_num());
-            max_num.setText(item.getMax_num());
+            curr_num.setText(item.getCurrent_num().toString());
+            max_num.setText(item.getMax_num().toString());
 
             name.setText(item.getName());
             content.setText(item.getContent());
 
             Glide.with(context)
-                    .load(item.getImageUri())
+                    .load(ClientApp.API_URL + item.getImageUri())
                     .into(image_group);
         }
     }

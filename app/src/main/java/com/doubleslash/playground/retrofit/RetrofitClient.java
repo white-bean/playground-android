@@ -69,7 +69,7 @@ public class RetrofitClient {
     public RetrofitClient() {
         Gson gson = new GsonBuilder().setLenient().create();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(ClientApp.API_URL)
+                .baseUrl(ClientApp.API_URL + "/")
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 

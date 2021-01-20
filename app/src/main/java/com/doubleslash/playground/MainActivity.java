@@ -89,7 +89,6 @@ public class MainActivity extends AppCompatActivity {
                     menu.findItem(R.id.chat).setIcon(R.drawable.chat_navigation);
                     menu.findItem(R.id.profile).setIcon(R.drawable.profile);
 
-                    // 미완성 (소모임 그룹 가입 전후)
                     if (body.getData().getMyteams().size() == 0) {
                         getSupportFragmentManager().beginTransaction().replace(R.id.container, groupListFragment1).commit();
                     } else {
