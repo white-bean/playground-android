@@ -38,6 +38,7 @@ public class RegisterActivity5 extends AppCompatActivity {
     private final int GET_IMAGE_FOR_PICTURE2 = 301;
     private final int GET_IMAGE_FOR_PICTURE3 = 302;
     public static Context context;
+    public int result=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,46 +53,37 @@ public class RegisterActivity5 extends AppCompatActivity {
     }
 
     private void initIUI() {
+
         binding.picture1Btn.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_PICK);
             intent.setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
             startActivityForResult(intent, GET_IMAGE_FOR_PICTURE1);
+            result+=1;
+            if(result>=3){
+                onNextBtn();
+            }
         });
 
         binding.picture2Btn.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_PICK);
             intent.setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
             startActivityForResult(intent, GET_IMAGE_FOR_PICTURE2);
+            result+=1;
+            if(result>=3){
+                onNextBtn();
+            }
         });
 
         binding.picture3Btn.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_PICK);
             intent.setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
             startActivityForResult(intent, GET_IMAGE_FOR_PICTURE3);
-        });
-
-        binding.introEdit.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (s.toString().length() > 10) {
-                    onNextBtn();
-                } else {
-                    // 테스트용으로 버튼 무조건 활성화
-                    // offNextBtn();
-                    onNextBtn();
-                }
+            result+=1;
+            if(result>=3){
+                onNextBtn();
             }
         });
+
 
         binding.nextBtn.setOnClickListener(v -> {
             ArrayList<Uri> urilist=new ArrayList<Uri>();
