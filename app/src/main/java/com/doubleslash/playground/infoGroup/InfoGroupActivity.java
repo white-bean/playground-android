@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import com.bumptech.glide.Glide;
@@ -38,6 +37,11 @@ public class InfoGroupActivity extends AppCompatActivity {
         binding.btnSetting.setVisibility(View.GONE);
         binding.btnAcceptPage.setVisibility(View.GONE);
 
+        binding.btnAcceptPage.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), JoinAcceptActivity.class);
+            startActivity(intent);
+        });
+
         // GroupListFragment로부터 teamId를 넘겨받음
         Intent intent = getIntent();
         teamId = intent.getLongExtra("teamId", -1);
@@ -46,29 +50,26 @@ public class InfoGroupActivity extends AppCompatActivity {
         Team_info_responseDTO body = retrofitClient.get_teaminfo(teamId);
 
         Glide.with(this)
-                .load(ClientApp.API_URL + body.getTeamInfoDTO().getTeamImageUrl())
+                .load(ClientApp.API_URL + body.getData().getTeamImageUrl())
                 .into(binding.imageGroup);
-        binding.tvGroupLocation.setText(body.getTeamInfoDTO().getLocation());
-        binding.tvGroupName.setText(body.getTeamInfoDTO().getName());
-        binding.tvGroupContent.setText(body.getTeamInfoDTO().getContent());
-        binding.tvMemberNumber.setText(body.getTeamInfoDTO().getCurrentMemberSize());
-        binding.tvMemberNumber2.setText(body.getTeamInfoDTO().getCurrentMemberSize());
-
-        String ddayDate = body.getTeamInfoDTO().getStartDate() + "~" + body.getTeamInfoDTO().getEndDate();
-        binding.tvGroupDdayDate.setText(ddayDate);
+        binding.tvGroupLocation.setText(body.getData().getLocation());
+        binding.tvGroupName.setText(body.getData().getName());
+        binding.tvGroupContent.setText(body.getData().getContent());
+        binding.tvMemberNumber.setText(Integer.toString(body.getData().getCurrentMemberSize()));
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(RecyclerView.HORIZONTAL);
         binding.rvGroupMembers.setLayoutManager(layoutManager);
 
         MemberAdapter adapter = new MemberAdapter();
-        for (int i = 0; i < body.getTeamInfoDTO().getTeamMembers().size(); i++) {
+        for (int i = 0; i < body.getData().getTeamMembers().size(); i++) {
             adapter.addItem(new Member(
-                    body.getTeamInfoDTO().getTeamMembers().get(i).getTeamImageUrl(),
-                    body.getTeamInfoDTO().getTeamMembers().get(i).getName()));
+                    body.getData().getTeamMembers().get(i).getImageUrl(),
+                    body.getData().getTeamMembers().get(i).getNickname()));
         }
+        binding.rvGroupMembers.setAdapter(adapter);
 
-        switch (body.getTeamInfoDTO().getCategory()) {
+        switch (body.getData().getCategory()) {
             case "스터디":
                 binding.imageGroupCategory.setImageResource(R.drawable.writing_hand);
                 binding.imageGroupCategory.setBackgroundResource(R.drawable.ic_button_study);
@@ -94,7 +95,7 @@ public class InfoGroupActivity extends AppCompatActivity {
         //가입신청버튼눌렀을 때
         binding.btnGroupRegister.setOnClickListener(v -> {
             // 레트로핏 통신으로 리퀘스트 보냄
-            retrofitClient.group_request_accept(Aria.GROUP, Type.REQUEST, ClientApp.userEmail, String.valueOf(teamId));
+            retrofitClient.group_request_accept(Aria.GROUP, Type.REQUEST, ClientApp.userEmail, String.valueOf(teamId), System.currentTimeMillis());
         });
     }
 }

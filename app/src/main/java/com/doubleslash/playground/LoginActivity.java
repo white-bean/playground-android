@@ -109,6 +109,7 @@ public class LoginActivity extends AppCompatActivity {
                                     autoLogin.commit();
                                 }
                                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                ClientApp.userEmail = binding.emailEdit.getText().toString();
                                 intent.putExtra("email", binding.emailEdit.getText().toString());
                                 startActivity(intent);
                                 finish();

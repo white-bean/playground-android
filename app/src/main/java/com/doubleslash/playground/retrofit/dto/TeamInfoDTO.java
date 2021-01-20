@@ -27,9 +27,6 @@ public class TeamInfoDTO {
     @SerializedName("currentMemberSize")
     @Expose
     private Integer currentMemberSize;
-    @SerializedName("maxMemberSize")
-    @Expose
-    private Integer maxMemberSize;
     @SerializedName("category")
     @Expose
     private String category;
@@ -67,10 +64,6 @@ public class TeamInfoDTO {
     public int getCurrentMemberSize() { return currentMemberSize; }
 
     public void setCurrentMemberSize(Integer currentMemberSize) { this.currentMemberSize = currentMemberSize; }
-
-    public int getMaxMemberSize() { return maxMemberSize; }
-
-    public void setMaxMemberSize(Integer maxMemberSize) { this.maxMemberSize = maxMemberSize; }
 
     public String getCategory() { return category; }
 

@@ -82,7 +82,7 @@ public class JoinAdapter extends RecyclerView.Adapter<JoinAdapter.ViewHolder>{
             retrofitClient = RetrofitClient.getInstance();
 
             acceptBtn.setOnClickListener(v -> {
-                retrofitClient.group_request_accept(Aria.GROUP, Type.ACCEPT, "가입신청한 유저 이메일", "teamId");
+                retrofitClient.group_request_accept(Aria.GROUP, Type.ACCEPT, "가입신청한 유저 이메일", "teamId", System.currentTimeMillis());
             });
         }
     }

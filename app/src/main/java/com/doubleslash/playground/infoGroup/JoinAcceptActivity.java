@@ -18,6 +18,8 @@ public class JoinAcceptActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityJoinAcceptBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        initUI();
     }
 
     private void initUI() {

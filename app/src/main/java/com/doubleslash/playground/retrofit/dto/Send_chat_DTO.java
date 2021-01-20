@@ -6,7 +6,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Send_chat_DTO {
-    @SerializedName("area")
+    @SerializedName("aria")
     @Expose
     private Aria aria;
     @SerializedName("type")
