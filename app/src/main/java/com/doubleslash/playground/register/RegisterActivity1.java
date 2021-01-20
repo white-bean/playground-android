@@ -159,7 +159,7 @@ public class RegisterActivity1 extends AppCompatActivity {
                     @Override
                     public void run() {
                         if (list!=null)
-                            adapter=new Search_school_Adapter(list,context);
+                            adapter=new Search_school_Adapter(list,context, binding.univEdit.getText().toString());
                             binding.schoollist.setAdapter(adapter);
                     }
                 });
