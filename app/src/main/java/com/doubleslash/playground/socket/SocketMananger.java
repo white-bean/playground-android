@@ -49,12 +49,21 @@ public class SocketMananger {
 
                     Message msg = gson.fromJson(message, Message.class);
                     // RoomId를 key로 사용함으로써, 해당 키가 존재하면 큐에 집어넣고 아니면 해당 키 추가
+                    if (!ClientApp.rooms.contains(msg.getTo())) {
+                        ClientApp.rooms.add(msg.getTo());
+                    }
+
                     if (ClientApp.RoomMsgQueues.containsKey(msg.getTo())) {
                         ClientApp.RoomMsgQueues.get(msg.getTo()).add(msg);
                     } else {
                         ClientApp.RoomMsgQueues.put(msg.getTo(), new LinkedList<>());
                         if (msg.getType() == Type.REQUEST) {
-                            // 리퀘스트를 받을 때의 행동
+                            if (ClientApp.waitingUsers.containsKey(msg.getTo())) {
+                                ClientApp.waitingUsers.get(msg.getTo()).add(msg.getFrom());
+                            } else {
+                                ClientApp.waitingUsers.put(msg.getTo(), new LinkedList<>());
+                                ClientApp.waitingUsers.get(msg.getTo()).add(msg.getFrom());
+                            }
                         } else {
                             ClientApp.RoomMsgQueues.get(msg.getTo()).add(msg);
                         }
