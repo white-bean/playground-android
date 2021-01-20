@@ -25,6 +25,7 @@ public class LoginActivity extends AppCompatActivity {
     ActivityLoginBinding binding;
     private RetrofitClient retrofitClient;
     private String user_token,token;
+    private String user_email;
     private boolean isCheckOn;
     private int result;
     @Override
@@ -51,6 +52,7 @@ public class LoginActivity extends AppCompatActivity {
         isCheckOn=false;
         SharedPreferences auto = getSharedPreferences("playground", Activity.MODE_PRIVATE);
         user_token=auto.getString("user_token",null);
+        user_email=auto.getString("user_email",null);
         retrofitClient = RetrofitClient.getInstance();
         result=0;
         if(user_token!=null){
@@ -68,6 +70,7 @@ public class LoginActivity extends AppCompatActivity {
                         result= retrofitClient.post_autologin(user_token, token);
                         if (result == 1) {
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            intent.putExtra("email", user_email);
                             startActivity(intent);
                             finish();
                         }
@@ -106,6 +109,7 @@ public class LoginActivity extends AppCompatActivity {
                                 if(isCheckOn) {
                                     SharedPreferences.Editor autoLogin = auto.edit();
                                     autoLogin.putString("user_token", sign_in_responseDTO.getToken());
+                                    autoLogin.putString("user_email",binding.emailEdit.getText().toString());
                                     autoLogin.commit();
                                 }
                                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
