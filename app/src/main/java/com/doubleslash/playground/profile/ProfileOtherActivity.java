@@ -9,33 +9,33 @@ import android.view.View;
 
 import com.bumptech.glide.Glide;
 import com.doubleslash.playground.ClientApp;
-import com.doubleslash.playground.databinding.ActivityCreateGroupBinding;
-import com.doubleslash.playground.databinding.ActivityProfileothersBinding;
+import com.doubleslash.playground.databinding.ActivityProfileOtherBinding;
 import com.doubleslash.playground.infoGroup.InfoGroupActivity;
 import com.doubleslash.playground.retrofit.RetrofitClient;
-import com.doubleslash.playground.retrofit.dto.response.User_info_responseDTO;
+import com.doubleslash.playground.retrofit.dto.response.Other_info_responseDTO;
 
-public class Profileothers extends AppCompatActivity {
-    ActivityProfileothersBinding binding;
+public class ProfileOtherActivity extends AppCompatActivity {
+    ActivityProfileOtherBinding binding;
+
     private RetrofitClient retrofitClient;
-    String userId;
+
+    private long memberId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        binding = ActivityProfileothersBinding.inflate(getLayoutInflater());
+        binding = ActivityProfileOtherBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
-        Intent intent = getIntent();
-        userId = intent.getStringExtra("email");
 
         initUI();
     }
     private void initUI(){
+        Intent intent = getIntent();
+        memberId = intent.getLongExtra("memberId", -1);
+
         retrofitClient = RetrofitClient.getInstance();
-        /*
-        User_info_responseDTO body = retrofitClient.get_userinfo(userId);
+
+        Other_info_responseDTO body = retrofitClient.get_otherinfo(memberId);
 
         // 사용자 정보
         Glide.with(getApplicationContext())
@@ -81,15 +81,14 @@ public class Profileothers extends AppCompatActivity {
         myGroupAdapter.setOnItemClickListener((holder, view, position) -> {
             MyGroup item = myGroupAdapter.getItem(position);
 
-            Intent intent = new Intent(getActivity(), InfoGroupActivity.class);
-            intent.putExtra("teamId", body.getData().getMyteams().get(position).getId());
+            Intent intent1 = new Intent(this, InfoGroupActivity.class);
+            intent1.putExtra("teamId", body.getData().getMyteams().get(position).getId());
 
-            startActivity(intent);
+            startActivity(intent1);
         });
 
- */
-        binding.chatbutton.setOnClickListener(v -> {
-            //click chatbutton
+        binding.fabChat.setOnClickListener(v -> {
+            // 1:1 채팅으로 이동
         });
     }
 }

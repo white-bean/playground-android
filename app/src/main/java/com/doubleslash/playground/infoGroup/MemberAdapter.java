@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.doubleslash.playground.ClientApp;
-import com.doubleslash.playground.GroupList.OnGroupItemClickListener;
 import com.doubleslash.playground.R;
 
 import java.util.ArrayList;
@@ -27,7 +26,7 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View itemView = inflater.inflate(R.layout.member_item, parent, false);
 
-        return new ViewHolder(itemView);
+        return new ViewHolder(itemView, this);
     }
 
     @Override
@@ -69,11 +68,19 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder
         TextView name;
         RequestOptions option = new RequestOptions().circleCrop();
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView, final OnMemberItemClickListener listener) {
             super(itemView);
 
             member_image = itemView.findViewById(R.id.member_image);
             name = itemView.findViewById(R.id.name);
+
+            itemView.setOnClickListener(view -> {
+                int position = getAdapterPosition();
+
+                if (listener != null){
+                    listener.onItemClick(MemberAdapter.ViewHolder.this, view, position);
+                }
+            });
         }
 
         public void setItem(Member item){

@@ -220,7 +220,7 @@
             app:layout_constraintTop_toBottomOf="@id/tv_user_group"
             app:layout_constraintBottom_toTopOf="@id/view"
 
-            android:visibility="gone"
+            android:visibility="visible"
             android:background="#f8f8fa">
 
             <ImageView
@@ -233,7 +233,7 @@
                 app:layout_constraintBottom_toTopOf="@id/tv_caution"
 
                 android:contentDescription="@null"
-                app:srcCompat="@drawable/ic_caution" />
+                app:srcCompat="@drawable/ic_none" />
 
             <TextView
                 android:id="@+id/tv_caution"

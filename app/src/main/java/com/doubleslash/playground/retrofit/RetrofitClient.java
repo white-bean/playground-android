@@ -18,6 +18,7 @@ import com.doubleslash.playground.retrofit.dto.Sign_inDTO;
 import com.doubleslash.playground.retrofit.dto.response.AutoLoginResponseDTO;
 import com.doubleslash.playground.retrofit.dto.response.Chatroom_info_responseDTO;
 import com.doubleslash.playground.retrofit.dto.response.Group_create_responseDTO;
+import com.doubleslash.playground.retrofit.dto.response.Other_info_responseDTO;
 import com.doubleslash.playground.retrofit.dto.response.Send_chat_responseDTO;
 import com.doubleslash.playground.retrofit.dto.response.Sign_in_responseDTO;
 import com.doubleslash.playground.retrofit.dto.response.Sign_up_responseDTO;
@@ -26,6 +27,7 @@ import com.doubleslash.playground.retrofit.dto.response.Total_group_responseDTO;
 import com.doubleslash.playground.retrofit.dto.response.User_info_responseDTO;
 import com.doubleslash.playground.retrofit.service.Chatroom_infoService;
 import com.doubleslash.playground.retrofit.service.Group_create_Service;
+import com.doubleslash.playground.retrofit.service.Other_info_Service;
 import com.doubleslash.playground.retrofit.service.Send_chat_Service;
 import com.doubleslash.playground.retrofit.service.Sign_in_Service;
 import com.doubleslash.playground.retrofit.service.Studentcard_upload_Service;
@@ -55,6 +57,7 @@ public class RetrofitClient {
     private static Total_group_Service total_group_service;
     private static Team_info_Service team_info_service;
     private static User_info_Service user_info_service;
+    private static Other_info_Service other_info_service;
     private static Chatroom_infoService chatroom_infoService;
     private static Studentcard_upload_Service studentcard_upload_service;
     private static Send_chat_Service send_chat_service;
@@ -64,6 +67,7 @@ public class RetrofitClient {
     public static Total_group_responseDTO total_group_responseDTO = null;
     public static Team_info_responseDTO team_info_responseDTO = null;
     public static User_info_responseDTO user_info_responseDTO = null;
+    public static Other_info_responseDTO other_info_responseDTO = null;
     public static Chatroom_info_responseDTO chatroom_infoDTO = null;
     public static Sign_up_responseDTO sign_up_responseDTO = null;
 
@@ -79,6 +83,7 @@ public class RetrofitClient {
         total_group_service = retrofit.create(Total_group_Service.class);
         team_info_service = retrofit.create(Team_info_Service.class);
         user_info_service = retrofit.create(User_info_Service.class);
+        other_info_service = retrofit.create(Other_info_Service.class);
         chatroom_infoService = retrofit.create(Chatroom_infoService.class);
         studentcard_upload_service = retrofit.create(Studentcard_upload_Service.class);
         send_chat_service = retrofit.create(Send_chat_Service.class);
@@ -321,6 +326,35 @@ public class RetrofitClient {
         try {
             thread.join();
             return user_info_responseDTO;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    // 다른 사람 프로필 정보 보기 (ProfileOtherActivity)
+    public Other_info_responseDTO get_otherinfo(long id){
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    other_info_responseDTO = other_info_service.getData(id).execute().body();
+                    if (other_info_responseDTO.getResult() == 1) {
+                        Log.d("notice", "other info fetch success");
+                    } else {
+                        Log.d("error", "other info fetch failed");
+                    }
+                } catch (IOException e) {
+                    Log.d("error", "other info fetch failed");
+                    e.printStackTrace();
+                }
+            }
+        };
+        thread.start();
+
+        try {
+            thread.join();
+            return other_info_responseDTO;
         } catch (InterruptedException e) {
             e.printStackTrace();
             return null;
