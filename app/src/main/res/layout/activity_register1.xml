@@ -49,6 +49,7 @@
             android:id="@+id/schoollist"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/ic_rounded_rectangle"
             />
         <com.doubleslash.playground.customwidget.ClearEditText
             android:id="@+id/year_edit"
