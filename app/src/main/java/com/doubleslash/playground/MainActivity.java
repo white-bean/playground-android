@@ -20,6 +20,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import com.doubleslash.playground.GroupList.GroupListFragment1;
 
+import java.util.HashMap;
+
 public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
 
@@ -50,6 +52,9 @@ public class MainActivity extends AppCompatActivity {
         initUI();
 
         ClientApp.socketMananger = new SocketMananger();
+
+        // 테스트용 코드
+        ClientApp.waitingUsers = new HashMap<>();
     }// onCreate()..
 
     private void initUI() {

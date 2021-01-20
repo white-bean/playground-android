@@ -20,9 +20,11 @@ import java.util.ArrayList;
 public class JoinAdapter extends RecyclerView.Adapter<JoinAdapter.ViewHolder>{
     private ArrayList<Join> items = new ArrayList<Join>();
     private String category;
+    private String teamId;
 
-    public JoinAdapter(String category) {
+    public JoinAdapter(String category, String teamId) {
         this.category = category;
+        this.teamId = teamId;
     }
 
     @NonNull
@@ -37,7 +39,7 @@ public class JoinAdapter extends RecyclerView.Adapter<JoinAdapter.ViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Join item = items.get(position);
-        holder.setItem(item, category);
+        holder.setItem(item, category, teamId);
     }
 
     @Override
@@ -65,6 +67,7 @@ public class JoinAdapter extends RecyclerView.Adapter<JoinAdapter.ViewHolder>{
         private TextView location;
         private TextView univ;
         private Button acceptBtn;
+        private String teamId;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -78,7 +81,7 @@ public class JoinAdapter extends RecyclerView.Adapter<JoinAdapter.ViewHolder>{
             categoryImage = itemView.findViewById(R.id.category_image);
         }
 
-        public void setItem(Join item, String category){
+        public void setItem(Join item, String category, String teamId){
             // profileImage.setImageResource(item.getImage());
             name.setText(item.getUserName());
             location.setText(item.getLocation());
@@ -87,7 +90,7 @@ public class JoinAdapter extends RecyclerView.Adapter<JoinAdapter.ViewHolder>{
             retrofitClient = RetrofitClient.getInstance();
 
             acceptBtn.setOnClickListener(v -> {
-                retrofitClient.group_request_accept(Aria.GROUP, Type.ACCEPT, "가입신청한 유저 이메일", "teamId", System.currentTimeMillis());
+                retrofitClient.group_request_accept(Aria.GROUP, Type.ACCEPT, item.getUserName(), teamId, System.currentTimeMillis());
             });
 
             switch (category) {

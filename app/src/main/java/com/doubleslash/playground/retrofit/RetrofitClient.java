@@ -485,6 +485,6 @@ public class RetrofitClient {
         }
     }
 
-    // 리퀘스트 "Aria" : "GROUP", "Type" : "REQUEST", "from" : "가입신청 유저", "to" : "teamId"
-    // 어셉트 "Aria" : "GROUP", "TYPE" :"ACCEPT", "from" : "가입신청 유저", "to" : "teamId"
+    // 리퀘스트 "Aria" : "GROUP", "Type" : "REQUEST", "from" : "가입신청 유저", "to" : "teamId", "sendTime" : "sendTime"
+    // 어셉트 "Aria" : "GROUP", "TYPE" :"ACCEPT", "from" : "가입신청 유저", "to" : "teamId", "sendTime" : "sendTime"
 }

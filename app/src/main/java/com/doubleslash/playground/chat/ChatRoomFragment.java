@@ -43,6 +43,18 @@ public class ChatRoomFragment extends Fragment {
 
         adapter = new ChatRoomAdapter();
 
+        for (String team : ClientApp.rooms) {
+            adapter.addItem(new ChatRoomItem("소모임" + team, "", "" , 5));
+        }
+
+        adapter.setOnItemClickListener((holder, view1, position) -> {
+            // 눌렀을 때
+            Intent intent = new Intent(getContext(), ChatActivity.class);
+            intent.putExtra("teamId", ClientApp.rooms.get(position));
+            startActivity(intent);
+        });
+
+        /*
         // 마지막으로 읽은 메세지, 안 읽은 메세지 수 세팅
         if (ClientApp.RoomMsgQueues.containsKey("1") && ClientApp.RoomMsgQueues.get("1").size() != 0) {
             Queue<Message> queue = ClientApp.RoomMsgQueues.get("1");
@@ -69,6 +81,7 @@ public class ChatRoomFragment extends Fragment {
             intent.putExtra("teamId", "1");
             startActivity(intent);
         });
+         */
 
         binding.recyclerView.setAdapter(adapter);
     }

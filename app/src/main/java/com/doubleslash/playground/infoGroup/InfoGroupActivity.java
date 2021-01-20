@@ -144,6 +144,7 @@ public class InfoGroupActivity extends AppCompatActivity {
         binding.btnAcceptPage.setOnClickListener(v -> {
             Intent intent3 = new Intent(this, JoinAcceptActivity.class);
             intent3.putExtra("category", body.getData().getCategory());
+            intent3.putExtra("teamId", Long.toString(teamId));
 
             startActivity(intent3);
         });
