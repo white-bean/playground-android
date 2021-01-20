@@ -66,12 +66,11 @@ public class MainActivity extends AppCompatActivity {
 
         bottomNavigation.setOnNavigationItemSelectedListener(new ItemSelectedListener(body));
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.container, groupListFragment1).commit();
-//        if (body.getData().getMyteams().size() == 0) {
-//            getSupportFragmentManager().beginTransaction().replace(R.id.container, groupListFragment1).commit();
-//        } else {
-//            getSupportFragmentManager().beginTransaction().replace(R.id.container, groupListFragment2).commit();
-//        }
+        if (body.getData().getMyteams().size() == 0) {
+             getSupportFragmentManager().beginTransaction().replace(R.id.container, groupListFragment1).commit();
+        } else {
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, groupListFragment2).commit();
+        }
     }// onCreate()..
 
     class ItemSelectedListener implements BottomNavigationView.OnNavigationItemSelectedListener{

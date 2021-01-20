@@ -37,11 +37,6 @@ public class InfoGroupActivity extends AppCompatActivity {
         binding.btnSetting.setVisibility(View.GONE);
         binding.btnAcceptPage.setVisibility(View.GONE);
 
-        binding.btnAcceptPage.setOnClickListener(v -> {
-            Intent intent = new Intent(getApplicationContext(), JoinAcceptActivity.class);
-            startActivity(intent);
-        });
-
         // GroupListFragment로부터 teamId를 넘겨받음
         Intent intent = getIntent();
         teamId = intent.getLongExtra("teamId", -1);
@@ -68,6 +63,12 @@ public class InfoGroupActivity extends AppCompatActivity {
                     body.getData().getTeamMembers().get(i).getNickname()));
         }
         binding.rvGroupMembers.setAdapter(adapter);
+
+        binding.btnAcceptPage.setOnClickListener(v -> {
+            Intent intent2 = new Intent(getApplicationContext(), JoinAcceptActivity.class);
+            intent2.putExtra("category", body.getData().getCategory());
+            startActivity(intent2);
+        });
 
         switch (body.getData().getCategory()) {
             case "스터디":

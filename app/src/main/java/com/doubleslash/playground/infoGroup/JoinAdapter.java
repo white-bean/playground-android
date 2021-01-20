@@ -8,20 +8,22 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RestrictTo;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.doubleslash.playground.ClientApp;
 import com.doubleslash.playground.R;
 import com.doubleslash.playground.retrofit.RetrofitClient;
 import com.doubleslash.playground.socket.model.Aria;
-import com.doubleslash.playground.socket.model.Message;
 import com.doubleslash.playground.socket.model.Type;
 
 import java.util.ArrayList;
 
 public class JoinAdapter extends RecyclerView.Adapter<JoinAdapter.ViewHolder>{
     private ArrayList<Join> items = new ArrayList<Join>();
+    private String category;
+
+    public JoinAdapter(String category) {
+        this.category = category;
+    }
 
     @NonNull
     @Override
@@ -35,7 +37,7 @@ public class JoinAdapter extends RecyclerView.Adapter<JoinAdapter.ViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Join item = items.get(position);
-        holder.setItem(item);
+        holder.setItem(item, category);
     }
 
     @Override
@@ -58,6 +60,7 @@ public class JoinAdapter extends RecyclerView.Adapter<JoinAdapter.ViewHolder>{
     static class ViewHolder extends RecyclerView.ViewHolder{
         private RetrofitClient retrofitClient;
         private ImageView profileImage;
+        private ImageView categoryImage;
         private TextView name;
         private TextView location;
         private TextView univ;
@@ -67,13 +70,15 @@ public class JoinAdapter extends RecyclerView.Adapter<JoinAdapter.ViewHolder>{
             super(itemView);
 
             profileImage = itemView.findViewById(R.id.profile_image);
+
             name = itemView.findViewById(R.id.user_name);
             location = itemView.findViewById(R.id.location);
             univ = itemView.findViewById(R.id.univ);
             acceptBtn = itemView.findViewById(R.id.accept_button);
+            categoryImage = itemView.findViewById(R.id.category_image);
         }
 
-        public void setItem(Join item){
+        public void setItem(Join item, String category){
             // profileImage.setImageResource(item.getImage());
             name.setText(item.getUserName());
             location.setText(item.getLocation());
@@ -84,6 +89,29 @@ public class JoinAdapter extends RecyclerView.Adapter<JoinAdapter.ViewHolder>{
             acceptBtn.setOnClickListener(v -> {
                 retrofitClient.group_request_accept(Aria.GROUP, Type.ACCEPT, "가입신청한 유저 이메일", "teamId", System.currentTimeMillis());
             });
+
+            switch (category) {
+                case "스터디":
+                    categoryImage.setImageResource(R.drawable.writing_hand);
+                    categoryImage.setBackgroundResource(R.drawable.ic_button_study);
+                    break;
+                case "운동/다이어트":
+                    categoryImage.setImageResource(R.drawable.diet);
+                    categoryImage.setBackgroundResource(R.drawable.ic_button_diet);
+                    break;
+                case "문화생활":
+                    categoryImage.setImageResource(R.drawable.draw);
+                    categoryImage.setBackgroundResource(R.drawable.ic_button_cultural);
+                    break;
+                case "게임":
+                    categoryImage.setImageResource(R.drawable.game);
+                    categoryImage.setBackgroundResource(R.drawable.ic_button_game);
+                    break;
+                default:
+                    categoryImage.setImageResource(R.drawable.ic_camera);
+                    categoryImage.setBackgroundResource(R.drawable.ic_button_study);
+                    break;
+            }
         }
     }
 }
