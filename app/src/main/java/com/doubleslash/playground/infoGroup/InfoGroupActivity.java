@@ -15,6 +15,7 @@ import com.doubleslash.playground.ClientApp;
 import com.doubleslash.playground.R;
 import com.doubleslash.playground.databinding.ActivityInfoGroupBinding;
 import com.doubleslash.playground.profile.MyGroup;
+import com.doubleslash.playground.profile.Profileothers;
 import com.doubleslash.playground.retrofit.RetrofitClient;
 import com.doubleslash.playground.retrofit.dto.response.Team_info_responseDTO;
 import com.doubleslash.playground.retrofit.dto.response.User_info_responseDTO;
@@ -71,6 +72,14 @@ public class InfoGroupActivity extends AppCompatActivity {
                     body.getData().getTeamMembers().get(i).getNickname()));
         }
         binding.rvGroupMembers.setAdapter(adapter);
+
+        adapter.setOnItemClickListener((holder, view, position) -> {
+            Intent intent2 = new Intent(InfoGroupActivity.this, Profileothers.class);
+            //intent2.putExtra("memberId", 다른사람 정보 responseDTO 넣기);
+
+            startActivity(intent2);
+        });
+
 
         switch (body.getData().getCategory()) {
             case "스터디":

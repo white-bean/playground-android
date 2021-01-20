@@ -12,12 +12,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.doubleslash.playground.ClientApp;
+import com.doubleslash.playground.GroupList.OnGroupItemClickListener;
 import com.doubleslash.playground.R;
 
 import java.util.ArrayList;
 
-public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder>{
+public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder> implements OnMemberItemClickListener{
     ArrayList<Member> items = new ArrayList<Member>();
+    OnMemberItemClickListener listener;
 
     @NonNull
     @Override
@@ -49,6 +51,17 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder
 
     public Member getItem(int position){
         return items.get(position);
+    }
+
+    public void setOnItemClickListener(OnMemberItemClickListener listener){
+        this.listener = listener;
+    }
+
+    @Override
+    public void onItemClick(ViewHolder holder, View view, int position) {
+        if (listener != null){
+            listener.onItemClick(holder, view, position);
+        }
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder{
