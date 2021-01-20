@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 
@@ -33,7 +35,7 @@ public class ChatActivity extends AppCompatActivity{
     private MutableLiveData<ArrayList<ChatItem>> chatsLiveData = new MutableLiveData<ArrayList<ChatItem>>();
     private List<MessageEntity> databaseMsgs;
 
-    private static MessageRepository messageRepository;
+    private MessageRepository messageRepository;
     private String teamId;
 
     private boolean menuOn;
@@ -96,15 +98,13 @@ public class ChatActivity extends AppCompatActivity{
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        binding.recyclerView.scrollToPosition(chats.size()-1);
 
         binding.recyclerView.setAdapter(adapter);
         // LiveData를 통한 채팅사항 항시 반영 (이 때, 채팅방이 Observe하고 있는 대상은 데이터베이스의 내용)
         chatsLiveData.observe(this, adapter::setItems);
 
         // 메세지 큐에 쌓여 있던 메세지 데이터베이스에 추가
-        // 선택지가 2개 있음
-        // 1. ChatItem을 기반으로 한 리사이클러뷰로 데이터베이스로부터 불러오고 데이터베이스의 내용을 다시 ChatItem으로 만들어 어댑터에 추가
-        // 2. 그냥 데이터베이스를 기반으로한 리사이클러뷰
         updateThread = new UpdateThread();
         updateThread.start();
 
@@ -131,6 +131,8 @@ public class ChatActivity extends AppCompatActivity{
     class UpdateThread extends Thread {
         @Override
         public void run() {
+            final Handler handler = new Handler(Looper.getMainLooper());
+
             while (true) {
                 if (ClientApp.RoomMsgQueues.containsKey(teamId)) {
                     Queue<Message> unloadedMsgs = ClientApp.RoomMsgQueues.get(teamId);
@@ -155,6 +157,9 @@ public class ChatActivity extends AppCompatActivity{
                                 }
                             }
                             chatsLiveData.postValue(chats);
+                            handler.post(() -> {
+                                binding.recyclerView.scrollToPosition(chats.size() - 1);
+                            });
                         }
                     }
                 }
