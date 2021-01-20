@@ -23,6 +23,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.MultiTransformation;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 import com.doubleslash.playground.databinding.ActivityCreateGroupBinding;
 import com.doubleslash.playground.retrofit.RetrofitClient;
 import com.doubleslash.playground.retrofit.dto.CreateTeamDTO;
@@ -261,8 +265,13 @@ public class CreateGroupActivity extends AppCompatActivity implements AdapterVie
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && data != null && data.getData() != null) {
             if (requestCode == 101) {
+                MultiTransformation multiOption = new MultiTransformation(new CenterCrop(), new RoundedCorners(8));
                 selectedImageUri = data.getData();
-                Glide.with(getApplicationContext()).asBitmap().load(selectedImageUri).into(binding.registerPicIv);
+                Glide.with(getApplicationContext())
+                        .asBitmap()
+                        .load(selectedImageUri)
+                        .apply(RequestOptions.bitmapTransform(multiOption))
+                        .into(binding.registerPicIv);
             }
         }
     }

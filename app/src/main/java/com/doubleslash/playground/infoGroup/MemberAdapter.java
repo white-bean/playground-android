@@ -9,13 +9,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.doubleslash.playground.GroupList.Group;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.doubleslash.playground.ClientApp;
 import com.doubleslash.playground.R;
 
 import java.util.ArrayList;
 
-public class memberAdapter extends RecyclerView.Adapter<memberAdapter.ViewHolder>{
-    ArrayList<member> items = new ArrayList<member>();
+public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder>{
+    ArrayList<Member> items = new ArrayList<Member>();
 
     @NonNull
     @Override
@@ -28,7 +30,7 @@ public class memberAdapter extends RecyclerView.Adapter<memberAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        member item = items.get(position);
+        Member item = items.get(position);
         holder.setItem(item);
     }
 
@@ -37,21 +39,22 @@ public class memberAdapter extends RecyclerView.Adapter<memberAdapter.ViewHolder
         return items.size();
     }
 
-    public void addItem(member item){
+    public void addItem(Member item){
         items.add(item);
     }
 
-    public void setItems(ArrayList<member> items){
+    public void setItems(ArrayList<Member> items){
         this.items = items;
     }
 
-    public member getItem(int position){
+    public Member getItem(int position){
         return items.get(position);
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder{
         ImageView member_image;
         TextView name;
+        RequestOptions option = new RequestOptions().circleCrop();
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -60,8 +63,11 @@ public class memberAdapter extends RecyclerView.Adapter<memberAdapter.ViewHolder
             name = itemView.findViewById(R.id.name);
         }
 
-        public void setItem(member item){
-            member_image.setImageResource(item.getImage());
+        public void setItem(Member item){
+            Glide.with(itemView.getContext())
+                    .load(ClientApp.API_URL + item.getImage())
+                    .apply(option)
+                    .into(member_image);
             name.setText(item.getName());
         }
     }
