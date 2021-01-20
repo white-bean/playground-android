@@ -1,5 +1,6 @@
 package com.doubleslash.playground.infoGroup;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,9 +26,12 @@ public class JoinAcceptActivity extends AppCompatActivity {
     private void initUI() {
         retrofitClient = RetrofitClient.getInstance();
 
+        Intent intent = getIntent();
+        String category = intent.getStringExtra("category");
+
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
-        adapter = new JoinAdapter();
+        adapter = new JoinAdapter(category);
 
         // 어답터에 추가하는 작업 있어야함
 

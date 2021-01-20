@@ -145,8 +145,6 @@ public class GroupListFragment1 extends Fragment {
         binding.recyclerView.setAdapter(adapter);
 
         adapter.setOnItemClickListener((holder, view, position) -> {
-            Group item = adapter.getItem(position);
-
             Intent intent = new Intent(getActivity(), InfoGroupActivity.class);
             intent.putExtra("teamId", body.getData().get(position).getTeamId());
 

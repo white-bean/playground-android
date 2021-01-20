@@ -29,7 +29,6 @@ public class GroupListFragment2 extends Fragment {
     private FragmentGroupList2Binding binding;
 
     private RetrofitClient retrofitClient;
-    private GroupAdapter adapter;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -128,8 +127,6 @@ public class GroupListFragment2 extends Fragment {
         binding.recyclerView.setAdapter(adapter);
 
         adapter.setOnItemClickListener((holder, view, position) -> {
-            Group item = adapter.getItem(position);
-
             Intent intent = new Intent(getActivity(), InfoGroupActivity.class);
             intent.putExtra("teamId", body.getData().get(position).getTeamId());
 
