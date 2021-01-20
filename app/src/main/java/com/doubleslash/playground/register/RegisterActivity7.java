@@ -31,27 +31,17 @@ public class RegisterActivity7 extends AppCompatActivity {
     ActivityRegister7Binding binding;
     Sign_upDTO sign_upDTO;
     final int MY_PERMISSIONS_REQUEST_READ_EXT_STORAGE =1;
-    Uri[] uri=new Uri[3];
-    Bundle bundle;
     Uri selectedImageUri;
     ArrayList<Uri> urilist=new ArrayList<>();
     MultipartBody.Part[] selfimage = new MultipartBody.Part[3];
     MultipartBody.Part studentcard;
     public static Context context;
     private final int GET_IMAGE_FOR_STUDENT_CARD = 203;
-    RegisterActivity5 registerActivity5=new RegisterActivity5();
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CONTACTS},1);
-        //requestReadExternalStoragePermission();
         binding = ActivityRegister7Binding.inflate(getLayoutInflater());
-        //sign_upDTO=(Sign_upDTO)getIntent().getSerializableExtra("sign_upDTO");
-        //bundle=getIntent().getExtras();
-        //uri[0]=bundle.getParcelable("imageUri");
-        //uri[1]=bundle.getParcelable("imageUri1");
-        //uri[2]=bundle.getParcelable("imageUri2");
-        //sign_upDTO= (Sign_upDTO) bundle.getSerializable("sign_upDTO");
         urilist=getIntent().getParcelableArrayListExtra(Intent.EXTRA_STREAM);
         sign_upDTO= (Sign_upDTO) getIntent().getSerializableExtra("sign_upDTO");
         setContentView(binding.getRoot());
@@ -68,8 +58,10 @@ public class RegisterActivity7 extends AppCompatActivity {
         });
 
         binding.nextBtn.setOnClickListener(v -> {
+
             RetrofitClient my_retrofit=new RetrofitClient();
             studentcard=my_retrofit.prepareFilePart("studentCard", selectedImageUri, context);
+
             for(int i=0;i<3;i++){
                 selfimage[i]=my_retrofit.prepareFilePart("profile", urilist.get(i), context);
             }
@@ -87,7 +79,6 @@ public class RegisterActivity7 extends AppCompatActivity {
             MultiTransformation multiOption = new MultiTransformation(new CenterCrop(), new RoundedCorners(8));
             selectedImageUri = data.getData();
             Glide.with(getApplicationContext()).asBitmap().load(selectedImageUri).apply(RequestOptions.bitmapTransform(multiOption)).into(binding.studentCardBtn);
-
         }
     }
 
@@ -99,29 +90,6 @@ public class RegisterActivity7 extends AppCompatActivity {
     }
 
 
-    private void requestReadExternalStoragePermission() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) !=
-                PackageManager.PERMISSION_GRANTED) {
-
-            // Should we show an explanation?
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.READ_EXTERNAL_STORAGE)) {
-
-                // Show an expanation to the user *asynchronously* -- don't block
-                // this thread waiting for the user's response! After the user
-                // sees the explanation, try again to request the permission.
-
-            } else {
-
-                // No explanation needed, we can request the permission.
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                        MY_PERMISSIONS_REQUEST_READ_EXT_STORAGE);
-                // MY_PERMISSIONS_REQUEST_READ_EXT_STORAGE is an
-                // app-defined int constant. The callback method gets the
-                // result of the request.
-            }
-        }
-    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {

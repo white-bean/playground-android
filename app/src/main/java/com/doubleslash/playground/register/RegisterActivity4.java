@@ -31,7 +31,7 @@ public class RegisterActivity4 extends AppCompatActivity {
     private ActivityRegister4Binding binding;
     Sign_upDTO sign_upDTO;
     InputMethodManager inputMethodManager;
-    private boolean isMan, isWoman;
+    private boolean isMan, isWoman, isregion;
     private List<String> list;
     private Search_school_Adapter adapter;
     Context context;
@@ -50,7 +50,7 @@ public class RegisterActivity4 extends AppCompatActivity {
     private void initUI() {
         isMan = false;
         isWoman = false;
-
+        isregion=false;
         // 남, 여 고르기 버튼 활성화, 비활성화
         binding.manBtn.setOnClickListener(v -> {
             if (isWoman) {
@@ -64,8 +64,7 @@ public class RegisterActivity4 extends AppCompatActivity {
 
             String text1 = binding.nicknameEdit.getText().toString();
             String text2 = binding.birthYearEdit.getText().toString();
-            String text3 = binding.searchEdit.getText().toString();
-            if (text1.length() > 0 && text2.length() ==4 && text3.length() > 0) {
+            if (text1.length() > 0 && text2.length() ==4 && isregion) {
                 onNextBtn();
             }
         });
@@ -81,8 +80,7 @@ public class RegisterActivity4 extends AppCompatActivity {
 
             String text1 = binding.nicknameEdit.getText().toString();
             String text2 = binding.birthYearEdit.getText().toString();
-            String text3 = binding.searchEdit.getText().toString();
-            if (text1.length() > 0 && text2.length() ==4 && text3.length() > 0) {
+            if (text1.length() > 0 && text2.length() ==4 && isregion) {
                 onNextBtn();
             }
         });
@@ -103,8 +101,7 @@ public class RegisterActivity4 extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 String text1 = s.toString();
                 String text2 = binding.birthYearEdit.getText().toString();
-                String text3 = binding.searchEdit.getText().toString();
-                if (text1.length() > 0 && text2.length() ==4 && text3.length() > 0 && (isMan || isWoman)) {
+                if (text1.length() > 0 && text2.length() ==4 && isregion && (isMan || isWoman)) {
                     onNextBtn();
                 }
                 else {
@@ -128,8 +125,7 @@ public class RegisterActivity4 extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 String text1 = s.toString();
                 String text2 = binding.nicknameEdit.getText().toString();
-                String text3 = binding.searchEdit.getText().toString();
-                if (text1.length() ==4 && text2.length() > 0 && text3.length() > 0 && (isMan || isWoman)) {
+                if (text1.length() ==4 && text2.length() > 0 && isregion && (isMan || isWoman)) {
                     onNextBtn();
                 }
                 else {
@@ -146,15 +142,14 @@ public class RegisterActivity4 extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                isregion=false;
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                String text1 = s.toString();
                 String text2 = binding.nicknameEdit.getText().toString();
                 String text3 = binding.birthYearEdit.getText().toString();
-                if (text1.length() > 0 && text2.length() > 0 && text3.length() ==4 && (isMan || isWoman)) {
+                if (isregion && text2.length() > 0 && text3.length() ==4 && (isMan || isWoman)) {
                     onNextBtn();
                 }
                 else {
@@ -183,7 +178,7 @@ public class RegisterActivity4 extends AppCompatActivity {
                         && keyCode == KeyEvent.KEYCODE_ENTER){
                     getschooldata();
                     binding.schoollist.setVisibility(View.VISIBLE); //나오기
-                    inputMethodManager.hideSoftInputFromWindow(binding.searchEdit.getWindowToken(),0);
+                    //inputMethodManager.hideSoftInputFromWindow(binding.searchEdit.getWindowToken(),0);
                     return true;
                 }
                 return false;
@@ -195,9 +190,18 @@ public class RegisterActivity4 extends AppCompatActivity {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             System.out.println(list.get(position));
             binding.searchEdit.setText(list.get(position));
+            isregion=true;
+            list.clear();
+            adapter.notifyDataSetChanged();
             binding.schoollist.setVisibility(View.INVISIBLE);
-            //binding.linearLayout.bringChildToFront(binding.schoollist);
-            //binding.yearEdit.setVisibility(View.VISIBLE);
+            String text2 = binding.nicknameEdit.getText().toString();
+            String text1 = binding.birthYearEdit.getText().toString();
+            if (text1.length() ==4 && text2.length() > 0 && isregion && (isMan || isWoman)) {
+                onNextBtn();
+            }
+            else {
+                offNextBtn();
+            }
         }
     };
     // 다음 버튼 활성화
@@ -224,7 +228,7 @@ public class RegisterActivity4 extends AppCompatActivity {
                     @Override
                     public void run() {
                         if (list!=null)
-                            adapter=new Search_school_Adapter(list,context);
+                            adapter=new Search_school_Adapter(list,context,binding.searchEdit.getText().toString());
                         binding.schoollist.setAdapter(adapter);
                     }
                 });
