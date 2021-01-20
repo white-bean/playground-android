@@ -174,7 +174,39 @@ public class RetrofitClient {
             e.printStackTrace();
         }
     }
-
+    //그룹 업데이트
+    public void update_group(CreateTeamDTO createTeamDTO, MultipartBody.Part teamImageUrl) {
+        final Group_create_responseDTO[] body = new Group_create_responseDTO[1];
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    body[0] = group_create_service.updateData(createPartFromString(createTeamDTO.getName()),
+                            createPartFromString(createTeamDTO.getContent()),
+                            createPartFromString(createTeamDTO.getStartDate()),
+                            createPartFromString(createTeamDTO.getEndDate()),
+                            createTeamDTO.getMaxMemberSize(),
+                            createPartFromString(createTeamDTO.getCategory()),
+                            createPartFromString(createTeamDTO.getLocation()),
+                            teamImageUrl,
+                            "TOKEN " + ClientApp.userToken).execute().body();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        thread.start();
+        try {
+            thread.join();
+            if (body[0].getResult() == 1) {
+                Log.d("notice", "Create group success " + body[0].getMessage());
+            } else {
+                Log.d("error", "Cannot create group failed " + body[0].getMessage());
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
     // 자동 로그인 (LoginActivity)
     public int post_autologin(final String user_token, final String fcm_token){
         final AutoLoginResponseDTO[] body = new AutoLoginResponseDTO[1];

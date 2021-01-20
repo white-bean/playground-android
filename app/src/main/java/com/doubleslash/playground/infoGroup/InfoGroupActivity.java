@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.doubleslash.playground.ClientApp;
+import com.doubleslash.playground.EditGroupActivity;
 import com.doubleslash.playground.R;
 import com.doubleslash.playground.databinding.ActivityInfoGroupBinding;
 import com.doubleslash.playground.profile.MyGroup;
@@ -94,7 +95,20 @@ public class InfoGroupActivity extends AppCompatActivity {
                 binding.imageGroupCategory.setBackgroundResource(R.drawable.ic_button_study);
                 break;
         }
-
+        //소모임 설정 버튼 눌렀을 때
+        binding.btnSetting.setOnClickListener(v->{
+            Intent intent1 = new Intent(getApplicationContext(), EditGroupActivity.class);
+            System.out.println(body.getData().getName());
+            Bundle bundle=new Bundle();
+            bundle.putString("name",body.getData().getName());
+            bundle.putString("startdate",body.getData().getStartDate());
+            bundle.putString("enddate",body.getData().getEndDate());
+            bundle.putString("url",body.getData().getTeamImageUrl());
+            bundle.putString("content",body.getData().getContent());
+            bundle.putString("location",body.getData().getLocation());
+            intent1.putExtras(bundle);
+            startActivity(intent1);
+        });
         // 모임 일정 리스트
         if (false) {
             // 모임 일정이 있는 경우

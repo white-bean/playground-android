@@ -31,11 +31,8 @@
                     android:layout_height="80dp"
                     android:layout_marginEnd="@dimen/spacing_m"
                     android:layout_marginRight="@dimen/spacing_m"
-                    android:paddingTop="23dp"
-                    android:paddingBottom="25dp"
-                    android:paddingLeft="@dimen/spacing_l"
-                    android:paddingRight="@dimen/spacing_l"
                     android:background="@drawable/button_r8"
+                    android:scaleType="centerCrop"
                     app:srcCompat="@drawable/camera_gray" />
 
 
