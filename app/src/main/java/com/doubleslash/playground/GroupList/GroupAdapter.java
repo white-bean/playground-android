@@ -1,6 +1,7 @@
 package com.doubleslash.playground.GroupList;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -100,15 +101,23 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.ViewHolder> 
             switch (item.getCategory()) {
                 case "스터디":
                     category.setImageResource(R.drawable.writing_hand);
+                    category.setBackgroundResource(R.drawable.ic_button_study);
                     break;
                 case "운동/다이어트":
                     category.setImageResource(R.drawable.diet);
+                    category.setBackgroundResource(R.drawable.ic_button_diet);
                     break;
                 case "문화생활":
                     category.setImageResource(R.drawable.draw);
+                    category.setBackgroundResource(R.drawable.ic_button_cultural);
                     break;
                 case "게임":
                     category.setImageResource(R.drawable.game);
+                    category.setBackgroundResource(R.drawable.ic_button_game);
+                    break;
+                default:
+                    category.setImageResource(R.drawable.ic_camera);
+                    category.setBackgroundResource(R.drawable.ic_button_study);
                     break;
             }
 

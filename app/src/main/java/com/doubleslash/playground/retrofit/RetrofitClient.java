@@ -49,9 +49,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
     private static RetrofitClient instance = null;
-    
-    private static final String API_URL = "http://222.251.129.150/";
-            
+
     private static Group_create_Service group_create_service;
     private static Sign_in_Service sign_in_service;
     private static Total_group_Service total_group_service;
@@ -60,7 +58,7 @@ public class RetrofitClient {
     private static Chatroom_infoService chatroom_infoService;
     private static Studentcard_upload_Service studentcard_upload_service;
     private static Send_chat_Service send_chat_service;
-    
+
     public static int result = -1;
 
     public static Total_group_responseDTO total_group_responseDTO = null;
@@ -72,7 +70,7 @@ public class RetrofitClient {
     public RetrofitClient() {
         Gson gson = new GsonBuilder().setLenient().create();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(API_URL)
+                .baseUrl(ClientApp.API_URL + "/")
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 

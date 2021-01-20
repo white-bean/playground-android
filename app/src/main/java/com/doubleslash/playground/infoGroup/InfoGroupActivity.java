@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -69,6 +68,29 @@ public class InfoGroupActivity extends AppCompatActivity {
                     body.getData().getTeamMembers().get(i).getNickname()));
         }
         binding.rvGroupMembers.setAdapter(adapter);
+
+        switch (body.getData().getCategory()) {
+            case "스터디":
+                binding.imageGroupCategory.setImageResource(R.drawable.writing_hand);
+                binding.imageGroupCategory.setBackgroundResource(R.drawable.ic_button_study);
+                break;
+            case "운동/다이어트":
+                binding.imageGroupCategory.setImageResource(R.drawable.diet);
+                binding.imageGroupCategory.setBackgroundResource(R.drawable.ic_button_diet);
+                break;
+            case "문화생활":
+                binding.imageGroupCategory.setImageResource(R.drawable.draw);
+                binding.imageGroupCategory.setBackgroundResource(R.drawable.ic_button_cultural);
+                break;
+            case "게임":
+                binding.imageGroupCategory.setImageResource(R.drawable.game);
+                binding.imageGroupCategory.setBackgroundResource(R.drawable.ic_button_game);
+                break;
+            default:
+                binding.imageGroupCategory.setImageResource(R.drawable.ic_camera);
+                binding.imageGroupCategory.setBackgroundResource(R.drawable.ic_button_study);
+                break;
+        }
 
         //가입신청버튼눌렀을 때
         binding.btnGroupRegister.setOnClickListener(v -> {

@@ -90,7 +90,7 @@ public class MyGroupAdapter extends RecyclerView.Adapter<MyGroupAdapter.ViewHold
         public void setItem(Context context, MyGroup item) {
             location.setText(item.getLocation());
 
-            curr_num.setText(item.getCurrent_num());
+            curr_num.setText(item.getCurrent_num().toString());
 
             name.setText(item.getName());
 

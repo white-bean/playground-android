@@ -1,6 +1,8 @@
 package com.doubleslash.playground.profile;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,6 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
+import com.doubleslash.playground.LoginActivity;
+import com.doubleslash.playground.ClientApp;
 import com.doubleslash.playground.databinding.FragmentProfileBinding;
 import com.doubleslash.playground.infoGroup.InfoGroupActivity;
 import com.doubleslash.playground.retrofit.RetrofitClient;
@@ -32,15 +36,15 @@ public class ProfileFragment extends Fragment {
 
         // 사용자 정보
         Glide.with(getContext())
-                .load(body.getData().getImages().get(0))
+                .load(ClientApp.API_URL + body.getData().getImages().get(0))
                 .into(binding.imageUser01);
 
         Glide.with(getContext())
-                .load(body.getData().getImages().get(1))
+                .load(ClientApp.API_URL + body.getData().getImages().get(1))
                 .into(binding.imageUser02);
 
         Glide.with(getContext())
-                .load(body.getData().getImages().get(2))
+                .load(ClientApp.API_URL + body.getData().getImages().get(2))
                 .into(binding.imageUser03);
 
         binding.tvUserName.setText(body.getData().getName());
@@ -63,21 +67,34 @@ public class ProfileFragment extends Fragment {
                     null));
         }
 
+        if (myGroupAdapter.getItemCount() > 0) {
+            binding.layoutCaution.setVisibility(View.GONE);
+        } else {
+            binding.layoutCaution.setVisibility(View.VISIBLE);
+        }
+
         binding.rvUserGroup.setAdapter(myGroupAdapter);
 
         myGroupAdapter.setOnItemClickListener((holder, view, position) -> {
             MyGroup item = myGroupAdapter.getItem(position);
 
             Intent intent = new Intent(getActivity(), InfoGroupActivity.class);
-
-            // 미완성
-            // 소모임 정보 넘겨주기
+            intent.putExtra("teamId", body.getData().getMyteams().get(position).getId());
 
             startActivity(intent);
         });
 
         binding.logout.setOnClickListener(v -> {
             //로그아웃 클릭했을 때
+
+            SharedPreferences auto = this.getActivity().getSharedPreferences("playground", Activity.MODE_PRIVATE);
+            SharedPreferences.Editor editor = auto.edit();
+            //editor.clear()는 auto에 들어있는 모든 정보를 기기에서 지웁니다.
+            editor.clear();
+            editor.commit();
+            Intent intent =new Intent(getActivity(), LoginActivity.class);
+            startActivity(intent);
+            getActivity().finish();
         });
 
         return binding.getRoot();

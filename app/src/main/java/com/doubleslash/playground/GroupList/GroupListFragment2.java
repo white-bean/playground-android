@@ -2,7 +2,6 @@ package com.doubleslash.playground.GroupList;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +15,7 @@ import com.bumptech.glide.load.MultiTransformation;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
+import com.doubleslash.playground.ClientApp;
 import com.doubleslash.playground.databinding.FragmentGroupList2Binding;
 import com.doubleslash.playground.infoGroup.InfoGroupActivity;
 import com.doubleslash.playground.profile.MyGroup;
@@ -52,7 +52,7 @@ public class GroupListFragment2 extends Fragment {
 
         Glide.with(Objects.requireNonNull(getActivity()))
                 .asBitmap()
-                .load(body.getData().getImages().get(0))
+                .load(ClientApp.API_URL + body.getData().getImages().get(0))
                 .apply(RequestOptions.bitmapTransform(multiOption))
                 .into(binding.imageUser);
 
@@ -69,7 +69,7 @@ public class GroupListFragment2 extends Fragment {
                     body.getData().getMyteams().get(i).getName(),
                     body.getData().getMyteams().get(i).getCategory(),
                     body.getData().getMyteams().get(i).getLocation(),
-                    body.getData().getImages().get(i),
+                    null,
                     body.getData().getMyteams().get(i).getCurrentMemberSize(),
                     body.getData().getMyteams().get(i).getMaximumMemberSize()));
         }
@@ -80,18 +80,19 @@ public class GroupListFragment2 extends Fragment {
             MyGroup item = myGroupAdapter2.getItem(position);
 
             Intent intent = new Intent(getActivity(), InfoGroupActivity.class);
-
-            // 미완성
-            // 소모임 정보 넘겨주기
+            intent.putExtra("teamId", body.getData().getMyteams().get(position).getId());
 
             startActivity(intent);
         });
 
         // 2. 예정된 모임 일정
-        // 미완성
+        if (false) {
+            // 모임 일정이 있는 경우
+            binding.layoutGroupSchedule.setVisibility(View.VISIBLE);
+        }
 
         // 3. 소모임 추천 목록
-        addItems("스터디");
+        addItems("전체");
 
         // 알림 버튼
         binding.btnAlarms.setOnClickListener(v -> {
@@ -121,7 +122,6 @@ public class GroupListFragment2 extends Fragment {
                         body.getData().get(i).getName(),
                         body.getData().get(i).getContent(),
                         body.getData().get(i).getImageUri()));
-                Log.d("group", body.getData().get(i).getLocation());
             }
         }
 
@@ -132,7 +132,6 @@ public class GroupListFragment2 extends Fragment {
 
             Intent intent = new Intent(getActivity(), InfoGroupActivity.class);
             intent.putExtra("teamId", body.getData().get(position).getTeamId());
-            // 미완성 (소모임 정보 넘겨주기)
 
             startActivity(intent);
         });

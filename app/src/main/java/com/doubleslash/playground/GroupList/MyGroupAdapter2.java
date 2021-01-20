@@ -121,7 +121,7 @@ public class MyGroupAdapter2 extends RecyclerView.Adapter<MyGroupAdapter2.ViewHo
                     category_name.setBackgroundColor(Color.parseColor("#ffc644"));
                     break;
                 default:
-                    category.setImageResource(R.drawable.writing_hand);
+                    category.setImageResource(R.drawable.ic_camera);
                     category_name.setBackgroundColor(Color.parseColor("#4ed2ae"));
                     break;
             }
