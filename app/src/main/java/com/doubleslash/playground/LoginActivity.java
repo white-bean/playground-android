@@ -108,7 +108,7 @@ public class LoginActivity extends AppCompatActivity {
                                     autoLogin.putString("user_token", sign_in_responseDTO.getToken());
                                     autoLogin.commit();
                                 }
-                                Intent intent = new Intent(getApplicationContext(), CreateGroupActivity.class);
+                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                 intent.putExtra("email", binding.emailEdit.getText().toString());
                                 startActivity(intent);
                                 finish();

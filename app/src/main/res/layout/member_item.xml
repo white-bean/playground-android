@@ -5,12 +5,13 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginRight="@dimen/spacing_m"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="6dp">
 
     <ImageView
         android:id="@+id/member_image"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
         android:layout_marginBottom="@dimen/spacing_xxs"
         android:background="@drawable/pro_min" />
 

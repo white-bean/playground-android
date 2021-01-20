@@ -147,9 +147,7 @@ public class GroupListFragment1 extends Fragment {
             Group item = adapter.getItem(position);
 
             Intent intent = new Intent(getActivity(), InfoGroupActivity.class);
-
-            // 미완성
-            // 소모임 정보 넘겨주기
+            intent.putExtra("teamId", body.getData().get(position).getTeamId());
 
             startActivity(intent);
         });
