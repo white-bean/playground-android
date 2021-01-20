@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 
@@ -65,9 +66,16 @@ public class ChatActivity extends AppCompatActivity{
         binding.plusButton.setOnClickListener(v -> {
             if (menuOn) {
                 binding.menuLayout.setVisibility(View.VISIBLE);
+                DisplayMetrics dm = getResources().getDisplayMetrics();
+                int bottomPadding = Math.round(140 * dm.density);
+                binding.recyclerView.setPadding(0, 0, 0, bottomPadding);
+                binding.recyclerView.scrollToPosition(chats.size() - 1);
                 menuOn = false;
             } else {
                 binding.menuLayout.setVisibility(View.GONE);
+                DisplayMetrics dm = getResources().getDisplayMetrics();
+                int bottomPadding = Math.round(60 * dm.density);
+                binding.recyclerView.setPadding(0, 0, 0, bottomPadding);
                 menuOn = true;
             }
         });
