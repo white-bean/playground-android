@@ -16,7 +16,6 @@ import com.doubleslash.playground.databinding.ActivityLoginBinding;
 import com.doubleslash.playground.register.RegisterActivity1;
 import com.doubleslash.playground.retrofit.RetrofitClient;
 import com.doubleslash.playground.retrofit.dto.response.Sign_in_responseDTO;
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.Objects;

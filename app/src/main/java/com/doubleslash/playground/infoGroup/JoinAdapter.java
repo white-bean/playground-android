@@ -92,23 +92,18 @@ public class JoinAdapter extends RecyclerView.Adapter<JoinAdapter.ViewHolder>{
 
             switch (category) {
                 case "스터디":
-                    categoryImage.setImageResource(R.drawable.writing_hand);
                     categoryImage.setBackgroundResource(R.drawable.ic_button_study);
                     break;
                 case "운동/다이어트":
-                    categoryImage.setImageResource(R.drawable.diet);
                     categoryImage.setBackgroundResource(R.drawable.ic_button_diet);
                     break;
                 case "문화생활":
-                    categoryImage.setImageResource(R.drawable.draw);
                     categoryImage.setBackgroundResource(R.drawable.ic_button_cultural);
                     break;
                 case "게임":
-                    categoryImage.setImageResource(R.drawable.game);
                     categoryImage.setBackgroundResource(R.drawable.ic_button_game);
                     break;
                 default:
-                    categoryImage.setImageResource(R.drawable.ic_camera);
                     categoryImage.setBackgroundResource(R.drawable.ic_button_study);
                     break;
             }

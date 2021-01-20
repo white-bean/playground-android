@@ -37,6 +37,10 @@ public class TeamInfoDTO {
     @Expose
     private String teamImageUrl;
 
+    @SerializedName("admin")
+    @Expose
+    private Boolean admin;
+
     public Long getId() { return id; }
 
     public void setId(Long id) { this.id = id; }
@@ -76,4 +80,12 @@ public class TeamInfoDTO {
     public String getTeamImageUrl() { return teamImageUrl; }
 
     public void setTeamImageUrl(String teamImageUrl) { this.teamImageUrl = teamImageUrl; }
+
+    public Boolean getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(Boolean admin) {
+        this.admin = admin;
+    }
 }

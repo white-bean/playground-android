@@ -45,4 +45,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+    <TextView
+        android:id="@+id/tv_no_member"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_m"
+        app:layout_constraintStart_toStartOf="@id/textView6"
+        app:layout_constraintTop_toBottomOf="@id/textView6"
+
+        android:text="가입을 신청한 사람이 없습니다."
+        android:textSize="14sp"
+        android:textColor="#7c7f90"
+        android:fontFamily="@font/notosanskr_regular"
+
+        android:visibility="gone"
+        android:includeFontPadding="false" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

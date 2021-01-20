@@ -69,25 +69,25 @@
             android:includeFontPadding="false" />
 
         <Button
-            android:id="@+id/btn_alarms"
+            android:id="@+id/btn_search"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginEnd="@dimen/spacing_m"
             android:layout_marginRight="@dimen/spacing_m"
-            app:layout_constraintEnd_toStartOf="@id/btn_settings"
-            app:layout_constraintTop_toTopOf="@id/btn_settings"
-            app:layout_constraintBottom_toBottomOf="@id/btn_settings"
+            app:layout_constraintEnd_toStartOf="@id/btn_add"
+            app:layout_constraintTop_toTopOf="@id/btn_add"
+            app:layout_constraintBottom_toBottomOf="@id/btn_add"
 
-            android:background="@drawable/ic_alarm"/>
+            android:background="@drawable/search"/>
 
         <Button
-            android:id="@+id/btn_settings"
+            android:id="@+id/btn_add"
             android:layout_width="24dp"
             android:layout_height="24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/cv_image_user"
 
-            android:background="@drawable/ic_settings"/>
+            android:background="@drawable/plus"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_user_group"

@@ -16,6 +16,8 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.doubleslash.playground.ClientApp;
+import com.doubleslash.playground.CreateGroupActivity;
+import com.doubleslash.playground.FindGroupActivity;
 import com.doubleslash.playground.databinding.FragmentGroupList2Binding;
 import com.doubleslash.playground.infoGroup.InfoGroupActivity;
 import com.doubleslash.playground.profile.MyGroup;
@@ -93,14 +95,16 @@ public class GroupListFragment2 extends Fragment {
         // 3. 소모임 추천 목록
         addItems("전체");
 
-        // 알림 버튼
-        binding.btnAlarms.setOnClickListener(v -> {
-            // 미완성
+        // 소모임 생성 버튼
+        binding.btnAdd.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), CreateGroupActivity.class);
+            startActivity(intent);
         });
 
-        // 설정 버튼
-        binding.btnSettings.setOnClickListener(v -> {
-            // 미완성
+        // 소모임 검색 버튼
+        binding.btnSearch.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), FindGroupActivity.class);
+            startActivity(intent);
         });
     }
 

@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +39,7 @@ public class ProfileFragment extends Fragment {
         Glide.with(getContext())
                 .load(ClientApp.API_URL + body.getData().getImages().get(0))
                 .into(binding.imageUser01);
+        Log.d("ddd", ClientApp.API_URL + body.getData().getImages().get(0));
 
         Glide.with(getContext())
                 .load(ClientApp.API_URL + body.getData().getImages().get(1))

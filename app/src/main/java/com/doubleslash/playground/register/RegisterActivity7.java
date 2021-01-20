@@ -17,6 +17,7 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.doubleslash.playground.CreateGroupActivity;
+import com.doubleslash.playground.LoginActivity;
 import com.doubleslash.playground.MainActivity;
 import com.doubleslash.playground.R;
 import com.doubleslash.playground.databinding.ActivityRegister7Binding;
@@ -66,7 +67,7 @@ public class RegisterActivity7 extends AppCompatActivity {
                 selfimage[i]=my_retrofit.prepareFilePart("profile", urilist.get(i), context);
             }
             my_retrofit.uploadSign_up(sign_upDTO,studentcard,selfimage);
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
             startActivity(intent);
             finish();
         });

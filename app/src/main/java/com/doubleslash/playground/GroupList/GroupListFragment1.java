@@ -7,7 +7,6 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,6 +59,8 @@ public class GroupListFragment1 extends Fragment {
 
         // 필터 항목 선택
         binding.tvAll.setOnClickListener(view -> {
+            binding.tvFilter.setText("전체");
+
             binding.tvAll.setTextColor(getResources().getColor(R.color.sub_black));
             binding.tvStudy.setTextColor(getResources().getColor(R.color.sub_gray));
             binding.tvDiet.setTextColor(getResources().getColor(R.color.sub_gray));
@@ -70,6 +71,8 @@ public class GroupListFragment1 extends Fragment {
         });
 
         binding.tvStudy.setOnClickListener(view -> {
+            binding.tvFilter.setText("스터디");
+
             binding.tvAll.setTextColor(getResources().getColor(R.color.sub_gray));
             binding.tvStudy.setTextColor(getResources().getColor(R.color.sub_black));
             binding.tvDiet.setTextColor(getResources().getColor(R.color.sub_gray));
@@ -80,6 +83,8 @@ public class GroupListFragment1 extends Fragment {
         });
 
         binding.tvDiet.setOnClickListener(view -> {
+            binding.tvFilter.setText("운동/다이어트");
+
             binding.tvAll.setTextColor(getResources().getColor(R.color.sub_gray));
             binding.tvStudy.setTextColor(getResources().getColor(R.color.sub_gray));
             binding.tvDiet.setTextColor(getResources().getColor(R.color.sub_black));
@@ -90,6 +95,8 @@ public class GroupListFragment1 extends Fragment {
         });
 
         binding.tvCultural.setOnClickListener(view -> {
+            binding.tvFilter.setText("문화생활");
+
             binding.tvAll.setTextColor(getResources().getColor(R.color.sub_gray));
             binding.tvStudy.setTextColor(getResources().getColor(R.color.sub_gray));
             binding.tvDiet.setTextColor(getResources().getColor(R.color.sub_gray));
@@ -100,6 +107,8 @@ public class GroupListFragment1 extends Fragment {
         });
 
         binding.tvGame.setOnClickListener(view -> {
+            binding.tvFilter.setText("게임");
+            
             binding.tvAll.setTextColor(getResources().getColor(R.color.sub_gray));
             binding.tvStudy.setTextColor(getResources().getColor(R.color.sub_gray));
             binding.tvDiet.setTextColor(getResources().getColor(R.color.sub_gray));

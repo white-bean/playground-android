@@ -2,6 +2,7 @@ package com.doubleslash.playground.infoGroup;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -36,5 +37,11 @@ public class JoinAcceptActivity extends AppCompatActivity {
         // 어답터에 추가하는 작업 있어야함
 
         binding.recyclerView.setAdapter(adapter);
+
+        if (adapter.getItemCount() > 0) {
+            binding.tvNoMember.setVisibility(View.GONE);
+        } else {
+            binding.tvNoMember.setVisibility(View.VISIBLE);
+        }
     }
 }

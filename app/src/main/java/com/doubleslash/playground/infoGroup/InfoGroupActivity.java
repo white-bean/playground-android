@@ -6,14 +6,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.doubleslash.playground.ClientApp;
 import com.doubleslash.playground.R;
 import com.doubleslash.playground.databinding.ActivityInfoGroupBinding;
+import com.doubleslash.playground.profile.MyGroup;
 import com.doubleslash.playground.retrofit.RetrofitClient;
 import com.doubleslash.playground.retrofit.dto.response.Team_info_responseDTO;
+import com.doubleslash.playground.retrofit.dto.response.User_info_responseDTO;
 import com.doubleslash.playground.socket.model.Aria;
 import com.doubleslash.playground.socket.model.Type;
 
@@ -23,27 +27,27 @@ public class InfoGroupActivity extends AppCompatActivity {
 
     private long teamId;
 
+    private boolean admin;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityInfoGroupBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        retrofitClient = RetrofitClient.getInstance();
+
         initUI();
     }
 
     private void initUI() {
-        // 방장이 아닐 경우
-        binding.btnSetting.setVisibility(View.GONE);
-        binding.btnAcceptPage.setVisibility(View.GONE);
-
-        // GroupListFragment로부터 teamId를 넘겨받음
+        // 이전 화면으로부터 teamId를 넘겨받음
         Intent intent = getIntent();
         teamId = intent.getLongExtra("teamId", -1);
 
-        retrofitClient = RetrofitClient.getInstance();
         Team_info_responseDTO body = retrofitClient.get_teaminfo(teamId);
 
+        // 소모임 기본 정보
         Glide.with(this)
                 .load(ClientApp.API_URL + body.getData().getTeamImageUrl())
                 .into(binding.imageGroup);
@@ -51,6 +55,10 @@ public class InfoGroupActivity extends AppCompatActivity {
         binding.tvGroupName.setText(body.getData().getName());
         binding.tvGroupContent.setText(body.getData().getContent());
         binding.tvMemberNumber.setText(Integer.toString(body.getData().getCurrentMemberSize()));
+        binding.tvMemberNumber2.setText(Integer.toString(body.getData().getCurrentMemberSize()));
+
+        String ddayDate = body.getData().getStartDate() + "\n~" + body.getData().getEndDate();
+        binding.tvGroupDdayDate.setText(ddayDate);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(RecyclerView.HORIZONTAL);
@@ -63,12 +71,6 @@ public class InfoGroupActivity extends AppCompatActivity {
                     body.getData().getTeamMembers().get(i).getNickname()));
         }
         binding.rvGroupMembers.setAdapter(adapter);
-
-        binding.btnAcceptPage.setOnClickListener(v -> {
-            Intent intent2 = new Intent(getApplicationContext(), JoinAcceptActivity.class);
-            intent2.putExtra("category", body.getData().getCategory());
-            startActivity(intent2);
-        });
 
         switch (body.getData().getCategory()) {
             case "스터디":
@@ -93,10 +95,57 @@ public class InfoGroupActivity extends AppCompatActivity {
                 break;
         }
 
-        //가입신청버튼눌렀을 때
+        // 모임 일정 리스트
+        if (false) {
+            // 모임 일정이 있는 경우
+            binding.tvNoMeeting.setVisibility(View.GONE);
+        }
+
+        // 가입 신청 버튼 눌렀을 때
         binding.btnGroupRegister.setOnClickListener(v -> {
             // 레트로핏 통신으로 리퀘스트 보냄
             retrofitClient.group_request_accept(Aria.GROUP, Type.REQUEST, ClientApp.userEmail, String.valueOf(teamId), System.currentTimeMillis());
         });
+
+        // 채팅방 입장 버튼 눌렀을 때
+        binding.btnGroupChatroom.setOnClickListener(view -> {
+            Toast.makeText(this, "채팅방 입장", Toast.LENGTH_SHORT).show();
+        });
+
+        // (방장용) 소모임 설정 버튼 눌렀을 때
+        binding.btnAcceptPage.setOnClickListener(v -> {
+//            Intent intent2 = new Intent(getApplicationContext(), 설정액티비티.class);
+//            intent.putExtra("teamId", teamId);
+//            startActivity(intent2);
+        });
+
+        // (방장용) 가입 대기 버튼 눌렀을 때
+        binding.btnAcceptPage.setOnClickListener(v -> {
+            Intent intent3 = new Intent(this, JoinAcceptActivity.class);
+            intent3.putExtra("category", body.getData().getCategory());
+
+            startActivity(intent3);
+        });
+
+        User_info_responseDTO body_userinfo = retrofitClient.get_userinfo();
+
+        // 소모임 방장인 경우
+        if (body.getData().getAdmin() == Boolean.TRUE) {
+            binding.btnSetting.setVisibility(View.VISIBLE);
+            binding.btnAcceptPage.setVisibility(View.VISIBLE);
+        }
+
+        // 소모임에 가입되어있는 경우
+        for (int i = 0; i < body_userinfo.getData().getMyteams().size(); i++) {
+            if (body_userinfo.getData().getMyteams().get(i).getId() == teamId) {
+                binding.layoutCaution.setVisibility(View.GONE);
+
+                binding.tvGroupDday.setText("소모임 채팅");
+                binding.tvGroupDdayDate.setText(body.getData().getTeamMembers().size() + "명의 소모임원이 온라인입니다!");
+
+                binding.btnGroupRegister.setVisibility(View.GONE);
+                binding.btnGroupChatroom.setVisibility(View.VISIBLE);
+            }
+        }
     }
 }

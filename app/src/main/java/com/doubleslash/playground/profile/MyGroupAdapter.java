@@ -11,12 +11,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.doubleslash.playground.ClientApp;
 import com.doubleslash.playground.R;
 
 import java.util.ArrayList;
 
 public class MyGroupAdapter extends RecyclerView.Adapter<MyGroupAdapter.ViewHolder> implements OnMyGroupItemClickListener {
-    ArrayList<MyGroup> items = new ArrayList<MyGroup>();
+    ArrayList<MyGroup> items = new ArrayList<>();
     OnMyGroupItemClickListener listener;
 
     private Context context;
@@ -95,7 +96,7 @@ public class MyGroupAdapter extends RecyclerView.Adapter<MyGroupAdapter.ViewHold
             name.setText(item.getName());
 
             Glide.with(context)
-                    .load(item.getImageUri())
+                    .load(ClientApp.API_URL + item.getImageUri())
                     .into(image_group);
         }
     }

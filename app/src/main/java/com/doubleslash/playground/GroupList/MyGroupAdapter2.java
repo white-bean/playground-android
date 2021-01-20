@@ -74,6 +74,7 @@ public class MyGroupAdapter2 extends RecyclerView.Adapter<MyGroupAdapter2.ViewHo
     static class ViewHolder extends RecyclerView.ViewHolder{
         ImageView category;
         ConstraintLayout category_name;
+        TextView tv_group_category;
 
         TextView name;
         TextView location;
@@ -86,6 +87,7 @@ public class MyGroupAdapter2 extends RecyclerView.Adapter<MyGroupAdapter2.ViewHo
 
             category = itemView.findViewById(R.id.image_group_category); // 카테고리
             category_name = itemView.findViewById(R.id.layout_group_category);
+            tv_group_category = itemView.findViewById(R.id.tv_group_category);
 
             name = itemView.findViewById(R.id.subject_tV);               // 그룹 제목
             location = itemView.findViewById(R.id.location_tV);          // 위치
@@ -105,22 +107,27 @@ public class MyGroupAdapter2 extends RecyclerView.Adapter<MyGroupAdapter2.ViewHo
         public void setItem(Context context, MyGroup item) {
             switch (item.getCategory()) {
                 case "스터디":
+                    tv_group_category.setText(item.getCategory());
                     category.setImageResource(R.drawable.writing_hand);
                     category_name.setBackgroundColor(Color.parseColor("#4ed2ae"));
                     break;
                 case "운동/다이어트":
+                    tv_group_category.setText(item.getCategory());
                     category.setImageResource(R.drawable.diet);
                     category_name.setBackgroundColor(Color.parseColor("#4ac3e8"));
                     break;
                 case "문화생활":
+                    tv_group_category.setText(item.getCategory());
                     category.setImageResource(R.drawable.draw);
                     category_name.setBackgroundColor(Color.parseColor("#ff9880"));
                     break;
                 case "게임":
+                    tv_group_category.setText(item.getCategory());
                     category.setImageResource(R.drawable.game);
                     category_name.setBackgroundColor(Color.parseColor("#ffc644"));
                     break;
                 default:
+                    tv_group_category.setText(item.getCategory());
                     category.setImageResource(R.drawable.ic_camera);
                     category_name.setBackgroundColor(Color.parseColor("#4ed2ae"));
                     break;
