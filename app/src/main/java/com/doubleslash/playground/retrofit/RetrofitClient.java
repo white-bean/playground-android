@@ -387,7 +387,7 @@ public class RetrofitClient {
     }
 
     // 그룹 참여 요청, 수락 (AcceptActivity, InfoGroupActivity)
-    public void group_request_accept(final Aria aria, final Type type, final String from, final String to) {
+    public void group_request_accept(final Aria aria, final Type type, final String from, final String to, final long sendTime) {
         final Send_chat_responseDTO[] body = new Send_chat_responseDTO[1];
         Thread thread = new Thread() {
             @Override
@@ -397,6 +397,7 @@ public class RetrofitClient {
                 send_chat_dto.setType(type);
                 send_chat_dto.setFrom(from);
                 send_chat_dto.setTo(to);
+                send_chat_dto.setSendTime(sendTime);
                 try {
                     body[0] = send_chat_service.postData(send_chat_dto, "TOKEN " + ClientApp.userToken).execute().body();
                 } catch (IOException e) {

@@ -10,7 +10,7 @@ import android.view.View;
 
 import com.bumptech.glide.Glide;
 import com.doubleslash.playground.ClientApp;
-import com.doubleslash.playground.MainActivity;
+import com.doubleslash.playground.R;
 import com.doubleslash.playground.databinding.ActivityInfoGroupBinding;
 import com.doubleslash.playground.retrofit.RetrofitClient;
 import com.doubleslash.playground.retrofit.dto.response.Team_info_responseDTO;
@@ -95,7 +95,7 @@ public class InfoGroupActivity extends AppCompatActivity {
         //가입신청버튼눌렀을 때
         binding.btnGroupRegister.setOnClickListener(v -> {
             // 레트로핏 통신으로 리퀘스트 보냄
-            retrofitClient.group_request_accept(Aria.GROUP, Type.REQUEST, ClientApp.userEmail, String.valueOf(teamId));
+            retrofitClient.group_request_accept(Aria.GROUP, Type.REQUEST, ClientApp.userEmail, String.valueOf(teamId), System.currentTimeMillis());
         });
     }
 }
