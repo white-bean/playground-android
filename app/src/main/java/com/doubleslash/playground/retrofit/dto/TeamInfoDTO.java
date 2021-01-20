@@ -60,6 +60,10 @@ public class TeamInfoDTO {
 
     public void setEndDate(String endDate) { this.endDate = endDate; }
 
+    public List<MemberDTO> getTeamMembers() { return teamMembers; }
+
+    public void setTeamMembers(List<MemberDTO> teamMembers) { this.teamMembers = teamMembers; }
+
     public int getCurrentMemberSize() { return currentMemberSize; }
 
     public void setCurrentMemberSize(Integer currentMemberSize) { this.currentMemberSize = currentMemberSize; }

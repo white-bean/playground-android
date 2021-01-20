@@ -279,4 +279,36 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <Button
+        android:id="@+id/btn_accept_page"
+        android:layout_width="84dp"
+        android:layout_height="22dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/spacing_xs"
+        android:layout_marginEnd="@dimen/spacing_m"
+        android:layout_marginRight="@dimen/spacing_m"
+        android:background="@drawable/ic_profile_rounded_rectangle"
+        android:drawableRight="@drawable/ic_arrow_right2"
+        android:drawablePadding="0dp"
+        android:fontFamily="@font/notosanskr_bold"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:text="가입 신청"
+        android:textColor="#33353d"
+        android:textSize="12sp"
+        style="?android:attr/borderlessButtonStyle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_group_dday" />
+
+    <Button
+        android:id="@+id/btn_setting"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="41dp"
+        android:layout_marginEnd="@dimen/spacing_m"
+        android:layout_marginRight="@dimen/spacing_m"
+        android:background="@drawable/ic_setting"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

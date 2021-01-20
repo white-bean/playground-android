@@ -1,19 +1,19 @@
 package com.doubleslash.playground.infoGroup;
 
-public class member {
-    int image;
+public class Member {
+    String image;
     String name;
 
-    public member(int image, String name) {
+    public Member(String image, String name) {
         this.image = image;
         this.name = name;
     }
 
-    public int getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(int image) {
+    public void setImage(String image) {
         this.image = image;
     }
 
