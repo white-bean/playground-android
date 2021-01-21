@@ -90,7 +90,7 @@ public class JoinAdapter extends RecyclerView.Adapter<JoinAdapter.ViewHolder>{
             retrofitClient = RetrofitClient.getInstance();
 
             acceptBtn.setOnClickListener(v -> {
-                retrofitClient.group_request_accept(Aria.GROUP, Type.ACCEPT, item.getUserName(), teamId, System.currentTimeMillis());
+                retrofitClient.group_request_accept(Aria.GROUP, Type.ACCEPT, Long.parseLong(item.getUserName()), teamId, System.currentTimeMillis());
             });
 
             switch (category) {
