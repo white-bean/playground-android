@@ -151,7 +151,6 @@ public class RetrofitClient {
         return MultipartBody.Part.createFormData(partName, file.getName(), requestFile);
     }
 
-
     // 그룹 생성 (CreateGroupActivity)
     public void post_group(CreateTeamDTO createTeamDTO, MultipartBody.Part teamImageUrl) {
         final Group_create_responseDTO[] body = new Group_create_responseDTO[1];
@@ -334,13 +333,7 @@ public class RetrofitClient {
             public void run() {
                 try {
                     find_group_responseDTO = find_group_service.getData(searchData).execute().body();
-                    if (find_group_responseDTO.getResult() == 1) {
-                        Log.d("notice", "group list fetch success");
-                    } else {
-                        Log.e("error", "group list fetch failed");
-                    }
                 } catch (IOException e) {
-                    Log.e("error", "group list fetch failed");
                     e.printStackTrace();
                 }
             }
@@ -349,6 +342,8 @@ public class RetrofitClient {
 
         try {
             thread.join();
+            System.out.println("아무거나");
+            System.out.println(find_group_responseDTO.getResult());
             return find_group_responseDTO;
         } catch (InterruptedException e) {
             e.printStackTrace();
