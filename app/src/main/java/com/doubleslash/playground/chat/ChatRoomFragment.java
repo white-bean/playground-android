@@ -70,7 +70,11 @@ public class ChatRoomFragment extends Fragment {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    adapter.addItem(new ChatRoomItem(room.getId(), room.getName(), room.getTeamImageUrl(), lastMsg.getText(), dateConvert(lastMsg.getSendTime()), 0));
+                    if (lastMsg != null) {
+                        adapter.addItem(new ChatRoomItem(room.getId(), room.getName(), room.getTeamImageUrl(), lastMsg.getText(), dateConvert(lastMsg.getSendTime()), 0));
+                    } else {
+                        adapter.addItem(new ChatRoomItem(room.getId(), room.getName(), room.getTeamImageUrl(), "", "", 0));
+                    }
                 }
 
                 adapter.setOnItemClickListener((holder, view1, position) -> {

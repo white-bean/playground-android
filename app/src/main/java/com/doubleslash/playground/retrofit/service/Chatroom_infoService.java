@@ -7,6 +7,6 @@ import retrofit2.http.Header;
 import retrofit2.http.POST;
 
 public interface Chatroom_infoService {
-    @POST("/update/info/chatrooms")
+    @POST("/update/info/chatroom")
     Call<ChatRoomInfoResponseDTO> getData(@Header("Authorization") String userToken);
 }

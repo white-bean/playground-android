@@ -7,6 +7,7 @@ import java.util.List;
 
 public class ChatRoomDTO {
     @SerializedName("type")
+    @Expose
     private String type;
     @SerializedName("id")
     @Expose
