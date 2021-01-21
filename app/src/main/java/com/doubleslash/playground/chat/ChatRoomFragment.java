@@ -55,11 +55,14 @@ public class ChatRoomFragment extends Fragment {
             List<ChatRoomDTO> chatRooms = retrofitClient.getChatRoomInfos().getData();
             ClientApp.roomInfos = new HashMap<>();
             for (ChatRoomDTO room : chatRooms) {
+
                 // 마지막으로 읽은 메세지, 안 읽은 메세지 수 세팅
                 ClientApp.roomInfos.put(room.getId(), room);
                 if (ClientApp.RoomMsgQueues.containsKey(room.getName()) && ClientApp.RoomMsgQueues.get(room.getId()).size() != 0) {
+
                     Queue<Message> queue = ClientApp.RoomMsgQueues.get(room.getId());
                     adapter.addItem(new ChatRoomItem(room.getId(), room.getType(), room.getName(), room.getTeamImageUrl(), queue.peek().getText(), dateConvert(queue.peek().getSendTime()), queue.size()));
+
                 } else {
                     Thread thread = new Thread() {
                         @Override
@@ -67,13 +70,15 @@ public class ChatRoomFragment extends Fragment {
                             lastMsg = repository.getLastMessage(room.getId());
                         }
                     };
+
                     thread.start();
                     try {
                         thread.join();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    if (lastMsg != null) {
+
+                    if (lastMsg != null && lastMsg.getText() != null) {
                         adapter.addItem(new ChatRoomItem(room.getId(), room.getType(), room.getName(), room.getTeamImageUrl(), lastMsg.getText(), dateConvert(lastMsg.getSendTime()), 0));
                     } else {
                         adapter.addItem(new ChatRoomItem(room.getId(), room.getType(), room.getName(), room.getTeamImageUrl(), "", "", 0));
@@ -103,18 +108,20 @@ public class ChatRoomFragment extends Fragment {
                             lastMsg = repository.getLastMessage(roomId);
                         }
                     };
+
                     thread.start();
                     try {
                         thread.join();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    if (lastMsg != null) {
+                    
+                    if (lastMsg != null && lastMsg.getText() != null) {
                         adapter.addItem(new ChatRoomItem(room.getId(), room.getType(), room.getName(), room.getTeamImageUrl(), lastMsg.getText(), dateConvert(lastMsg.getSendTime()), 0));
                     } else {
                         adapter.addItem(new ChatRoomItem(room.getId(), room.getType(), room.getName(), room.getTeamImageUrl(), "", "", 0));
                     }
-                    adapter.addItem(new ChatRoomItem(room.getId(), room.getName(), room.getType(), room.getTeamImageUrl(), lastMsg.getText(), dateConvert(lastMsg.getSendTime()), 0));
+                    adapter.addItem(new ChatRoomItem(room.getId(), room.getType(), room.getName(), room.getTeamImageUrl(), lastMsg.getText(), dateConvert(lastMsg.getSendTime()), 0));
                 }
 
                 adapter.setOnItemClickListener((holder, view1, position) -> {
