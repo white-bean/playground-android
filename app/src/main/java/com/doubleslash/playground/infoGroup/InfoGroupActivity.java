@@ -118,6 +118,7 @@ public class InfoGroupActivity extends AppCompatActivity {
             bundle.putLong("teamId",teamId);
             intent1.putExtras(bundle);
             startActivity(intent1);
+            finish();
         });
         // 모임 일정 리스트
         if (false) {
