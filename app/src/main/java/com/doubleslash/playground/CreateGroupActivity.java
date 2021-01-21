@@ -14,6 +14,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -39,9 +40,12 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import okhttp3.MultipartBody;
 
@@ -55,6 +59,9 @@ public class CreateGroupActivity extends AppCompatActivity implements AdapterVie
     Uri selectedImageUri;
     String start, end;
     final Calendar cal = Calendar.getInstance();
+    Date currentTime = Calendar.getInstance().getTime();
+    String todaydate, todaydate2, time;
+
     private RetrofitClient retrofitClient;
     boolean isregion=false;
     @Override
@@ -85,6 +92,20 @@ public class CreateGroupActivity extends AppCompatActivity implements AdapterVie
     }
 
     private void initUI() {
+        // 현재날짜시간 지정
+        todaydate = new SimpleDateFormat("yy.MM.dd", Locale.getDefault()).format(currentTime);
+        todaydate2 = new SimpleDateFormat("yyyy년 MM월 dd일 EE요일", Locale.getDefault()).format(currentTime);
+        time = new SimpleDateFormat("aa hh:mm", Locale.getDefault()).format(currentTime);
+
+        this.start = todaydate;
+        this.end = todaydate;
+
+        binding.startDate.setText(todaydate2);
+        binding.endDate.setText(todaydate2);
+        binding.startTime.setText(time);
+        binding.endTime.setText(time);
+        //Log.d("", "start:"+start+" end:"+end);
+
         binding.registerPicIv.setOnClickListener(v -> { // 소모임 사진
             openGallery();
         });
@@ -208,6 +229,7 @@ public class CreateGroupActivity extends AppCompatActivity implements AdapterVie
         binding.categorySpinner.setOnItemSelectedListener(this);
 
         binding.locationlist.setOnItemClickListener(listener);
+
         binding.switch1.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if(isChecked) {//On
                 binding.startDate.setTextColor(Color.parseColor("#33353d"));
@@ -226,6 +248,7 @@ public class CreateGroupActivity extends AppCompatActivity implements AdapterVie
                 binding.endTime.setOnClickListener(v -> {
                     showTime(2);
                 });
+
             }
             else {//Off
                 binding.startDate.setTextColor(getResources().getColor(R.color.sub_gray));
@@ -234,7 +257,6 @@ public class CreateGroupActivity extends AppCompatActivity implements AdapterVie
                 binding.endTime.setTextColor(getResources().getColor(R.color.sub_gray));
             }
         });
-
     }
 
     AdapterView.OnItemClickListener listener= new AdapterView.OnItemClickListener() {
@@ -345,11 +367,13 @@ public class CreateGroupActivity extends AppCompatActivity implements AdapterVie
                     switch (id){
                         case 1:
                             this.start = date;
-                            binding.startDate.setText(year1 + "년 " + (monthOfYear + 1) + "월 " + dayOfMonth + "일 " + weekday);
+                            binding.startDate.setText(year1 + "년 " + String.format("%02d월 %02d일 ", (monthOfYear + 1), dayOfMonth) + weekday);
+                            //Log.d("", "start:"+start+" end:"+end);
                             break;
                         case 2:
                             this.end = date;
-                            binding.endDate.setText(year1 + "년 " + (monthOfYear + 1) + "월 " + dayOfMonth + "일 " + weekday);
+                            binding.endDate.setText(year1 + "년 " + String.format("%02d월 %02d일 ", (monthOfYear + 1), dayOfMonth) + weekday);
+                            //Log.d("", "start:"+start+" end:"+end);
                             break;
                     }
                 }, year, month, day);

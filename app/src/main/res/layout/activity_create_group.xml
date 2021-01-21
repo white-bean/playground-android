@@ -45,6 +45,7 @@
                         android:id="@+id/GroupName_edit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="2dp"
                         android:backgroundTint="@color/gray"
                         android:ems="8"
                         android:fontFamily="@font/notosanskr_bold"
@@ -54,11 +55,10 @@
                         android:inputType="textPersonName"
                         android:maxLines="1"
                         android:nextFocusDown="@id/info_edit"
-                        android:paddingBottom="@dimen/spacing_xxs"
                         android:singleLine="true"
                         android:textColor="#33353d"
                         android:textColorHint="@color/gray"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent" />
 
@@ -80,8 +80,6 @@
                         android:id="@+id/textView6"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="3dp"
-                        android:layout_marginLeft="3dp"
                         android:layout_marginTop="5dp"
                         android:fontFamily="@font/notosanskr_regular"
                         android:includeFontPadding="false"
@@ -193,13 +191,13 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/start_date"
+                    android:id="@+id/startDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/notosanskr_regular"
                     android:includeFontPadding="false"
                     android:textColor="@color/sub_gray"
-                    android:text="2021년 1월 14일 목요일" />
+                    android:text="2021년 01월 14일 목요일" />
 
                 <TextView
                     android:id="@+id/start_time"
@@ -220,13 +218,13 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/end_date"
+                    android:id="@+id/endDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/notosanskr_regular"
                     android:includeFontPadding="false"
                     android:textColor="@color/sub_gray"
-                    android:text="2021년 1월 21일 목요일" />
+                    android:text="2021년 01월 21일 목요일" />
 
                 <TextView
                     android:id="@+id/end_time"
