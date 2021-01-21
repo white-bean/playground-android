@@ -26,7 +26,7 @@ public interface Group_create_Service {
 
 
     @Multipart
-    @POST("/update/{teamid}")
+    @POST("/update/all/{teamid}")
     Call<Group_create_responseDTO> updateData(@Path("teamid") Long id,
                                             @Part("name") RequestBody name,
                                             @Part("content") RequestBody content,
@@ -39,7 +39,7 @@ public interface Group_create_Service {
                                             @Header("Authorization") String token);
 
     @Multipart
-    @POST("/update/{teamid}")
+    @POST("/update/info/{teamid}")
     Call<Group_create_responseDTO> updateData2(@Path("teamid") Long id,
                                               @Part("name") RequestBody name,
                                               @Part("content") RequestBody content,

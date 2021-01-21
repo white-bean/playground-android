@@ -210,8 +210,6 @@ public class CreateGroupActivity extends AppCompatActivity implements AdapterVie
         ArrayAdapter subAdapter = ArrayAdapter.createFromResource(this, R.array.category, android.R.layout.simple_spinner_dropdown_item);
         // 나중에 팀원들과 상의해서 세부 카테고리에 뭐가 들어갈지 정해야함, array도 만들어야함, 지금은 임시로 category 리스트로 넣었음
         subAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        binding.subCategorySpinner.setAdapter(subAdapter);
-        binding.subCategorySpinner.setOnItemSelectedListener(this);
 
 
         binding.locationlist.setOnItemClickListener(listener);
@@ -272,9 +270,6 @@ public class CreateGroupActivity extends AppCompatActivity implements AdapterVie
                 break;
             case R.id.category_spinner:
                 Toast.makeText(CreateGroupActivity.this,"선택된 아이템 : "+binding.categorySpinner.getItemAtPosition(position),Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.sub_category_spinner:
-                Toast.makeText(CreateGroupActivity.this,"선택된 아이템 : "+binding.subCategorySpinner.getItemAtPosition(position),Toast.LENGTH_SHORT).show();
                 break;
         }//Toast는 그저 확인용
     }//이 오버라이드 메소드에서 position은 몇번째 값이 클릭됐는지 알 수 있음

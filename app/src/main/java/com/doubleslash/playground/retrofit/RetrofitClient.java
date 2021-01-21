@@ -146,12 +146,6 @@ public class RetrofitClient {
         return MultipartBody.Part.createFormData(partName, file.getName(), requestFile);
     }
 
-    @NonNull
-    public MultipartBody.Part prepareFilePart2(String partName, String fileUri, Context context) {
-        File file = new File(fileUri);
-        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-        return MultipartBody.Part.createFormData(partName, file.getName(), requestFile);
-    }
 
     // 그룹 생성 (CreateGroupActivity)
     public void post_group(CreateTeamDTO createTeamDTO, MultipartBody.Part teamImageUrl) {
@@ -194,7 +188,6 @@ public class RetrofitClient {
             public void run() {
                 try {
                     if(teamImageUrl!=null) {
-                        System.out.println("123");
                         body[0] = group_create_service.updateData(teamid, createPartFromString(createTeamDTO.getName()),
                                 createPartFromString(createTeamDTO.getContent()),
                                 createPartFromString(createTeamDTO.getStartDate()),
@@ -205,7 +198,6 @@ public class RetrofitClient {
                                 teamImageUrl,
                                 "TOKEN " + ClientApp.userToken).execute().body();
                     }else{
-                        System.out.println("456");
                         body[0] = group_create_service.updateData2(teamid, createPartFromString(createTeamDTO.getName()),
                                 createPartFromString(createTeamDTO.getContent()),
                                 createPartFromString(createTeamDTO.getStartDate()),

@@ -50,7 +50,7 @@ public class EditGroupActivity extends AppCompatActivity implements AdapterView.
     private Search_school_Adapter adapter;
     InputMethodManager inputMethodManager;
     TimePickerDialog Tpicker;
-    boolean isregion=false;
+    boolean isregion=true;
     Uri selectedImageUri;
     final Calendar cal = Calendar.getInstance();
     private RetrofitClient retrofitClient;
@@ -141,9 +141,7 @@ public class EditGroupActivity extends AppCompatActivity implements AdapterView.
                 retrofitClient.update_group(createTeamDTO, teamImage,teamid);
                 createTeamDTO.setTeamImageUrl(selectedImageUri.toString());
             }else{
-                MultipartBody.Part teamImage = retrofitClient.prepareFilePart2("file", uri, getApplicationContext());
-                createTeamDTO.setTeamImageUrl(null);
-                retrofitClient.update_group(createTeamDTO, teamImage,teamid);
+                retrofitClient.update_group(createTeamDTO, null,teamid);
             }
 
             finish();
@@ -216,9 +214,6 @@ public class EditGroupActivity extends AppCompatActivity implements AdapterView.
         ArrayAdapter subAdapter = ArrayAdapter.createFromResource(this, R.array.category, android.R.layout.simple_spinner_dropdown_item);
         // 나중에 팀원들과 상의해서 세부 카테고리에 뭐가 들어갈지 정해야함, array도 만들어야함, 지금은 임시로 category 리스트로 넣었음
         subAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        binding.subCategorySpinner.setAdapter(subAdapter);
-        binding.subCategorySpinner.setOnItemSelectedListener(this);
-
 
         binding.locationlist.setOnItemClickListener(listener);
         binding.switch1.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -259,9 +254,6 @@ public class EditGroupActivity extends AppCompatActivity implements AdapterView.
                 break;
             case R.id.category_spinner:
                 Toast.makeText(EditGroupActivity.this,"선택된 아이템 : "+binding.categorySpinner.getItemAtPosition(position),Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.sub_category_spinner:
-                Toast.makeText(EditGroupActivity.this,"선택된 아이템 : "+binding.subCategorySpinner.getItemAtPosition(position),Toast.LENGTH_SHORT).show();
                 break;
         }//Toast는 그저 확인용
     }//이 오버라이드 메소드에서 position은 몇번째 값이 클릭됐는지 알 수 있음
