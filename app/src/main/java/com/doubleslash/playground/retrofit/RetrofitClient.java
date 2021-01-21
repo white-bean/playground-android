@@ -280,6 +280,7 @@ public class RetrofitClient {
             // 로그인할 때 유저 토큰 받아옴
             ClientApp.userToken = body[0].getToken();
             ClientApp.userId = body[0].getResult();
+            Log.d("userId", body[0].getResult() + "");
             if (ClientApp.userId != 0) {
                 Log.d("notice", "Login success");
             } else {
