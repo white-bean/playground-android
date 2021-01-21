@@ -67,7 +67,7 @@ public class LoginActivity extends AppCompatActivity {
                         System.out.println(user_token);
                         System.out.println(token);
                         result= retrofitClient.post_autologin(user_token, token);
-                        if (result == 1) {
+                        if (result != 0) {
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             intent.putExtra("email", user_email);
                             startActivity(intent);
@@ -104,7 +104,7 @@ public class LoginActivity extends AppCompatActivity {
                             result=0;
                             Sign_in_responseDTO sign_in_responseDTO = retrofitClient.post_login(binding.emailEdit.getText().toString(), binding.passwordEdit.getText().toString(),token);
                             System.out.println(result);
-                            if (sign_in_responseDTO.getResult() == 1) {
+                            if (sign_in_responseDTO.getResult() != 0) {
                                 if(isCheckOn) {
                                     SharedPreferences.Editor autoLogin = auto.edit();
                                     autoLogin.putString("user_token", sign_in_responseDTO.getToken());
