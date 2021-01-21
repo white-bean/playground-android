@@ -9,6 +9,7 @@ import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.Path;
 
 public interface Group_create_Service {
     @Multipart
@@ -25,8 +26,9 @@ public interface Group_create_Service {
 
 
     @Multipart
-    @POST("/update/team")
-    Call<Group_create_responseDTO> updateData(@Part("name") RequestBody name,
+    @POST("/update/{teamid}")
+    Call<Group_create_responseDTO> updateData(@Path("teamid") Long id,
+                                            @Part("name") RequestBody name,
                                             @Part("content") RequestBody content,
                                             @Part("startDate") RequestBody startDate,
                                             @Part("endDate") RequestBody endDate,
@@ -35,5 +37,17 @@ public interface Group_create_Service {
                                             @Part("location") RequestBody location,
                                             @Part MultipartBody.Part teamImageUrl,
                                             @Header("Authorization") String token);
+
+    @Multipart
+    @POST("/update/{teamid}")
+    Call<Group_create_responseDTO> updateData2(@Path("teamid") Long id,
+                                              @Part("name") RequestBody name,
+                                              @Part("content") RequestBody content,
+                                              @Part("startDate") RequestBody startDate,
+                                              @Part("endDate") RequestBody endDate,
+                                              @Part("maxMemberSize") Integer maxMemberSize,
+                                              @Part("category") RequestBody category,
+                                              @Part("location") RequestBody location,
+                                              @Header("Authorization") String token);
 
 }

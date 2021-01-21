@@ -22,6 +22,7 @@ import com.doubleslash.playground.socket.model.Aria;
 import com.doubleslash.playground.socket.model.Type;
 
 public class InfoGroupActivity extends AppCompatActivity {
+
     private ActivityInfoGroupBinding binding;
 
     private RetrofitClient retrofitClient;
@@ -29,7 +30,7 @@ public class InfoGroupActivity extends AppCompatActivity {
     private long teamId;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         binding = ActivityInfoGroupBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -42,6 +43,7 @@ public class InfoGroupActivity extends AppCompatActivity {
     private void initUI() {
         // 이전 화면으로부터 teamId를 넘겨받음
         Intent intent = getIntent();
+
         teamId = intent.getLongExtra("teamId", -1);
 
         Team_info_responseDTO body = retrofitClient.get_teaminfo(teamId);
@@ -75,7 +77,6 @@ public class InfoGroupActivity extends AppCompatActivity {
         memberAdapter.setOnItemClickListener((holder, view, position) -> {
             Intent intent2 = new Intent(this, ProfileOtherActivity.class);
             intent2.putExtra("memberId", body.getData().getTeamMembers().get(position).getId());
-
             startActivity(intent2);
         });
 
@@ -113,6 +114,7 @@ public class InfoGroupActivity extends AppCompatActivity {
             bundle.putString("url",body.getData().getTeamImageUrl());
             bundle.putString("content",body.getData().getContent());
             bundle.putString("location",body.getData().getLocation());
+            bundle.putLong("teamId",teamId);
             intent1.putExtras(bundle);
             startActivity(intent1);
         });
