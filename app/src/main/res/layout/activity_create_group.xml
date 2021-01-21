@@ -32,10 +32,8 @@
                     android:layout_marginEnd="@dimen/spacing_m"
                     android:layout_marginRight="@dimen/spacing_m"
                     android:background="@drawable/button_r8"
-                    android:padding="@dimen/spacing_l"
-                    android:scaleType="centerCrop"
+                    android:scaleType="center"
                     app:srcCompat="@drawable/camera_gray" />
-
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"

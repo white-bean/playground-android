@@ -49,6 +49,12 @@ public class JoinAcceptActivity extends AppCompatActivity {
                 for (Long user : users) {
                     joinAdapter.addItem(new Join(Long.toString(user), "서울 광진구", "대학교"));
                 }
+
+                // 가입 대기 인원 체크
+                binding.tvWaitingUsersNumber.setText(users.size());
+
+                binding.tvNoMember.setVisibility(View.GONE);
+                binding.imageNoMember.setVisibility(View.GONE);
             }
 
             joinAdapter.setOnItemClickListener((holder, view, position) -> {
@@ -57,30 +63,19 @@ public class JoinAcceptActivity extends AppCompatActivity {
                 ClientApp.waitingUsers.remove(joinAdapter.getItem(position).getUserName());
                 joinAdapter.removeItem(position);
 
-                // 가입 대기 인원 체크
-                binding.tvWaitingUsersNumber.setText(joinAdapter.getItemCount());
-
-                if (joinAdapter.getItemCount() > 0) {
-                    binding.tvNoMember.setVisibility(View.GONE);
-                    binding.imageNoMember.setVisibility(View.GONE);
-                } else {
-                    binding.tvNoMember.setVisibility(View.VISIBLE);
-                    binding.imageNoMember.setVisibility(View.VISIBLE);
-                }
+//                // 가입 대기 인원 체크
+//                binding.tvWaitingUsersNumber.setText(joinAdapter.getItemCount());
+//
+//                if (joinAdapter.getItemCount() > 0) {
+//                    binding.tvNoMember.setVisibility(View.GONE);
+//                    binding.imageNoMember.setVisibility(View.GONE);
+//                } else {
+//                    binding.tvNoMember.setVisibility(View.VISIBLE);
+//                    binding.imageNoMember.setVisibility(View.VISIBLE);
+//                }
             });
 
             binding.rvWaitingUsers.setAdapter(joinAdapter);
-
-            // 가입 대기 인원 체크
-            binding.tvWaitingUsersNumber.setText(joinAdapter.getItemCount());
-
-            if (joinAdapter.getItemCount() > 0) {
-                binding.tvNoMember.setVisibility(View.GONE);
-                binding.imageNoMember.setVisibility(View.GONE);
-            } else {
-                binding.tvNoMember.setVisibility(View.VISIBLE);
-                binding.imageNoMember.setVisibility(View.VISIBLE);
-            }
         }
     }
 }

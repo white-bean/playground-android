@@ -20,15 +20,12 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.doubleslash.playground.databinding.ActivityCreateGroupBinding;
 import com.doubleslash.playground.register.Search_school_Adapter;
 import com.doubleslash.playground.retrofit.RetrofitClient;
 import com.doubleslash.playground.retrofit.dto.CreateTeamDTO;
-import com.doubleslash.playground.retrofit.dto.response.Group_create_responseDTO;
-import com.doubleslash.playground.retrofit.dto.response.Team_info_responseDTO;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -131,6 +128,7 @@ public class EditGroupActivity extends AppCompatActivity implements AdapterView.
             //중복확인하기
         });
 
+        binding.createBtn.setText("수정 신청");
         binding.createBtn.setOnClickListener(v -> {
             retrofitClient = RetrofitClient.getInstance();
             String maxMember = binding.memberSpinner.getSelectedItem().toString();
@@ -256,10 +254,10 @@ public class EditGroupActivity extends AppCompatActivity implements AdapterView.
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         switch (parent.getId()){
             case R.id.member_spinner:
-                Toast.makeText(EditGroupActivity.this,"선택된 아이템 : "+binding.memberSpinner.getItemAtPosition(position),Toast.LENGTH_SHORT).show();
+//                Toast.makeText(EditGroupActivity.this,"선택된 아이템 : "+binding.memberSpinner.getItemAtPosition(position),Toast.LENGTH_SHORT).show();
                 break;
             case R.id.category_spinner:
-                Toast.makeText(EditGroupActivity.this,"선택된 아이템 : "+binding.categorySpinner.getItemAtPosition(position),Toast.LENGTH_SHORT).show();
+//                Toast.makeText(EditGroupActivity.this,"선택된 아이템 : "+binding.categorySpinner.getItemAtPosition(position),Toast.LENGTH_SHORT).show();
                 break;
         }//Toast는 그저 확인용
     }//이 오버라이드 메소드에서 position은 몇번째 값이 클릭됐는지 알 수 있음
