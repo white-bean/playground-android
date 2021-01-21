@@ -14,7 +14,7 @@ public class Send_chat_DTO {
     private Type type;
     @SerializedName("from")
     @Expose
-    private String from;
+    private long from;
     @SerializedName("to")
     @Expose
     private String to;
@@ -37,11 +37,11 @@ public class Send_chat_DTO {
         this.type = type;
     }
 
-    public String getFrom() {
+    public long getFrom() {
         return from;
     }
 
-    public void setFrom(String from) {
+    public void setFrom(long from) {
         this.from = from;
     }
 

@@ -5,26 +5,26 @@ import com.google.gson.Gson;
 public class Message {
     private Aria aria;
     private Type type;
-    private String from;
+    private long from;
     private String to;
     private String text;
     // System.currentTimeMillis 형식으로 보냄
     private long sendTime;
 
-    public Message(Type type, String from, long sendTime) {
+    public Message(Type type, long from, long sendTime) {
         this.type = type;
         this.from = from;
         this.sendTime = sendTime;
     }
 
-    public Message(Aria aria, Type type, String from, long sendTime) {
+    public Message(Aria aria, Type type, long from, long sendTime) {
         this.aria = aria;
         this.type = type;
         this.from = from;
         this.sendTime = sendTime;
     }
 
-    public Message(Aria aria, Type type, String from, String to, long sendTime) {
+    public Message(Aria aria, Type type, long from, String to, long sendTime) {
         this.aria = aria;
         this.type = type;
         this.from = from;
@@ -32,7 +32,7 @@ public class Message {
         this.sendTime = sendTime;
     }
 
-    public Message(Aria aria, Type type, String from, String to, String text, long sendTime) {
+    public Message(Aria aria, Type type, long from, String to, String text, long sendTime) {
         this.aria = aria;
         this.type = type;
         this.from = from;
@@ -47,7 +47,7 @@ public class Message {
         return type;
     }
 
-    public String getFrom() {
+    public long getFrom() {
         return from;
     }
 
@@ -62,6 +62,18 @@ public class Message {
     public long getSendTime() {
         return sendTime;
     }
+
+    public void setAria(Aria aria) { this.aria = aria; }
+
+    public void setType(Type type) { this.type = type; }
+
+    public void setFrom(long from) { this.from = from; }
+
+    public void setTo(String to) { this.to = to; }
+
+    public void setText(String text) { this.text = text; }
+
+    public void setSendTime(long sendTime) { this.sendTime = sendTime; }
 
     @Override
     public String toString() {

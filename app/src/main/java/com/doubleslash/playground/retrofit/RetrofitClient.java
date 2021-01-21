@@ -16,7 +16,7 @@ import com.doubleslash.playground.retrofit.dto.Send_chat_DTO;
 import com.doubleslash.playground.retrofit.dto.Sign_upDTO;
 import com.doubleslash.playground.retrofit.dto.Sign_inDTO;
 import com.doubleslash.playground.retrofit.dto.response.AutoLoginResponseDTO;
-import com.doubleslash.playground.retrofit.dto.response.Chatroom_info_responseDTO;
+import com.doubleslash.playground.retrofit.dto.response.ChatRoomInfoResponseDTO;
 import com.doubleslash.playground.retrofit.dto.response.Group_create_responseDTO;
 import com.doubleslash.playground.retrofit.dto.response.Other_info_responseDTO;
 import com.doubleslash.playground.retrofit.dto.response.Send_chat_responseDTO;
@@ -68,7 +68,7 @@ public class RetrofitClient {
     public static Team_info_responseDTO team_info_responseDTO = null;
     public static User_info_responseDTO user_info_responseDTO = null;
     public static Other_info_responseDTO other_info_responseDTO = null;
-    public static Chatroom_info_responseDTO chatroom_infoDTO = null;
+    public static ChatRoomInfoResponseDTO chatroom_infoDTO = null;
     public static Sign_up_responseDTO sign_up_responseDTO = null;
 
     public RetrofitClient() {
@@ -244,8 +244,8 @@ public class RetrofitClient {
             thread.join();
             // 로그인할 때 유저 토큰 받아옴
             ClientApp.userToken = user_token;
-            result = body[0].getResult();
-            if (result == 1) {
+            ClientApp.userId = body[0].getResult();
+            if (ClientApp.userId != 0) {
                 Log.d("notice", "Login success");
             } else {
                 Log.d("error", "Login failed");
@@ -258,7 +258,7 @@ public class RetrofitClient {
     }
 
     // 로그인 (LoginActivity)
-    public Sign_in_responseDTO post_login(final String email, final String password,final String fcmToken){
+    public Sign_in_responseDTO post_login(final String email, final String password, final String fcmToken){
         final Sign_in_responseDTO[] body = new Sign_in_responseDTO[1];
         Thread thread = new Thread() {
             @Override
@@ -279,8 +279,8 @@ public class RetrofitClient {
             thread.join();
             // 로그인할 때 유저 토큰 받아옴
             ClientApp.userToken = body[0].getToken();
-            result = body[0].getResult();
-            if (result == 1) {
+            ClientApp.userId = body[0].getResult();
+            if (ClientApp.userId != 0) {
                 Log.d("notice", "Login success");
             } else {
                 Log.d("error", "Login failed");
@@ -406,12 +406,12 @@ public class RetrofitClient {
     }
 
     // 채팅방 정보 가져오기 (ChatRoomFragment)
-    public Chatroom_info_responseDTO get_Chatroominfo(){
+    public ChatRoomInfoResponseDTO getChatRoomInfos() {
         Thread thread = new Thread() {
             @Override
             public void run() {
                 try {
-                    chatroom_infoDTO = chatroom_infoService.getData().execute().body();
+                    chatroom_infoDTO = chatroom_infoService.getData("TOKEN " + ClientApp.userToken).execute().body();
                     Log.d("notice", "chatroom info fetch success");
                 } catch (IOException e) {
                     Log.d("error", "chatroom info fetch success");
@@ -431,7 +431,7 @@ public class RetrofitClient {
     }
 
     // 채팅 메시지 보내기 (ChatActivity)
-    public void send_chat(final Aria aria, final Type type, final String from, final String to, final String text, final long sendTime){
+    public void send_chat(final Aria aria, final Type type, final long from, final String to, final String text, final long sendTime){
         final Send_chat_responseDTO[] body = new Send_chat_responseDTO[1];
         Thread thread = new Thread() {
             @Override
@@ -465,7 +465,7 @@ public class RetrofitClient {
     }
 
     // 그룹 참여 요청, 수락 (AcceptActivity, InfoGroupActivity)
-    public void group_request_accept(final Aria aria, final Type type, final String from, final String to, final long sendTime) {
+    public void group_request_accept(final Aria aria, final Type type, final long from, final String to, final long sendTime) {
         final Send_chat_responseDTO[] body = new Send_chat_responseDTO[1];
         Thread thread = new Thread() {
             @Override

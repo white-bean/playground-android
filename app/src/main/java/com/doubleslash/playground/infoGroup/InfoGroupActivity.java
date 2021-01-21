@@ -128,7 +128,7 @@ public class InfoGroupActivity extends AppCompatActivity {
         // 가입 신청 버튼 눌렀을 때
         binding.btnGroupRegister.setOnClickListener(v -> {
             // 레트로핏 통신으로 리퀘스트 보냄
-            retrofitClient.group_request_accept(Aria.GROUP, Type.REQUEST, ClientApp.userEmail, String.valueOf(teamId), System.currentTimeMillis());
+            retrofitClient.group_request_accept(Aria.GROUP, Type.REQUEST, ClientApp.userId, String.valueOf(teamId), System.currentTimeMillis());
         });
 
         // 채팅방 입장 버튼 눌렀을 때
