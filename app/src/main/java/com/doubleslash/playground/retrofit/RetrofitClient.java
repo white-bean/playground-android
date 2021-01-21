@@ -146,6 +146,7 @@ public class RetrofitClient {
         return MultipartBody.Part.createFormData(partName, file.getName(), requestFile);
     }
 
+
     // 그룹 생성 (CreateGroupActivity)
     public void post_group(CreateTeamDTO createTeamDTO, MultipartBody.Part teamImageUrl) {
         final Group_create_responseDTO[] body = new Group_create_responseDTO[1];
@@ -180,21 +181,32 @@ public class RetrofitClient {
         }
     }
     //그룹 업데이트
-    public void update_group(CreateTeamDTO createTeamDTO, MultipartBody.Part teamImageUrl) {
+    public void update_group(CreateTeamDTO createTeamDTO, MultipartBody.Part teamImageUrl,Long teamid) {
         final Group_create_responseDTO[] body = new Group_create_responseDTO[1];
         Thread thread = new Thread() {
             @Override
             public void run() {
                 try {
-                    body[0] = group_create_service.updateData(createPartFromString(createTeamDTO.getName()),
-                            createPartFromString(createTeamDTO.getContent()),
-                            createPartFromString(createTeamDTO.getStartDate()),
-                            createPartFromString(createTeamDTO.getEndDate()),
-                            createTeamDTO.getMaxMemberSize(),
-                            createPartFromString(createTeamDTO.getCategory()),
-                            createPartFromString(createTeamDTO.getLocation()),
-                            teamImageUrl,
-                            "TOKEN " + ClientApp.userToken).execute().body();
+                    if(teamImageUrl!=null) {
+                        body[0] = group_create_service.updateData(teamid, createPartFromString(createTeamDTO.getName()),
+                                createPartFromString(createTeamDTO.getContent()),
+                                createPartFromString(createTeamDTO.getStartDate()),
+                                createPartFromString(createTeamDTO.getEndDate()),
+                                createTeamDTO.getMaxMemberSize(),
+                                createPartFromString(createTeamDTO.getCategory()),
+                                createPartFromString(createTeamDTO.getLocation()),
+                                teamImageUrl,
+                                "TOKEN " + ClientApp.userToken).execute().body();
+                    }else{
+                        body[0] = group_create_service.updateData2(teamid, createPartFromString(createTeamDTO.getName()),
+                                createPartFromString(createTeamDTO.getContent()),
+                                createPartFromString(createTeamDTO.getStartDate()),
+                                createPartFromString(createTeamDTO.getEndDate()),
+                                createTeamDTO.getMaxMemberSize(),
+                                createPartFromString(createTeamDTO.getCategory()),
+                                createPartFromString(createTeamDTO.getLocation()),
+                                "TOKEN " + ClientApp.userToken).execute().body();
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

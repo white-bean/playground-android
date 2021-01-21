@@ -24,28 +24,45 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.doubleslash.playground.databinding.ActivityCreateGroupBinding;
+import com.doubleslash.playground.register.Search_school_Adapter;
 import com.doubleslash.playground.retrofit.RetrofitClient;
 import com.doubleslash.playground.retrofit.dto.CreateTeamDTO;
 import com.doubleslash.playground.retrofit.dto.response.Group_create_responseDTO;
 import com.doubleslash.playground.retrofit.dto.response.Team_info_responseDTO;
 
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserFactory;
+
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import okhttp3.MultipartBody;
 
 public class EditGroupActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     ActivityCreateGroupBinding binding;
     DatePickerDialog Dpicker;
+    private List<String> list;
+    private Search_school_Adapter adapter;
+    InputMethodManager inputMethodManager;
     TimePickerDialog Tpicker;
+    boolean isregion=true;
     Uri selectedImageUri;
     final Calendar cal = Calendar.getInstance();
+    String start, end;
     private RetrofitClient retrofitClient;
-    public static String API_URL = "http://222.251.129.150/";
-    Team_info_responseDTO team_info_responseDTO;
+    String uri;
+    Long teamid;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityCreateGroupBinding.inflate(getLayoutInflater());
+        inputMethodManager= (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
         setContentView(binding.getRoot());
         setUI();    // 소모임 생성할 때 넣었던 정보 가져옴
         initUI();
@@ -71,6 +88,15 @@ public class EditGroupActivity extends AppCompatActivity implements AdapterView.
     private void initUI() {
         binding.registerPicIv.setOnClickListener(v -> { // 소모임 사진
             openGallery();
+
+            String text2 = binding.GroupNameEdit.getText().toString();
+            String text3 = binding.infoEdit.getText().toString();
+            if (isregion && text2.length() > 0 && text3.length() > 0){
+                onCreateBtn();
+            }
+            else {
+                offCreateBtn();
+            }
         });
 
         binding.GroupNameEdit.addTextChangedListener(new TextWatcher() {    // 소모임 이름
@@ -88,14 +114,17 @@ public class EditGroupActivity extends AppCompatActivity implements AdapterView.
             public void afterTextChanged(Editable s) {
                 String text1 = s.toString();
                 String text2 = binding.infoEdit.getText().toString();
-                String text3 = binding.locationEdit.getText().toString();
-                if (text1.length() > 0 && text2.length() > 0 && text3.length() > 0){
+                if (text1.length() > 0 && text2.length() > 0 && isregion){
                     onCreateBtn();
                 }
                 else {
                     offCreateBtn();
                 }
             }
+        });
+        binding.searchBtn.setOnClickListener(v -> {
+            getschooldata();
+            binding.locationlist.setVisibility(View.VISIBLE); //나오기
         });
 
         binding.checkBtn.setOnClickListener(v -> {
@@ -104,23 +133,25 @@ public class EditGroupActivity extends AppCompatActivity implements AdapterView.
 
         binding.createBtn.setOnClickListener(v -> {
             retrofitClient = RetrofitClient.getInstance();
-
-            MultipartBody.Part teamImage = retrofitClient.prepareFilePart("file", selectedImageUri, getApplicationContext());
             String maxMember = binding.memberSpinner.getSelectedItem().toString();
             maxMember = maxMember.substring(0, maxMember.length() - 1);
             Integer maxMemberCount = Integer.parseInt(maxMember);
 
             CreateTeamDTO createTeamDTO = new CreateTeamDTO();
-            createTeamDTO.setTeamImageUrl(selectedImageUri.toString());
             createTeamDTO.setCategory(binding.categorySpinner.getSelectedItem().toString());
             createTeamDTO.setLocation(binding.locationEdit.getText().toString());
             createTeamDTO.setContent(binding.infoEdit.getText().toString());
             createTeamDTO.setMaxMemberSize(maxMemberCount);
             createTeamDTO.setName(binding.GroupNameEdit.getText().toString());
-            createTeamDTO.setStartDate(binding.startDate.getText().toString());
-            createTeamDTO.setEndDate(binding.endDate.getText().toString());
-
-            retrofitClient.update_group(createTeamDTO, teamImage);
+            createTeamDTO.setStartDate(start);
+            createTeamDTO.setEndDate(end);
+            if(selectedImageUri!=null) {
+                MultipartBody.Part teamImage = retrofitClient.prepareFilePart("file", selectedImageUri, getApplicationContext());
+                retrofitClient.update_group(createTeamDTO, teamImage,teamid);
+                createTeamDTO.setTeamImageUrl(selectedImageUri.toString());
+            }else{
+                retrofitClient.update_group(createTeamDTO, null,teamid);
+            }
 
             finish();
         });
@@ -146,8 +177,7 @@ public class EditGroupActivity extends AppCompatActivity implements AdapterView.
 
                 String text1 = s.toString();
                 String text2 = binding.GroupNameEdit.getText().toString();
-                String text3 = binding.locationEdit.getText().toString();
-                if (text1.length() > 0 && text2.length() > 0 && text3.length() > 0){
+                if (text1.length() > 0 && text2.length() > 0 && isregion){
                     onCreateBtn();
                 }
                 else {
@@ -164,15 +194,14 @@ public class EditGroupActivity extends AppCompatActivity implements AdapterView.
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                isregion=false;
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                String text1 = s.toString();
                 String text2 = binding.GroupNameEdit.getText().toString();
                 String text3 = binding.infoEdit.getText().toString();
-                if (text1.length() > 0 && text2.length() > 0 && text3.length() > 0){
+                if (isregion && text2.length() > 0 && text3.length() > 0){
                     onCreateBtn();
                 }
                 else {
@@ -191,13 +220,7 @@ public class EditGroupActivity extends AppCompatActivity implements AdapterView.
         binding.categorySpinner.setAdapter(cateAdapter);
         binding.categorySpinner.setOnItemSelectedListener(this);
 
-        ArrayAdapter subAdapter = ArrayAdapter.createFromResource(this, R.array.category, android.R.layout.simple_spinner_dropdown_item);
-        // 나중에 팀원들과 상의해서 세부 카테고리에 뭐가 들어갈지 정해야함, array도 만들어야함, 지금은 임시로 category 리스트로 넣었음
-        subAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        binding.subCategorySpinner.setAdapter(subAdapter);
-        binding.subCategorySpinner.setOnItemSelectedListener(this);
-
-
+        binding.locationlist.setOnItemClickListener(listener);
         binding.switch1.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if(isChecked) {//On
                 binding.startDate.setTextColor(Color.parseColor("#33353d"));
@@ -237,13 +260,30 @@ public class EditGroupActivity extends AppCompatActivity implements AdapterView.
             case R.id.category_spinner:
                 Toast.makeText(EditGroupActivity.this,"선택된 아이템 : "+binding.categorySpinner.getItemAtPosition(position),Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.sub_category_spinner:
-                Toast.makeText(EditGroupActivity.this,"선택된 아이템 : "+binding.subCategorySpinner.getItemAtPosition(position),Toast.LENGTH_SHORT).show();
-                break;
         }//Toast는 그저 확인용
     }//이 오버라이드 메소드에서 position은 몇번째 값이 클릭됐는지 알 수 있음
     //getItemAtPosition(position)를 통해서 해당 값을 받아올수있음
 
+    AdapterView.OnItemClickListener listener= new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            System.out.println(list.get(position));
+            binding.locationEdit.setText(list.get(position));
+            isregion=true;
+            list.clear();
+            adapter.notifyDataSetChanged();
+            binding.locationlist.setVisibility(View.INVISIBLE);
+            String text2 = binding.GroupNameEdit.getText().toString();
+            String text3 = binding.infoEdit.getText().toString();
+
+            if (isregion && text2.length() > 0 && text3.length() > 0) {
+                onCreateBtn();
+            }
+            else {
+                offCreateBtn();
+            }
+        }
+    };
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
@@ -268,6 +308,7 @@ public class EditGroupActivity extends AppCompatActivity implements AdapterView.
             }
         }
     }
+
     @SuppressLint("ClickableViewAccessibility")
     public static void bindEditTextScrolling(EditText view)
     {
@@ -310,11 +351,14 @@ public class EditGroupActivity extends AppCompatActivity implements AdapterView.
                     cal.set(year1, monthOfYear, dayOfMonth);
                     int weekDay = cal.get(Calendar.DAY_OF_WEEK);
                     String weekday = dayofweek(weekDay);
+                    String date = Integer.toString(year1).substring(2) + "." + String.format("%02d.%02d", monthOfYear + 1, dayOfMonth);
                     switch (id){
                         case 1:
+                            this.start = date;
                             binding.startDate.setText(year1 + "년 " + (monthOfYear + 1) + "월 " + dayOfMonth + "일 " + weekday);
                             break;
                         case 2:
+                            this.end = date;
                             binding.endDate.setText(year1 + "년 " + (monthOfYear + 1) + "월 " + dayOfMonth + "일 " + weekday);
                             break;
                     }
@@ -367,11 +411,80 @@ public class EditGroupActivity extends AppCompatActivity implements AdapterView.
         binding.locationEdit.setText(bundle.getString("location"));
         binding.startDate.setText(bundle.getString("startdate"));
         binding.endDate.setText(bundle.getString("enddate"));
-        selectedImageUri=Uri.parse(bundle.getString("url"));
-
+        selectedImageUri=null;
+        uri=ClientApp.API_URL + bundle.getString("url");
+        teamid=bundle.getLong("teamId");
         Glide.with(this)
                 .load(ClientApp.API_URL + bundle.getString("url"))
                 .into(binding.registerPicIv);
+
+    }
+    private void getschooldata(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                list=getXmlData();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (list!=null)
+                            adapter=new Search_school_Adapter(list,getApplicationContext(),binding.locationEdit.getText().toString());
+                        binding.locationlist.setAdapter(adapter);
+                    }
+                });
+            }
+        }).start();
+    }
+
+    ArrayList<String> getXmlData(){
+        ArrayList<String> schoolList =new ArrayList();
+        String str= binding.locationEdit.getText().toString();//EditText에 작성된 Text얻어오기
+        String regionname = URLEncoder.encode(str);
+        System.out.println("지낙마111111111111111111111111111");
+        String queryUrl="http://api.vworld.kr/req/data?service=data&request=GetFeature&data=LT_C_ADSIGG_INFO&key=E0DD4DBC-0E1A-3136-BDF8-3D98B8E8A211&domain=http://api.vworld.kr/req/data&format=xml&[&attrFilter=sig_kor_nm:like:"+regionname+"&]";
+        try{
+            URL url= new URL(queryUrl);//문자열로 된 요청 url을 URL 객체로 생성.
+            InputStream is= url.openStream(); //url위치로 입력스트림 연결
+            XmlPullParserFactory factory= XmlPullParserFactory.newInstance();//xml파싱을 위한
+            XmlPullParser xpp= factory.newPullParser();
+            xpp.setInput( new InputStreamReader(is, "UTF-8") ); //inputstream 으로부터 xml 입력받기
+            System.out.println("지낙마22");
+            String tag;
+            System.out.println(xpp);
+            xpp.next();
+            System.out.println("지낙마33");
+            int eventType= xpp.getEventType();
+            while( eventType != XmlPullParser.END_DOCUMENT ){
+                System.out.println(xpp.getName());
+                switch( eventType ){
+                    case XmlPullParser.START_DOCUMENT:
+                        //buffer.append("파싱 시작...\n\n");
+                        //break;
+                    case XmlPullParser.START_TAG:
+                        tag= xpp.getName();//테그 이름 얻어오기
+                        if(tag.equals("result")) ;
+                        else if(tag.equals("full_nm")) {
+                            xpp.next();
+                            schoolList.add(xpp.getText());//title 요소의 TEXT 읽어와서 문자열버퍼에 추가
+                            System.out.println(xpp.getText());
+                            //list.append("\n");
+                        }
+                        break;
+                    case XmlPullParser.TEXT:
+                        break;
+
+                    case XmlPullParser.END_TAG:
+                        tag= xpp.getName(); //테그 이름 얻어오기
+                        if(tag.equals("result")) ;// 첫번째 검색결과종료..줄바꿈
+                        break;
+                }
+                eventType= xpp.next();
+            }
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return schoolList;
 
     }
 }

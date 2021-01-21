@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide;
 import com.doubleslash.playground.ClientApp;
 import com.doubleslash.playground.EditGroupActivity;
 import com.doubleslash.playground.R;
+import com.doubleslash.playground.chat.ChatActivity;
 import com.doubleslash.playground.databinding.ActivityInfoGroupBinding;
 import com.doubleslash.playground.profile.ProfileOtherActivity;
 import com.doubleslash.playground.retrofit.RetrofitClient;
@@ -22,6 +23,7 @@ import com.doubleslash.playground.socket.model.Aria;
 import com.doubleslash.playground.socket.model.Type;
 
 public class InfoGroupActivity extends AppCompatActivity {
+
     private ActivityInfoGroupBinding binding;
 
     private RetrofitClient retrofitClient;
@@ -29,7 +31,7 @@ public class InfoGroupActivity extends AppCompatActivity {
     private long teamId;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         binding = ActivityInfoGroupBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -42,6 +44,7 @@ public class InfoGroupActivity extends AppCompatActivity {
     private void initUI() {
         // 이전 화면으로부터 teamId를 넘겨받음
         Intent intent = getIntent();
+
         teamId = intent.getLongExtra("teamId", -1);
 
         Team_info_responseDTO body = retrofitClient.get_teaminfo(teamId);
@@ -75,7 +78,6 @@ public class InfoGroupActivity extends AppCompatActivity {
         memberAdapter.setOnItemClickListener((holder, view, position) -> {
             Intent intent2 = new Intent(this, ProfileOtherActivity.class);
             intent2.putExtra("memberId", body.getData().getTeamMembers().get(position).getId());
-
             startActivity(intent2);
         });
 
@@ -113,6 +115,7 @@ public class InfoGroupActivity extends AppCompatActivity {
             bundle.putString("url",body.getData().getTeamImageUrl());
             bundle.putString("content",body.getData().getContent());
             bundle.putString("location",body.getData().getLocation());
+            bundle.putLong("teamId",teamId);
             intent1.putExtras(bundle);
             startActivity(intent1);
         });
@@ -131,6 +134,10 @@ public class InfoGroupActivity extends AppCompatActivity {
         // 채팅방 입장 버튼 눌렀을 때
         binding.btnGroupChatroom.setOnClickListener(view -> {
             Toast.makeText(this, "채팅방 입장", Toast.LENGTH_SHORT).show();
+            Intent intent1=new Intent(getApplicationContext(), ChatActivity.class);
+            intent1.putExtra("teamId",teamId);
+            startActivity(intent1);
+            finish();
         });
 
         // (방장용) 소모임 설정 버튼 눌렀을 때
