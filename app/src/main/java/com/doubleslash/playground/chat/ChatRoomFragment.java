@@ -51,89 +51,49 @@ public class ChatRoomFragment extends Fragment {
 
         adapter = new ChatRoomAdapter(getContext());
 
-        if (ClientApp.roomInfos.size() == 0) {
-            List<ChatRoomDTO> chatRooms = retrofitClient.getChatRoomInfos().getData();
-            ClientApp.roomInfos = new HashMap<>();
-            for (ChatRoomDTO room : chatRooms) {
 
-                // 마지막으로 읽은 메세지, 안 읽은 메세지 수 세팅
-                ClientApp.roomInfos.put(room.getId(), room);
-                if (ClientApp.RoomMsgQueues.containsKey(room.getName()) && ClientApp.RoomMsgQueues.get(room.getId()).size() != 0) {
+        List<ChatRoomDTO> chatRooms = retrofitClient.getChatRoomInfos().getData();
+        ClientApp.roomInfos = new HashMap<>();
+        for (ChatRoomDTO room : chatRooms) {
 
-                    Queue<Message> queue = ClientApp.RoomMsgQueues.get(room.getId());
-                    adapter.addItem(new ChatRoomItem(room.getId(), room.getType(), room.getName(), room.getTeamImageUrl(), queue.peek().getText(), dateConvert(queue.peek().getSendTime()), queue.size()));
+            // 마지막으로 읽은 메세지, 안 읽은 메세지 수 세팅
+            ClientApp.roomInfos.put(room.getId(), room);
+            if (ClientApp.RoomMsgQueues.containsKey(room.getId()) && ClientApp.RoomMsgQueues.get(room.getId()).size() != 0) {
 
-                } else {
-                    Thread thread = new Thread() {
-                        @Override
-                        public void run() {
-                            lastMsg = repository.getLastMessage(room.getId());
-                        }
-                    };
+                Queue<Message> queue = ClientApp.RoomMsgQueues.get(room.getId());
+                adapter.addItem(new ChatRoomItem(room.getId(), room.getType(), room.getName(), room.getTeamImageUrl(), queue.peek().getText(), dateConvert(queue.peek().getSendTime()), queue.size()));
 
-                    thread.start();
-                    try {
-                        thread.join();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+            } else {
+                Thread thread = new Thread() {
+                    @Override
+                    public void run() {
+                        lastMsg = repository.getLastMessage(room.getId());
                     }
+                };
 
-                    if (lastMsg != null && lastMsg.getText() != null) {
-                        adapter.addItem(new ChatRoomItem(room.getId(), room.getType(), room.getName(), room.getTeamImageUrl(), lastMsg.getText(), dateConvert(lastMsg.getSendTime()), 0));
-                    } else {
-                        adapter.addItem(new ChatRoomItem(room.getId(), room.getType(), room.getName(), room.getTeamImageUrl(), "", "", 0));
-                    }
+                thread.start();
+                try {
+                    thread.join();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
 
-                adapter.setOnItemClickListener((holder, view1, position) -> {
-                    // 눌렀을 때
-                    Intent intent = new Intent(getContext(), ChatActivity.class);
-                    intent.putExtra("roomId", adapter.getItem(position).getRoomId());
-                    intent.putExtra("roomType", adapter.getItem(position).getType());
-                    startActivity(intent);
-                });
-            }
-        } else {
-            for (String roomId : ClientApp.roomInfos.keySet()) {
-                ChatRoomDTO room = ClientApp.roomInfos.get(roomId);
-
-                // 마지막으로 읽은 메세지, 안 읽은 메세지 수 세팅
-                if (ClientApp.RoomMsgQueues.containsKey(room.getName()) && ClientApp.RoomMsgQueues.get(roomId).size() != 0) {
-                    Queue<Message> queue = ClientApp.RoomMsgQueues.get(roomId);
-                    adapter.addItem(new ChatRoomItem(room.getId(), room.getName(), room.getType(), room.getTeamImageUrl(), queue.peek().getText(), dateConvert(queue.peek().getSendTime()), queue.size()));
-                } else {
-                    Thread thread = new Thread() {
-                        @Override
-                        public void run() {
-                            lastMsg = repository.getLastMessage(roomId);
-                        }
-                    };
-
-                    thread.start();
-                    try {
-                        thread.join();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    
-                    if (lastMsg != null && lastMsg.getText() != null) {
-                        adapter.addItem(new ChatRoomItem(room.getId(), room.getType(), room.getName(), room.getTeamImageUrl(), lastMsg.getText(), dateConvert(lastMsg.getSendTime()), 0));
-                    } else {
-                        adapter.addItem(new ChatRoomItem(room.getId(), room.getType(), room.getName(), room.getTeamImageUrl(), "", "", 0));
-                    }
+                if (lastMsg != null && lastMsg.getText() != null) {
                     adapter.addItem(new ChatRoomItem(room.getId(), room.getType(), room.getName(), room.getTeamImageUrl(), lastMsg.getText(), dateConvert(lastMsg.getSendTime()), 0));
+                } else {
+                    adapter.addItem(new ChatRoomItem(room.getId(), room.getType(), room.getName(), room.getTeamImageUrl(), "", "", 0));
                 }
-
-                adapter.setOnItemClickListener((holder, view1, position) -> {
-                    // 눌렀을 때
-                    Intent intent = new Intent(getContext(), ChatActivity.class);
-                    intent.putExtra("roomId", adapter.getItem(position).getRoomId());
-                    intent.putExtra("roomType", adapter.getItem(position).getType());
-                    Log.d("roomType", adapter.getItem(position).getType());
-                    startActivity(intent);
-                });
             }
+
+            adapter.setOnItemClickListener((holder, view1, position) -> {
+                // 눌렀을 때
+                Intent intent = new Intent(getContext(), ChatActivity.class);
+                intent.putExtra("roomId", adapter.getItem(position).getRoomId());
+                intent.putExtra("roomType", adapter.getItem(position).getType());
+                startActivity(intent);
+            });
         }
+
 
         binding.recyclerView.setAdapter(adapter);
     }

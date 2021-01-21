@@ -29,7 +29,7 @@ public class ProfileOtherActivity extends AppCompatActivity {
 
         initUI();
     }
-    private void initUI(){
+    private void initUI() {
         Intent intent = getIntent();
         memberId = intent.getLongExtra("memberId", -1);
 
