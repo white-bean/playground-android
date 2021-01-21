@@ -104,6 +104,7 @@ public class LoginActivity extends AppCompatActivity {
                             result=0;
                             Sign_in_responseDTO sign_in_responseDTO = retrofitClient.post_login(binding.emailEdit.getText().toString(), binding.passwordEdit.getText().toString(),token);
                             System.out.println(result);
+
                             if (sign_in_responseDTO.getResult() != 0) {
                                 if(isCheckOn) {
                                     SharedPreferences.Editor autoLogin = auto.edit();

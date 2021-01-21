@@ -157,7 +157,8 @@ public class CreateGroupActivity extends AppCompatActivity implements AdapterVie
             createTeamDTO.setEndDate(end);
 
             retrofitClient.post_group(createTeamDTO, teamImage);
-
+            Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+            startActivity(intent);
             finish();
         });
 

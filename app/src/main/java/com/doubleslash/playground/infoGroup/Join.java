@@ -2,23 +2,16 @@ package com.doubleslash.playground.infoGroup;
 
 public class Join {
     // uri는 추후 서버 작업 끝난 후 추가
-    private String imageUri;
     private String userName;
     private String location;
-    private String univ;
+    private String university;
 
-    public Join(String userName, String location, String univ) {
+    private String imageUri;
+
+    public Join(String userName, String location, String university) {
         this.userName = userName;
         this.location = location;
-        this.univ = univ;
-    }
-
-    public String getImageUri() {
-        return imageUri;
-    }
-
-    public void setImageUri(String imageUri) {
-        this.imageUri = imageUri;
+        this.university = university;
     }
 
     public String getUserName() {
@@ -37,11 +30,19 @@ public class Join {
         this.location = location;
     }
 
-    public String getUniv() {
-        return univ;
+    public String getUniversity() {
+        return university;
     }
 
-    public void setUniv(String univ) {
-        this.univ = univ;
+    public void setUniversity(String university) {
+        this.university = university;
+    }
+
+    public String getImageUri() {
+        return imageUri;
+    }
+
+    public void setImageUri(String imageUri) {
+        this.imageUri = imageUri;
     }
 }

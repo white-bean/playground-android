@@ -152,7 +152,8 @@ public class EditGroupActivity extends AppCompatActivity implements AdapterView.
             }else{
                 retrofitClient.update_group(createTeamDTO, null,teamid);
             }
-
+            Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+            startActivity(intent);
             finish();
         });
 
@@ -412,6 +413,8 @@ public class EditGroupActivity extends AppCompatActivity implements AdapterView.
         binding.startDate.setText(bundle.getString("startdate"));
         binding.endDate.setText(bundle.getString("enddate"));
         selectedImageUri=null;
+        start=bundle.getString("startdate");
+        end=bundle.getString("enddate");
         uri=ClientApp.API_URL + bundle.getString("url");
         teamid=bundle.getLong("teamId");
         Glide.with(this)
