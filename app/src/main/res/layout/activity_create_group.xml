@@ -32,6 +32,7 @@
                     android:layout_marginEnd="@dimen/spacing_m"
                     android:layout_marginRight="@dimen/spacing_m"
                     android:background="@drawable/button_r8"
+                    android:padding="@dimen/spacing_l"
                     android:scaleType="centerCrop"
                     app:srcCompat="@drawable/camera_gray" />
 
@@ -243,7 +244,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1">
+                    android:layout_weight="2">
 
                     <TextView
                         android:id="@+id/textView14"
@@ -283,7 +284,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1">
+                    android:layout_weight="3">
 
                     <TextView
                         android:id="@+id/textView16"
@@ -295,36 +296,53 @@
                         android:text="소모임 활동 지역"
                         android:textColor="@color/sub_black"
                         android:textSize="12sp"
-                        app:layout_constraintBottom_toTopOf="@+id/location_edit"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
-
-                    <EditText
-                        android:id="@+id/location_edit"
-                        android:layout_width="160dp"
-                        android:layout_height="48dp"
-                        android:background="@drawable/button_r8"
-                        android:fontFamily="@font/notosanskr_regular"
-                        android:hint="서울 OO구"
-                        android:includeFontPadding="false"
-                        android:inputType="textShortMessage"
-                        android:nextFocusDown="@id/category_spinner"
-                        android:paddingLeft="@dimen/spacing_m"
-                        android:textColor="@color/sub_black"
-                        android:textColorHint="@color/sub_gray"
-                        android:textSize="20sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
 
                     <Button
                         android:id="@+id/search_btn"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginEnd="@dimen/spacing_m"
                         android:layout_marginRight="@dimen/spacing_m"
                         android:background="@drawable/search"
-                        app:layout_constraintBottom_toBottomOf="@+id/location_edit"
-                        app:layout_constraintEnd_toEndOf="@+id/location_edit"
-                        app:layout_constraintTop_toTopOf="@+id/location_edit" />
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/linearLayout3" />
+
+                    <LinearLayout
+                        android:id="@+id/linearLayout3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_xs"
+                        android:orientation="vertical"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/textView16">
+
+                        <EditText
+                            android:id="@+id/location_edit"
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp"
+                            android:background="@drawable/button_r8"
+                            android:fontFamily="@font/notosanskr_regular"
+                            android:hint="서울 OO구"
+                            android:includeFontPadding="false"
+                            android:inputType="textShortMessage"
+                            android:nextFocusDown="@id/category_spinner"
+                            android:paddingLeft="@dimen/spacing_m"
+                            android:textColor="@color/sub_black"
+                            android:textColorHint="@color/sub_gray"
+                            android:textSize="18sp" />
+
+                        <ListView
+                            android:id="@+id/listview"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/ic_rounded_rectangle"/>
+
+
+                    </LinearLayout>
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </LinearLayout>
@@ -352,48 +370,12 @@
                     android:layout_height="48dp"
                     android:background="@drawable/button_r8"
                     android:entries="@array/category"
-                    android:nextFocusDown="@id/sub_category_spinner"
                     android:paddingLeft="@dimen/spacing_m" />
 
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_alignRight="@id/category_spinner"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/spacing_m"
-                    app:srcCompat="@drawable/down_large" />
-            </RelativeLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_l"
-                android:layout_marginBottom="@dimen/spacing_xs"
-                android:fontFamily="@font/notosanskr_bold"
-                android:includeFontPadding="false"
-                android:text="소모임 세부 카테고리 (선택)"
-                android:textColor="@color/sub_black"
-                android:textSize="12sp" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
-
-                <Spinner
-                    android:id="@+id/sub_category_spinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:background="@drawable/button_r8"
-                    android:entries="@array/category"
-                    android:imeOptions="actionDone"
-                    android:paddingLeft="@dimen/spacing_m" />
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_alignRight="@id/sub_category_spinner"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/spacing_m"
                     app:srcCompat="@drawable/down_large" />
