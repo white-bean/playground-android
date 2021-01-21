@@ -2,14 +2,16 @@ package com.doubleslash.playground.chat;
 
 public class ChatRoomItem {
     private String roomId;  // 방 id
+    private String type;    // 방 타입 (GROUP, PERSON)
     private String title;   // 제목
     private String imageUrl;    // 채팅방 이미지
     private String content; // 마지막에 친 내용
     private String sendTime;    // 마지막에 보낸 시각
     int unreadMsgCnt;   // 안 읽은 메세지 갯수
 
-    public ChatRoomItem(String roomId, String title, String imageUrl, String content, String sendTime, int unreadMsgCnt) {
+    public ChatRoomItem(String roomId, String type, String title, String imageUrl, String content, String sendTime, int unreadMsgCnt) {
         this.roomId = roomId;
+        this.type = type;
         this.title = title;
         this.imageUrl = imageUrl;
         this.content = content;
@@ -20,6 +22,10 @@ public class ChatRoomItem {
     public String getRoomId() { return roomId; }
 
     public void setRoomId(String roomId) { this.roomId = roomId; }
+
+    public String getType() { return type; }
+
+    public void setType(String type) { this.type = type; }
 
     public String getTitle() {
         return title;

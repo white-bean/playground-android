@@ -34,7 +34,7 @@ import static android.view.View.GONE;
 public class ChatActivity extends AppCompatActivity{
     private ActivityChatBinding binding;
     private RetrofitClient retrofitClient;
-    private ChatAdapter adapter = new ChatAdapter(getApplicationContext());
+    private ChatAdapter adapter;
     private ArrayList<ChatItem> chats = new ArrayList<ChatItem>();
     private MutableLiveData<ArrayList<ChatItem>> chatsLiveData = new MutableLiveData<ArrayList<ChatItem>>();
     private List<MessageEntity> databaseMsgs;
@@ -60,6 +60,8 @@ public class ChatActivity extends AppCompatActivity{
     }
 
     private void initUI() {
+        adapter = new ChatAdapter(getApplicationContext());
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         binding.recyclerView.setLayoutManager(layoutManager);
         binding.recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -76,7 +78,7 @@ public class ChatActivity extends AppCompatActivity{
         // 채팅 목록에서 인텐트로 roomId, roomType 받아옴
         Intent intent = getIntent();
         roomId = intent.getStringExtra("roomId");
-        roomType = intent.getStringExtra("type");
+        roomType = intent.getStringExtra("roomType");
 
         // 멤버들 정보 초기화 (해싱으로 빠르게 불러오기 위함)
         memberInfos = new HashMap<>();
@@ -164,7 +166,7 @@ public class ChatActivity extends AppCompatActivity{
 
     private void sendMessage(String msg) {
         retrofitClient = RetrofitClient.getInstance();
-        if (roomType == "GROUP") {
+        if (roomType.equals("GROUP")) {
             retrofitClient.send_chat(Aria.GROUP, Type.SEND, ClientApp.userId, roomId, msg, System.currentTimeMillis());
         } else {
             retrofitClient.send_chat(Aria.PERSON, Type.SEND, ClientApp.userId, roomId, msg, System.currentTimeMillis());
