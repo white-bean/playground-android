@@ -56,7 +56,7 @@ public class InfoGroupActivity extends AppCompatActivity {
         binding.tvMemberNumber.setText(Integer.toString(body.getData().getCurrentMemberSize()));
         binding.tvMemberNumber2.setText(Integer.toString(body.getData().getCurrentMemberSize()));
 
-        String ddayDate = body.getData().getStartDate() + "~" + body.getData().getEndDate();
+        String ddayDate = body.getData().getStartDate() + " ~ " + body.getData().getEndDate();
         binding.tvGroupDdayDate.setText(ddayDate);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);

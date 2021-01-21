@@ -51,10 +51,6 @@ public class MainActivity extends AppCompatActivity {
 
         retrofitClient = RetrofitClient.getInstance();
 
-        groupListFragment1 = new GroupListFragment1();
-        groupListFragment2 = new GroupListFragment2();
-        setContentView(R.layout.activity_main);
-
         initUI();
 
         ClientApp.socketMananger = new SocketMananger();
@@ -107,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
             toast.show();
         }
     }
-    class ItemSelectedListener implements BottomNavigationView.OnNavigationItemSelectedListener{
+    class ItemSelectedListener implements BottomNavigationView.OnNavigationItemSelectedListener {
         User_info_responseDTO body;
 
         ItemSelectedListener(User_info_responseDTO body) {
