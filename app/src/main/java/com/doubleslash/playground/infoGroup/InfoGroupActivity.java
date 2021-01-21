@@ -152,6 +152,8 @@ public class InfoGroupActivity extends AppCompatActivity {
             intent1.putExtras(bundle);
 
             startActivity(intent1);
+
+            finish();
         });
 
         User_info_responseDTO body_userinfo = retrofitClient.get_userinfo();
