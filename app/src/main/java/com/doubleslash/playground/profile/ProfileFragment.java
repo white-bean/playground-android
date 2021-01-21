@@ -39,7 +39,6 @@ public class ProfileFragment extends Fragment {
         Glide.with(getContext())
                 .load(ClientApp.API_URL + body.getData().getImages().get(0))
                 .into(binding.imageUser01);
-        Log.d("ddd", ClientApp.API_URL + body.getData().getImages().get(0));
 
         Glide.with(getContext())
                 .load(ClientApp.API_URL + body.getData().getImages().get(1))

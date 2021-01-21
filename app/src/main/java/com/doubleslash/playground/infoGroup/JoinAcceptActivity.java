@@ -10,13 +10,18 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.doubleslash.playground.ClientApp;
 import com.doubleslash.playground.databinding.ActivityJoinAcceptBinding;
 import com.doubleslash.playground.retrofit.RetrofitClient;
+import com.doubleslash.playground.socket.model.Aria;
+import com.doubleslash.playground.socket.model.Type;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class JoinAcceptActivity extends AppCompatActivity {
     private ActivityJoinAcceptBinding binding;
+
     private RetrofitClient retrofitClient;
-    private JoinAdapter adapter;
+
+    List<Long> users = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,26 +36,51 @@ public class JoinAcceptActivity extends AppCompatActivity {
         retrofitClient = RetrofitClient.getInstance();
 
         Intent intent = getIntent();
-        String category = intent.getStringExtra("category");
         String teamId = intent.getStringExtra("teamId");
 
-        binding.recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        binding.rvWaitingUsers.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
-        adapter = new JoinAdapter(category, teamId);
+        JoinAdapter joinAdapter = new JoinAdapter();
 
-        // 어답터에 추가하는 작업 있어야함
-        List<Long> users = ClientApp.waitingUsers.get(teamId);
-        for (Long user : users) {
-            adapter.addItem(new Join(Long.toString(user), "서울 광진구", "대학교"));
-        }
-        binding.recyclerView.setAdapter(adapter);
+        users = ClientApp.waitingUsers.get(teamId);
 
-        if (adapter.getItemCount() > 0) {
-            binding.tvNoMember.setVisibility(View.GONE);
-            binding.imageNoMember.setVisibility(View.GONE);
-        } else {
-            binding.tvNoMember.setVisibility(View.VISIBLE);
-            binding.imageNoMember.setVisibility(View.VISIBLE);
+        if (users != null) {
+            if (users.size() > 0) {
+                for (Long user : users) {
+                    joinAdapter.addItem(new Join(Long.toString(user), "서울 광진구", "대학교"));
+                }
+            }
+
+            joinAdapter.setOnItemClickListener((holder, view, position) -> {
+                retrofitClient.group_request_accept(Aria.GROUP, Type.ACCEPT, Long.parseLong(joinAdapter.getItem(position).getUserName()), teamId, System.currentTimeMillis());
+
+                ClientApp.waitingUsers.remove(joinAdapter.getItem(position).getUserName());
+                joinAdapter.removeItem(position);
+
+                // 가입 대기 인원 체크
+                binding.tvWaitingUsersNumber.setText(joinAdapter.getItemCount());
+
+                if (joinAdapter.getItemCount() > 0) {
+                    binding.tvNoMember.setVisibility(View.GONE);
+                    binding.imageNoMember.setVisibility(View.GONE);
+                } else {
+                    binding.tvNoMember.setVisibility(View.VISIBLE);
+                    binding.imageNoMember.setVisibility(View.VISIBLE);
+                }
+            });
+
+            binding.rvWaitingUsers.setAdapter(joinAdapter);
+
+            // 가입 대기 인원 체크
+            binding.tvWaitingUsersNumber.setText(joinAdapter.getItemCount());
+
+            if (joinAdapter.getItemCount() > 0) {
+                binding.tvNoMember.setVisibility(View.GONE);
+                binding.imageNoMember.setVisibility(View.GONE);
+            } else {
+                binding.tvNoMember.setVisibility(View.VISIBLE);
+                binding.imageNoMember.setVisibility(View.VISIBLE);
+            }
         }
     }
 }

@@ -17,8 +17,14 @@ import com.doubleslash.playground.R;
 import java.util.ArrayList;
 
 public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder> implements OnMemberItemClickListener{
-    ArrayList<Member> items = new ArrayList<Member>();
+    ArrayList<Member> items = new ArrayList<>();
     OnMemberItemClickListener listener;
+
+    private long kingId;
+
+    public MemberAdapter(long kingId) {
+        this.kingId = kingId;
+    }
 
     @NonNull
     @Override
@@ -32,7 +38,7 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Member item = items.get(position);
-        holder.setItem(item);
+        holder.setItem(item, kingId);
     }
 
     @Override
@@ -64,12 +70,17 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder{
+        ImageView image_group_king;
+
         ImageView member_image;
         TextView name;
+
         RequestOptions option = new RequestOptions().circleCrop();
 
         public ViewHolder(@NonNull View itemView, final OnMemberItemClickListener listener) {
             super(itemView);
+
+            image_group_king = itemView.findViewById(R.id.image_group_king);
 
             member_image = itemView.findViewById(R.id.member_image);
             name = itemView.findViewById(R.id.name);
@@ -78,16 +89,21 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.ViewHolder
                 int position = getAdapterPosition();
 
                 if (listener != null){
-                    listener.onItemClick(MemberAdapter.ViewHolder.this, view, position);
+                    listener.onItemClick(this, view, position);
                 }
             });
         }
 
-        public void setItem(Member item){
+        public void setItem(Member item, long kingId){
+            if (item.getId() == kingId) {
+                image_group_king.setVisibility(View.VISIBLE);
+            }
+
             Glide.with(itemView.getContext())
                     .load(ClientApp.API_URL + item.getImage())
                     .apply(option)
                     .into(member_image);
+
             name.setText(item.getName());
         }
     }

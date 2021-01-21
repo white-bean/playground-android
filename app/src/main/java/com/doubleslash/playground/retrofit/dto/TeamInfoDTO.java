@@ -9,6 +9,9 @@ public class TeamInfoDTO {
     @SerializedName("id")
     @Expose
     private Long id;
+    @SerializedName("adminInfo")
+    @Expose
+    private AdminInfoDTO adminInfo;
     @SerializedName("name")
     @Expose
     private String name;
@@ -44,6 +47,14 @@ public class TeamInfoDTO {
     public Long getId() { return id; }
 
     public void setId(Long id) { this.id = id; }
+
+    public AdminInfoDTO getAdminInfo() {
+        return adminInfo;
+    }
+
+    public void setAdminInfo(AdminInfoDTO adminInfo) {
+        this.adminInfo = adminInfo;
+    }
 
     public String getName() { return name; }
 
