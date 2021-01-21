@@ -5,9 +5,10 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "Messages", foreignKeys = @ForeignKey(entity = ChatRoomEntity.class,
-        parentColumns = "id",
-        childColumns = "roomId"))
+//@Entity(tableName = "Messages", foreignKeys = @ForeignKey(entity = ChatRoomEntity.class,
+//        parentColumns = "id",
+//        childColumns = "roomId"))
+@Entity(tableName = "Messages")
 public class MessageEntity {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
