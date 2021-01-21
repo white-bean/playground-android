@@ -66,23 +66,11 @@ public class ChatActivity extends AppCompatActivity{
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         binding.recyclerView.setLayoutManager(layoutManager);
-        binding.recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                if (!binding.recyclerView.canScrollVertically(-1)) {
-
-                } else if (!binding.recyclerView.canScrollVertically(1)) {
-
-                }
-            }
-        });
 
         // 채팅 목록에서 인텐트로 roomId, roomType 받아옴
         Intent intent = getIntent();
         roomId = intent.getStringExtra("roomId");
         roomType = intent.getStringExtra("roomType");
-
-
 
         // 멤버들 정보 초기화 (해싱으로 빠르게 불러오기 위함)
         memberInfos = new HashMap<>();
@@ -92,9 +80,6 @@ public class ChatActivity extends AppCompatActivity{
             Gson gson = new Gson();
             Log.d("members", gson.toJson(member));
         }
-
-
-
 
         // 플러스 버튼으로 메뉴 열고 닫기
         binding.menuLayout.setVisibility(GONE);

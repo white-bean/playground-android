@@ -57,7 +57,7 @@ public class ChatRoomFragment extends Fragment {
             // 마지막으로 읽은 메세지, 안 읽은 메세지 수 세팅
             ClientApp.roomInfos.put(room.getId(), room);
 
-            if (room.getType() == "GROUP") {
+            if (room.getType().equals("GROUP")) {
                 if (ClientApp.RoomMsgQueues.containsKey(room.getId()) && ClientApp.RoomMsgQueues.get(room.getId()).size() != 0) {
                     Queue<Message> queue = ClientApp.RoomMsgQueues.get(room.getId());
                     adapter.addItem(new ChatRoomItem(room.getId(), room.getType(), room.getName(), room.getTeamImageUrl(), queue.peek().getText(), dateConvert(queue.peek().getSendTime()), queue.size()));
