@@ -53,9 +53,9 @@ public class CreateGroupActivity extends AppCompatActivity implements AdapterVie
     InputMethodManager inputMethodManager;
     TimePickerDialog Tpicker;
     Uri selectedImageUri;
+    String start, end;
     final Calendar cal = Calendar.getInstance();
     private RetrofitClient retrofitClient;
-    MultipartBody.Part groupimage;
     boolean isregion=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,8 +132,8 @@ public class CreateGroupActivity extends AppCompatActivity implements AdapterVie
             createTeamDTO.setContent(binding.infoEdit.getText().toString());
             createTeamDTO.setMaxMemberSize(maxMemberCount);
             createTeamDTO.setName(binding.GroupNameEdit.getText().toString());
-            createTeamDTO.setStartDate(binding.startDate.getText().toString());
-            createTeamDTO.setEndDate(binding.endDate.getText().toString());
+            createTeamDTO.setStartDate(start);
+            createTeamDTO.setEndDate(end);
 
             retrofitClient.post_group(createTeamDTO, teamImage);
 
@@ -207,11 +207,6 @@ public class CreateGroupActivity extends AppCompatActivity implements AdapterVie
         binding.categorySpinner.setAdapter(cateAdapter);
         binding.categorySpinner.setOnItemSelectedListener(this);
 
-        ArrayAdapter subAdapter = ArrayAdapter.createFromResource(this, R.array.category, android.R.layout.simple_spinner_dropdown_item);
-        // 나중에 팀원들과 상의해서 세부 카테고리에 뭐가 들어갈지 정해야함, array도 만들어야함, 지금은 임시로 category 리스트로 넣었음
-        subAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-
         binding.locationlist.setOnItemClickListener(listener);
         binding.switch1.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if(isChecked) {//On
@@ -253,7 +248,7 @@ public class CreateGroupActivity extends AppCompatActivity implements AdapterVie
             binding.locationlist.setVisibility(View.INVISIBLE);
             String text2 = binding.GroupNameEdit.getText().toString();
             String text3 = binding.infoEdit.getText().toString();
-            if (isregion && text2.length() > 0 && text3.length() ==4) {
+            if (isregion && text2.length() > 0 && text3.length() > 0) {
                 onCreateBtn();
             }
             else {
@@ -266,13 +261,13 @@ public class CreateGroupActivity extends AppCompatActivity implements AdapterVie
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         switch (parent.getId()){
             case R.id.member_spinner:
-                Toast.makeText(CreateGroupActivity.this,"선택된 아이템 : "+binding.memberSpinner.getItemAtPosition(position),Toast.LENGTH_SHORT).show();
+                //Toast.makeText(CreateGroupActivity.this,"선택된 아이템 : "+binding.memberSpinner.getItemAtPosition(position),Toast.LENGTH_SHORT).show();
                 break;
             case R.id.category_spinner:
-                Toast.makeText(CreateGroupActivity.this,"선택된 아이템 : "+binding.categorySpinner.getItemAtPosition(position),Toast.LENGTH_SHORT).show();
+                //Toast.makeText(CreateGroupActivity.this,"선택된 아이템 : "+binding.categorySpinner.getItemAtPosition(position),Toast.LENGTH_SHORT).show();
                 break;
-        }//Toast는 그저 확인용
-    }//이 오버라이드 메소드에서 position은 몇번째 값이 클릭됐는지 알 수 있음
+        }
+    }
     //getItemAtPosition(position)를 통해서 해당 값을 받아올수있음
 
     @Override
@@ -346,11 +341,14 @@ public class CreateGroupActivity extends AppCompatActivity implements AdapterVie
                     cal.set(year1, monthOfYear, dayOfMonth);
                     int weekDay = cal.get(Calendar.DAY_OF_WEEK);
                     String weekday = dayofweek(weekDay);
+                    String date = Integer.toString(year1).substring(2) + "." + String.format("%02d.%02d", monthOfYear + 1, dayOfMonth);
                     switch (id){
                         case 1:
+                            this.start = date;
                             binding.startDate.setText(year1 + "년 " + (monthOfYear + 1) + "월 " + dayOfMonth + "일 " + weekday);
                             break;
                         case 2:
+                            this.end = date;
                             binding.endDate.setText(year1 + "년 " + (monthOfYear + 1) + "월 " + dayOfMonth + "일 " + weekday);
                             break;
                     }
@@ -360,7 +358,7 @@ public class CreateGroupActivity extends AppCompatActivity implements AdapterVie
     private void showTime(int id){
 
         Tpicker = new TimePickerDialog(CreateGroupActivity.this, android.R.style.Theme_Holo_Light_Dialog_NoActionBar,
-                (TimePickerDialog.OnTimeSetListener) (timePicker, hour, min) -> {
+                (timePicker, hour, min) -> {
                     String status = ((hour>12))? "오후":"오전";
                     String format = String.format("%s %02d:%02d", status, hour % 12, min);
                     switch (id){
