@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 public class Total_group_dataDTO {
     @SerializedName("teamId")
     @Expose
-    private long teamId;
+    private Long teamId;
 
     @SerializedName("name")
     @Expose

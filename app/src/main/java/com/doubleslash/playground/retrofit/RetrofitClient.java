@@ -18,6 +18,7 @@ import com.doubleslash.playground.retrofit.dto.Sign_inDTO;
 import com.doubleslash.playground.retrofit.dto.response.AutoLoginResponseDTO;
 import com.doubleslash.playground.retrofit.dto.response.ChatRoomInfoResponseDTO;
 import com.doubleslash.playground.retrofit.dto.response.CheckChatRoomResponseDTO;
+import com.doubleslash.playground.retrofit.dto.response.Find_group_responseDTO;
 import com.doubleslash.playground.retrofit.dto.response.Group_create_responseDTO;
 import com.doubleslash.playground.retrofit.dto.response.Other_info_responseDTO;
 import com.doubleslash.playground.retrofit.dto.response.Send_chat_responseDTO;
@@ -28,6 +29,7 @@ import com.doubleslash.playground.retrofit.dto.response.Total_group_responseDTO;
 import com.doubleslash.playground.retrofit.dto.response.User_info_responseDTO;
 import com.doubleslash.playground.retrofit.service.Chatroom_infoService;
 import com.doubleslash.playground.retrofit.service.CheckChatRoomService;
+import com.doubleslash.playground.retrofit.service.Find_group_Service;
 import com.doubleslash.playground.retrofit.service.Group_create_Service;
 import com.doubleslash.playground.retrofit.service.Other_info_Service;
 import com.doubleslash.playground.retrofit.service.Send_chat_Service;
@@ -64,6 +66,7 @@ public class RetrofitClient {
     private static CheckChatRoomService checkChatRoomService;
     private static Studentcard_upload_Service studentcard_upload_service;
     private static Send_chat_Service send_chat_service;
+    private static Find_group_Service find_group_service;
 
     public static int result = -1;
 
@@ -74,6 +77,7 @@ public class RetrofitClient {
     public static ChatRoomInfoResponseDTO chatroom_infoDTO = null;
     public static CheckChatRoomResponseDTO checkChatRoomResponseDTO = null;
     public static Sign_up_responseDTO sign_up_responseDTO = null;
+    public static Find_group_responseDTO find_group_responseDTO = null;
 
     public RetrofitClient() {
         Gson gson = new GsonBuilder().setLenient().create();
@@ -92,6 +96,7 @@ public class RetrofitClient {
         checkChatRoomService = retrofit.create(CheckChatRoomService.class);
         studentcard_upload_service = retrofit.create(Studentcard_upload_Service.class);
         send_chat_service = retrofit.create(Send_chat_Service.class);
+        find_group_service = retrofit.create(Find_group_Service.class);
     }
 
     public static RetrofitClient getInstance() {
@@ -150,7 +155,6 @@ public class RetrofitClient {
         RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
         return MultipartBody.Part.createFormData(partName, file.getName(), requestFile);
     }
-
 
     // 그룹 생성 (CreateGroupActivity)
     public void post_group(CreateTeamDTO createTeamDTO, MultipartBody.Part teamImageUrl) {
@@ -321,6 +325,31 @@ public class RetrofitClient {
         try {
             thread.join();
             return total_group_responseDTO;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    // 소모임 검색 시 소모임 정보 가져오기 (FindGroupActivity)
+    public Find_group_responseDTO get_findgrouplist(String searchData){
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    find_group_responseDTO = find_group_service.getData(searchData).execute().body();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        thread.start();
+
+        try {
+            thread.join();
+            System.out.println("아무거나");
+            System.out.println(find_group_responseDTO.getResult());
+            return find_group_responseDTO;
         } catch (InterruptedException e) {
             e.printStackTrace();
             return null;
@@ -529,7 +558,4 @@ public class RetrofitClient {
             e.printStackTrace();
         }
     }
-
-    // 리퀘스트 "Aria" : "GROUP", "Type" : "REQUEST", "from" : "가입신청 유저", "to" : "teamId", "sendTime" : "sendTime"
-    // 어셉트 "Aria" : "GROUP", "TYPE" :"ACCEPT", "from" : "가입신청 유저", "to" : "teamId", "sendTime" : "sendTime"
 }

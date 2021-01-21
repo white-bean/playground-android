@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:paddingLeft="@dimen/spacing_m"
     android:paddingRight="@dimen/spacing_m"
+    android:paddingBottom="16dp"
     tools:context=".FindGroupActivity">
 
     <com.doubleslash.playground.customwidget.SearchbarEditText
@@ -28,95 +29,56 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TableLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_l"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="@dimen/spacing_xl"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search_edit">
+        app:layout_constraintTop_toBottomOf="@+id/search_edit" />
 
-        <TableRow
-            android:layout_width="match_parent"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_caution"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="202dp"
+        android:background="#f8f8fa"
+
+        android:visibility="invisible"
+        app:layout_constraintTop_toBottomOf="@id/search_edit"
+        tools:layout_editor_absoluteX="32dp">
+
+        <ImageView
+            android:id="@+id/image_caution"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginBottom="@dimen/spacing_m"
+            android:contentDescription="@null"
+            app:layout_constraintBottom_toTopOf="@id/tv_caution"
+            app:layout_constraintEnd_toEndOf="parent"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/ic_none" />
+
+        <TextView
+            android:id="@+id/tv_caution"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/spacing_xs">
+            android:layout_marginTop="40dp"
+            android:fontFamily="@font/notosanskr_regular"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:text="검색된 결과가 없어요"
 
-            <Button
-                android:id="@+id/btn_1"
-                android:layout_width="65dp"
-                android:layout_height="22dp"
-                android:layout_marginRight="@dimen/spacing_xs"
-                android:background="@drawable/r11"
-                android:fontFamily="@font/notosanskr_regular"
-                android:includeFontPadding="false"
-                android:text="영어 스터디"
-                android:textColor="@color/sub_gray"
-                android:textSize="12sp" />
+            android:textColor="#595c6a"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
 
-            <Button
-                android:id="@+id/btn_2"
-                android:layout_width="wrap_content"
-                android:layout_height="22dp"
-                android:layout_marginRight="@dimen/spacing_xs"
-                android:background="@drawable/r11"
-                android:fontFamily="@font/notosanskr_regular"
-                android:includeFontPadding="false"
-                android:text="기상 스터디"
-                android:textColor="@color/sub_gray"
-                android:textSize="12sp" />
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <Button
-                android:id="@+id/btn_3"
-                android:layout_width="wrap_content"
-                android:layout_height="22dp"
-                android:layout_marginRight="@dimen/spacing_xs"
-                android:background="@drawable/r11"
-                android:fontFamily="@font/notosanskr_regular"
-                android:includeFontPadding="false"
-                android:text="한강러닝"
-                android:textColor="@color/sub_gray"
-                android:textSize="12sp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <Button
-                android:id="@+id/btn_4"
-                android:layout_width="wrap_content"
-                android:layout_height="22dp"
-                android:background="@drawable/r11"
-                android:fontFamily="@font/notosanskr_regular"
-                android:includeFontPadding="false"
-                android:text="어몽어스"
-                android:textColor="@color/sub_gray"
-                android:textSize="12sp" />
-        </TableRow>
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <Button
-                android:id="@+id/btn_5"
-                android:layout_width="wrap_content"
-                android:layout_height="22dp"
-                android:layout_marginRight="@dimen/spacing_xs"
-                android:background="@drawable/r11"
-                android:fontFamily="@font/notosanskr_regular"
-                android:includeFontPadding="false"
-                android:text="강남 소모임"
-                android:textColor="@color/sub_gray"
-                android:textSize="12sp" />
-
-            <Button
-                android:id="@+id/btn_6"
-                android:layout_width="wrap_content"
-                android:layout_height="22dp"
-                android:layout_marginRight="@dimen/spacing_xs"
-                android:background="@drawable/r11"
-                android:fontFamily="@font/notosanskr_regular"
-                android:includeFontPadding="false"
-                android:text="연대 소모임"
-                android:textColor="@color/sub_gray"
-                android:textSize="12sp" />
-        </TableRow>
-
-    </TableLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
