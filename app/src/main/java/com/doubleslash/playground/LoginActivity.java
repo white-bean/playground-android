@@ -69,7 +69,6 @@ public class LoginActivity extends AppCompatActivity {
                         result= retrofitClient.post_autologin(user_token, token);
                         if (result == 1) {
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                            ClientApp.userEmail=user_email;
                             intent.putExtra("email", user_email);
                             startActivity(intent);
                             finish();
@@ -113,7 +112,7 @@ public class LoginActivity extends AppCompatActivity {
                                     autoLogin.commit();
                                 }
                                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                ClientApp.userEmail = binding.emailEdit.getText().toString();
+
                                 intent.putExtra("email", binding.emailEdit.getText().toString());
                                 startActivity(intent);
                                 finish();

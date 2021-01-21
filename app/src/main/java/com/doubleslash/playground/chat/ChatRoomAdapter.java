@@ -1,5 +1,6 @@
 package com.doubleslash.playground.chat;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.doubleslash.playground.ClientApp;
 import com.doubleslash.playground.R;
 
 import java.util.ArrayList;
@@ -17,6 +20,12 @@ import java.util.ArrayList;
 public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.ViewHolder> implements OnChatRoomItemClickListener {
     ArrayList<ChatRoomItem> items = new ArrayList<ChatRoomItem>();
     OnChatRoomItemClickListener listener;
+
+    private Context context;
+
+    public ChatRoomAdapter(Context context) {
+        this.context = context;
+    }
 
     @NonNull
     @Override
@@ -30,7 +39,7 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ChatRoomItem item = items.get(position);
-        holder.setItem(item);
+        holder.setItem(context, item);
     }
 
     @Override
@@ -79,19 +88,20 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.ViewHo
             sendTimeText = itemView.findViewById(R.id.send_time_text);
             unreadMsgCntText = itemView.findViewById(R.id.unread_msg_cnt);
 
-            itemView.setOnClickListener(new View.OnClickListener(){ // 클릭 이벤트
-                @Override
-                public void onClick(View view) {
-                    int position = getAdapterPosition();
+            // 클릭 이벤트
+            itemView.setOnClickListener(view -> {
+                int position = getAdapterPosition();
 
-                    if (listener != null){
-                        listener.onItemClick(ViewHolder.this, view, position);
-                    }
-                    //클릭 시 동작
+                if (listener != null){
+                    listener.onItemClick(ViewHolder.this, view, position);
                 }
+                //클릭 시 동작
             });
         }
-        public void setItem(ChatRoomItem item){
+        public void setItem(Context context, ChatRoomItem item) {
+            Glide.with(context)
+                    .load(ClientApp.API_URL + item.getImageUrl())
+                    .into(chatImage);
             titleText.setText(item.getTitle());
             contentText.setText(item.getContent());
             sendTimeText.setText(item.getSendTime());

@@ -44,6 +44,8 @@ public class GroupListFragment2 extends Fragment {
     }
 
     private void initUI() {
+        // myInfo 에러의 근원
+
         User_info_responseDTO body = retrofitClient.get_userinfo();
 
         // 사용자 이름 & 사진

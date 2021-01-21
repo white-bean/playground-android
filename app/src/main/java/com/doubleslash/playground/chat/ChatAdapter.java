@@ -10,6 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.doubleslash.playground.ClientApp;
 import com.doubleslash.playground.R;
 
 import java.util.ArrayList;
@@ -17,6 +19,10 @@ import java.util.ArrayList;
 public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private ArrayList<ChatItem> items = new ArrayList<ChatItem>();
+
+    private Context context;
+
+    public ChatAdapter(Context context) { this.context = context; }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -44,7 +50,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
         else if (viewHolder instanceof LeftViewHolder) {
             ChatItem item = items.get(position);
-            ((LeftViewHolder) viewHolder).setItem(item);
+            ((LeftViewHolder) viewHolder).setItem(context, item);
         }
         else {
             ChatItem item = items.get(position);
@@ -102,10 +108,13 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             sendTimeText = itemView.findViewById(R.id.send_time_text);
         }
 
-        public void setItem(ChatItem item){
+        public void setItem(Context context, ChatItem item){
             nameText.setText(item.getName());
             contentText.setText(item.getContent());
             sendTimeText.setText(item.getSendTime());
+            Glide.with(context)
+                    .load(ClientApp.API_URL + item.getUserImageUrl())
+                    .into(profileImage);
         }
     }
 

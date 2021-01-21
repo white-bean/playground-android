@@ -24,6 +24,11 @@ public class MessageRepository {
         messageDao = db.messageDao();
     }
 
+    public List<MessageEntity> getLast10Messages(String roomId, int id) {
+        messages = messageDao.getLast10Items(roomId, id);
+        return messages;
+    }
+
     public List<MessageEntity> getAllMessages() {
         messages = messageDao.getAll();
         return messages;

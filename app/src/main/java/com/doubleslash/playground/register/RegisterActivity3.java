@@ -139,6 +139,7 @@ public class RegisterActivity3 extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), RegisterActivity4.class);
                 intent.putExtra("sign_upDTO",sign_upDTO);
                 startActivity(intent);
+                finish();
                 /*
                 int result= retrofitClient.post_sign_up(binding.emailEdit.getText().toString(), binding.passwordEdit.getText().toString());
 

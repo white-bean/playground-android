@@ -27,6 +27,9 @@ public interface MessageDao {
     @Query("SELECT * FROM messages WHERE id = :id")
     MessageEntity getItemById(int id);
 
+    @Query("SELECT * FROM Messages WHERE roomId = :roomId AND id < :id ORDER BY id DESC LIMIT 1")
+    List<MessageEntity> getLast10Items(String roomId, int id);
+
     @Query("SELECT * FROM messages WHERE roomId = :roomId")
     List<MessageEntity> getItemByroomId(String roomId);
 

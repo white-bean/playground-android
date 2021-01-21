@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class MemberDTO {
+    // 채팅에서 id는 식별자가 되지 못한다.........
     @SerializedName("id")
     @Expose
     private Long id;

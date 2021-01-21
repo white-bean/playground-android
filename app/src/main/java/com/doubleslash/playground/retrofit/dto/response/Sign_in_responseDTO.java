@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 public class Sign_in_responseDTO {
     @SerializedName("result")
     @Expose
-    private Integer result;
+    private Long result;
     @SerializedName("message")
     @Expose
     private String message;
@@ -14,11 +14,11 @@ public class Sign_in_responseDTO {
     @Expose
     private String token;
 
-    public Integer getResult() {
+    public Long getResult() {
         return result;
     }
 
-    public void setResult(Integer result) {
+    public void setResult(Long result) {
         this.result = result;
     }
 

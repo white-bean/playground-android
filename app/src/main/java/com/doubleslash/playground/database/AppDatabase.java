@@ -6,12 +6,15 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
+import com.doubleslash.playground.database.dao.ChatRoomDao;
 import com.doubleslash.playground.database.dao.MessageDao;
+import com.doubleslash.playground.database.entity.ChatRoomEntity;
 import com.doubleslash.playground.database.entity.MessageEntity;
 
-@Database(entities = {MessageEntity.class}, version = 1, exportSchema = false)
+@Database(entities = {MessageEntity.class, ChatRoomEntity.class}, version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract MessageDao messageDao();
+    public abstract ChatRoomDao chatRoomDao();
 
     private static volatile AppDatabase instance;
 

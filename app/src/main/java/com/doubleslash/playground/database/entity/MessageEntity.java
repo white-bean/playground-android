@@ -2,9 +2,12 @@ package com.doubleslash.playground.database.entity;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "Messages")
+@Entity(tableName = "Messages", foreignKeys = @ForeignKey(entity = ChatRoomEntity.class,
+        parentColumns = "id",
+        childColumns = "roomId"))
 public class MessageEntity {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
@@ -12,7 +15,7 @@ public class MessageEntity {
     @ColumnInfo(name = "type")
     private int type;
     @ColumnInfo(name = "from")
-    private String from;
+    private long from;
     @ColumnInfo(name = "roomId")
     private String roomId;
     @ColumnInfo(name = "text")
@@ -20,7 +23,7 @@ public class MessageEntity {
     @ColumnInfo(name = "sendTime")
     private long sendTime;
 
-    public MessageEntity(int type, String from, String roomId, String text, long sendTime) {
+    public MessageEntity(int type, long from, String roomId, String text, long sendTime) {
         this.type = type;
         this.from = from;
         this.roomId = roomId;
@@ -44,11 +47,11 @@ public class MessageEntity {
         this.type = type;
     }
 
-    public String getFrom() {
+    public long getFrom() {
         return from;
     }
 
-    public void setFrom(String from) {
+    public void setFrom(long from) {
         this.from = from;
     }
 
