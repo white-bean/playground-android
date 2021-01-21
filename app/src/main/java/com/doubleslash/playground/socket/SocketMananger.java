@@ -57,11 +57,6 @@ public class SocketMananger {
                     Message msg = gson.fromJson(message, Message.class);
                     // RoomId를 key로 사용함으로써, 해당 키가 존재하면 큐에 집어넣고 아니면 해당 키 추가
 
-                    // 1 대 1 채팅일 경우 roomId = "member_" + memberId
-                    if (msg.getAria() == Aria.PERSON) {
-                        msg.setTo("member_" + msg.getTo());
-                    }
-
                     if (msg.getType() == Type.ENTER || msg.getType() == Type.START) {
                         List<ChatRoomDTO> chatRooms = retrofitClient.getChatRoomInfos().getData();
                         ClientApp.roomInfos = new HashMap<>();

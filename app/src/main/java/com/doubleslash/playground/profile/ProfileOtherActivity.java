@@ -9,6 +9,7 @@ import android.view.View;
 
 import com.bumptech.glide.Glide;
 import com.doubleslash.playground.ClientApp;
+import com.doubleslash.playground.chat.ChatActivity;
 import com.doubleslash.playground.databinding.ActivityProfileOtherBinding;
 import com.doubleslash.playground.infoGroup.InfoGroupActivity;
 import com.doubleslash.playground.retrofit.RetrofitClient;
@@ -91,9 +92,16 @@ public class ProfileOtherActivity extends AppCompatActivity {
 
         binding.fabChat.setOnClickListener(v -> {
             // 1:1 채팅으로 이동
-
-            //없을 경우
-            retrofitClient.group_request_accept(Aria.PERSON, Type.START, ClientApp.userId, Long.toString(memberId), System.currentTimeMillis());
+            Long roomId = retrofitClient.getCheckChatRoom(memberId);
+            if (roomId > 0) {
+                Intent intent2 = new Intent(getApplicationContext(), ChatActivity.class);
+                intent2.putExtra("roomId", String.valueOf(roomId));
+                intent2.putExtra("roomType", "PERSON");
+                startActivity(intent2);
+            } else {
+                //없을 경우
+                retrofitClient.group_request_accept(Aria.PERSON, Type.START, ClientApp.userId, Long.toString(memberId), System.currentTimeMillis());
+            }
         });
     }
 }

@@ -197,44 +197,41 @@ public class ChatActivity extends AppCompatActivity{
             while (true) {
                 if (ClientApp.RoomMsgQueues.containsKey(roomId)) {
                     Queue<Message> unloadedMsgs = ClientApp.RoomMsgQueues.get(roomId);
-
-                    if (unloadedMsgs.size() > 0) {
-                        while (!unloadedMsgs.isEmpty()) {
-                            Message msg = unloadedMsgs.poll();
-                            Log.d("Message", msg.toString());
-                            if (msg.getType() == Type.ENTER) {
-                                MessageEntity message = new MessageEntity(ChatType.ViewType.CENTER_CONTENT, msg.getFrom(), msg.getTo(), msg.getText(), msg.getSendTime());
+                    while (!unloadedMsgs.isEmpty()) {
+                        Message msg = unloadedMsgs.poll();
+                        Log.d("Message", msg.toString());
+                        if (msg.getType() == Type.ENTER) {
+                            MessageEntity message = new MessageEntity(ChatType.ViewType.CENTER_CONTENT, msg.getFrom(), msg.getTo(), msg.getText(), msg.getSendTime());
+                            messageRepository.insert(message);
+                            chats.add(new ChatItem(memberInfos.get(msg.getFrom()).getNickname(),
+                                    "",
+                                    msg.getText(),
+                                    dateConvert(msg.getSendTime()),
+                                    ChatType.ViewType.CENTER_CONTENT));
+                        } else if (msg.getType() == Type.SEND) {
+                            if (ClientApp.userId == msg.getFrom()) {
+                                MessageEntity message = new MessageEntity(ChatType.ViewType.RIGHT_CONTENT, msg.getFrom(), msg.getTo(), msg.getText(), msg.getSendTime());
                                 messageRepository.insert(message);
                                 chats.add(new ChatItem(memberInfos.get(msg.getFrom()).getNickname(),
                                         "",
                                         msg.getText(),
                                         dateConvert(msg.getSendTime()),
-                                        ChatType.ViewType.CENTER_CONTENT));
-                            } else if (msg.getType() == Type.SEND) {
-                                if (ClientApp.userId == msg.getFrom()) {
-                                    MessageEntity message = new MessageEntity(ChatType.ViewType.RIGHT_CONTENT, msg.getFrom(), msg.getTo(), msg.getText(), msg.getSendTime());
-                                    messageRepository.insert(message);
-                                    chats.add(new ChatItem(memberInfos.get(msg.getFrom()).getNickname(),
-                                            "",
-                                            msg.getText(),
-                                            dateConvert(msg.getSendTime()),
-                                            ChatType.ViewType.RIGHT_CONTENT));
-                                } else {
-                                    MessageEntity message = new MessageEntity(ChatType.ViewType.LEFT_CONTENT, msg.getFrom(), msg.getTo(), msg.getText(), msg.getSendTime());
-                                    messageRepository.insert(message);
-                                    chats.add(new ChatItem(memberInfos.get(msg.getFrom()).getNickname(),
-                                            memberInfos.get(msg.getFrom()).getImageUrl(),
-                                            msg.getText(),
-                                            dateConvert(msg.getSendTime()),
-                                            ChatType.ViewType.LEFT_CONTENT));
-                                }
+                                        ChatType.ViewType.RIGHT_CONTENT));
+                            } else {
+                                MessageEntity message = new MessageEntity(ChatType.ViewType.LEFT_CONTENT, msg.getFrom(), msg.getTo(), msg.getText(), msg.getSendTime());
+                                messageRepository.insert(message);
+                                chats.add(new ChatItem(memberInfos.get(msg.getFrom()).getNickname(),
+                                        memberInfos.get(msg.getFrom()).getImageUrl(),
+                                        msg.getText(),
+                                        dateConvert(msg.getSendTime()),
+                                        ChatType.ViewType.LEFT_CONTENT));
                             }
-                            chatsLiveData.postValue(chats);
-                            // 사용자가 메세지를 보냈을 경우 채팅방의 맨 마지막으로 스크롤링
-                            handler.post(() -> {
-                                binding.recyclerView.scrollToPosition(chats.size() - 1);
-                            });
                         }
+                        chatsLiveData.postValue(chats);
+                        // 사용자가 메세지를 보냈을 경우 채팅방의 맨 마지막으로 스크롤링
+                        handler.post(() -> {
+                            binding.recyclerView.scrollToPosition(chats.size() - 1);
+                        });
                     }
                 }
             }

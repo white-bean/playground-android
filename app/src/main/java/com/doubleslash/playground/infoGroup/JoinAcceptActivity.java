@@ -2,6 +2,7 @@ package com.doubleslash.playground.infoGroup;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -40,21 +41,31 @@ public class JoinAcceptActivity extends AppCompatActivity {
 
         binding.rvWaitingUsers.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
-        JoinAdapter joinAdapter = new JoinAdapter();
+        JoinAdapter joinAdapter = new JoinAdapter(this);
 
         users = ClientApp.waitingUsers.get(teamId);
-
         if (users != null) {
             if (users.size() > 0) {
-                for (Long user : users) {
-                    joinAdapter.addItem(new Join(Long.toString(user), "서울 광진구", "대학교"));
+                if (users.size() == 1) {
+                    joinAdapter.addItem(new Join(Long.toString(users.get(0)), "서울 광진구", "서울대학교"));
+                } else if (users.size() == 2) {
+                    joinAdapter.addItem(new Join(Long.toString(users.get(0)), "서울 광진구", "서울대학교"));
+                    joinAdapter.addItem(new Join(Long.toString(users.get(1)), "경기 가평군", "중앙대학교"));
+                } else if (users.size() == 3) {
+                    joinAdapter.addItem(new Join(Long.toString(users.get(0)), "서울 광진구", "서울대학교"));
+                    joinAdapter.addItem(new Join(Long.toString(users.get(1)), "경기 가평군", "중앙대학교"));
+                    joinAdapter.addItem(new Join(Long.toString(users.get(2)), "안산 상록구", "아주대학교"));
                 }
 
-                // 가입 대기 인원 체크
-                binding.tvWaitingUsersNumber.setText(users.size());
+//                for (Long user : users) {
+//                    joinAdapter.addItem(new Join(Long.toString(user), "서울 광진구", "대학교"));
+//                }
 
-                binding.tvNoMember.setVisibility(View.GONE);
-                binding.imageNoMember.setVisibility(View.GONE);
+//                // 가입 대기 인원 체크
+//                binding.tvWaitingUsersNumber.setText(users.size());
+//
+//                binding.tvNoMember.setVisibility(View.GONE);
+//                binding.imageNoMember.setVisibility(View.GONE);
             }
 
             joinAdapter.setOnItemClickListener((holder, view, position) -> {
