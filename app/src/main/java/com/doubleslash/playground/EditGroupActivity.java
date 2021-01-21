@@ -88,6 +88,15 @@ public class EditGroupActivity extends AppCompatActivity implements AdapterView.
     private void initUI() {
         binding.registerPicIv.setOnClickListener(v -> { // 소모임 사진
             openGallery();
+
+            String text2 = binding.GroupNameEdit.getText().toString();
+            String text3 = binding.infoEdit.getText().toString();
+            if (isregion && text2.length() > 0 && text3.length() > 0){
+                onCreateBtn();
+            }
+            else {
+                offCreateBtn();
+            }
         });
 
         binding.GroupNameEdit.addTextChangedListener(new TextWatcher() {    // 소모임 이름
@@ -185,7 +194,7 @@ public class EditGroupActivity extends AppCompatActivity implements AdapterView.
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                isregion=false;
             }
 
             @Override
@@ -270,7 +279,7 @@ public class EditGroupActivity extends AppCompatActivity implements AdapterView.
             binding.locationlist.setVisibility(View.INVISIBLE);
             String text2 = binding.GroupNameEdit.getText().toString();
             String text3 = binding.infoEdit.getText().toString();
-            if (isregion && text2.length() > 0 && text3.length() ==4) {
+            if (isregion && text2.length() > 0 && text3.length() >0) {
                 onCreateBtn();
             }
             else {

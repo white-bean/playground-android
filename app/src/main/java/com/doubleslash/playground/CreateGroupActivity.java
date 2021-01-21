@@ -253,7 +253,7 @@ public class CreateGroupActivity extends AppCompatActivity implements AdapterVie
             binding.locationlist.setVisibility(View.INVISIBLE);
             String text2 = binding.GroupNameEdit.getText().toString();
             String text3 = binding.infoEdit.getText().toString();
-            if (isregion && text2.length() > 0 && text3.length() ==4) {
+            if (isregion && text2.length() > 0 && text3.length() > 0) {
                 onCreateBtn();
             }
             else {
