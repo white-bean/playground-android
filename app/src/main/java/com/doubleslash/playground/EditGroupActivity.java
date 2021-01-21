@@ -53,11 +53,11 @@ public class EditGroupActivity extends AppCompatActivity implements AdapterView.
     boolean isregion=true;
     Uri selectedImageUri;
     final Calendar cal = Calendar.getInstance();
+    String start, end;
     private RetrofitClient retrofitClient;
-    public static String API_URL = "http://222.251.129.150/";
     String uri;
     Long teamid;
-    Team_info_responseDTO team_info_responseDTO;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -143,8 +143,8 @@ public class EditGroupActivity extends AppCompatActivity implements AdapterView.
             createTeamDTO.setContent(binding.infoEdit.getText().toString());
             createTeamDTO.setMaxMemberSize(maxMemberCount);
             createTeamDTO.setName(binding.GroupNameEdit.getText().toString());
-            createTeamDTO.setStartDate(binding.startDate.getText().toString());
-            createTeamDTO.setEndDate(binding.endDate.getText().toString());
+            createTeamDTO.setStartDate(start);
+            createTeamDTO.setEndDate(end);
             if(selectedImageUri!=null) {
                 MultipartBody.Part teamImage = retrofitClient.prepareFilePart("file", selectedImageUri, getApplicationContext());
                 retrofitClient.update_group(createTeamDTO, teamImage,teamid);
@@ -220,10 +220,6 @@ public class EditGroupActivity extends AppCompatActivity implements AdapterView.
         binding.categorySpinner.setAdapter(cateAdapter);
         binding.categorySpinner.setOnItemSelectedListener(this);
 
-        ArrayAdapter subAdapter = ArrayAdapter.createFromResource(this, R.array.category, android.R.layout.simple_spinner_dropdown_item);
-        // 나중에 팀원들과 상의해서 세부 카테고리에 뭐가 들어갈지 정해야함, array도 만들어야함, 지금은 임시로 category 리스트로 넣었음
-        subAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
         binding.locationlist.setOnItemClickListener(listener);
         binding.switch1.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if(isChecked) {//On
@@ -279,7 +275,8 @@ public class EditGroupActivity extends AppCompatActivity implements AdapterView.
             binding.locationlist.setVisibility(View.INVISIBLE);
             String text2 = binding.GroupNameEdit.getText().toString();
             String text3 = binding.infoEdit.getText().toString();
-            if (isregion && text2.length() > 0 && text3.length() >0) {
+
+            if (isregion && text2.length() > 0 && text3.length() > 0) {
                 onCreateBtn();
             }
             else {
@@ -354,11 +351,14 @@ public class EditGroupActivity extends AppCompatActivity implements AdapterView.
                     cal.set(year1, monthOfYear, dayOfMonth);
                     int weekDay = cal.get(Calendar.DAY_OF_WEEK);
                     String weekday = dayofweek(weekDay);
+                    String date = Integer.toString(year1).substring(2) + "." + String.format("%02d.%02d", monthOfYear + 1, dayOfMonth);
                     switch (id){
                         case 1:
+                            this.start = date;
                             binding.startDate.setText(year1 + "년 " + (monthOfYear + 1) + "월 " + dayOfMonth + "일 " + weekday);
                             break;
                         case 2:
+                            this.end = date;
                             binding.endDate.setText(year1 + "년 " + (monthOfYear + 1) + "월 " + dayOfMonth + "일 " + weekday);
                             break;
                     }

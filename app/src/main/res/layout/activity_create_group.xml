@@ -43,13 +43,14 @@
 
                     <EditText
                         android:id="@+id/GroupName_edit"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:backgroundTint="@color/gray"
-                        android:ems="10"
+                        android:ems="8"
                         android:fontFamily="@font/notosanskr_bold"
                         android:hint="소모임 이름을 입력하세요."
                         android:includeFontPadding="true"
+                        android:background="@null"
                         android:inputType="textPersonName"
                         android:maxLines="1"
                         android:nextFocusDown="@id/info_edit"
@@ -88,6 +89,14 @@
                         android:textSize="16sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginBottom="4dp"
+                        android:background="#f5f6f9"
+                        app:layout_constraintBottom_toBottomOf="parent" />
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </LinearLayout>
@@ -325,14 +334,14 @@
                             android:layout_height="48dp"
                             android:background="@drawable/button_r8"
                             android:fontFamily="@font/notosanskr_regular"
-                            android:hint="서울 OO구"
+                            android:hint="사는 지역 ex) 마포구"
                             android:includeFontPadding="false"
                             android:inputType="textShortMessage"
                             android:nextFocusDown="@id/category_spinner"
                             android:paddingLeft="@dimen/spacing_m"
                             android:textColor="@color/sub_black"
                             android:textColorHint="@color/sub_gray"
-                            android:textSize="18sp" />
+                            android:textSize="16sp" />
 
                         <ListView
                             android:id="@+id/locationlist"
