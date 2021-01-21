@@ -13,6 +13,8 @@ import com.doubleslash.playground.databinding.ActivityProfileOtherBinding;
 import com.doubleslash.playground.infoGroup.InfoGroupActivity;
 import com.doubleslash.playground.retrofit.RetrofitClient;
 import com.doubleslash.playground.retrofit.dto.response.Other_info_responseDTO;
+import com.doubleslash.playground.socket.model.Aria;
+import com.doubleslash.playground.socket.model.Type;
 
 public class ProfileOtherActivity extends AppCompatActivity {
     ActivityProfileOtherBinding binding;
@@ -89,6 +91,9 @@ public class ProfileOtherActivity extends AppCompatActivity {
 
         binding.fabChat.setOnClickListener(v -> {
             // 1:1 채팅으로 이동
+
+            //없을 경우
+            retrofitClient.group_request_accept(Aria.PERSON, Type.START, ClientApp.userId, Long.toString(memberId), System.currentTimeMillis());
         });
     }
 }

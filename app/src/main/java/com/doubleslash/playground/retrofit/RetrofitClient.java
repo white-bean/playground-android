@@ -358,9 +358,11 @@ public class RetrofitClient {
             public void run() {
                 try {
                     user_info_responseDTO = user_info_service.getData("TOKEN " + ClientApp.userToken).execute().body();
-                    Log.d("data.getUserId()", user_info_responseDTO.getResult() + "");
-                    //Log.d("data.getId()", body.getData() + "");
-                    Log.e("postData end3", "======================================");
+                    if (user_info_responseDTO.getResult() == 1) {
+                        Log.d("notice", "user info fetch success");
+                    } else {
+                        Log.d("error", "user info fetch failed");
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
