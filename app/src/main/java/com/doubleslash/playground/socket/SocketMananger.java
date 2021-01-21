@@ -17,6 +17,7 @@ import org.java_websocket.handshake.ServerHandshake;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -61,9 +62,6 @@ public class SocketMananger {
                         msg.setTo("member_" + msg.getTo());
                     }
 
-                    // Aria 검증 - GROUP, ENTER
-                    // Type 검증 - ENTER, LEFT 채팅방 목록이 바뀌는 시점
-                    // roomInfos 갱신
                     if (msg.getType() == Type.ENTER || msg.getType() == Type.START) {
                         List<ChatRoomDTO> chatRooms = retrofitClient.getChatRoomInfos().getData();
                         ClientApp.roomInfos = new HashMap<>();
@@ -71,21 +69,38 @@ public class SocketMananger {
                             ClientApp.roomInfos.put(room.getId(), room);
                         }
                     } else {
-                        if (ClientApp.RoomMsgQueues.containsKey(msg.getTo())) {
-                            ClientApp.RoomMsgQueues.get(msg.getTo()).add(msg);
-                        } else {
-                            ClientApp.RoomMsgQueues.put(msg.getTo(), new LinkedList<>());
+                        // GROUP일 때
+                        if (msg.getAria() == Aria.GROUP) {
+
                             if (msg.getType() == Type.REQUEST) {
+                                Log.d("REQUEST", msg.toString());
                                 // 가입 대기 중인 인원에 추가
                                 if (ClientApp.waitingUsers.containsKey(msg.getTo())) {
                                     ClientApp.waitingUsers.get(msg.getTo()).add(msg.getFrom());
+                                    Log.d("REQUEST SIZE", ClientApp.waitingUsers.get(msg.getTo()).size() + "");
                                 } else {
-                                    ClientApp.waitingUsers.put(msg.getTo(), new LinkedList<Long>());
+                                    ClientApp.waitingUsers.put(msg.getTo(), new ArrayList<Long>());
                                     ClientApp.waitingUsers.get(msg.getTo()).add(msg.getFrom());
+                                    Log.d("REQUEST SIZE", ClientApp.waitingUsers.get(msg.getTo()).size() + "");
                                 }
+
                             } else {
-                                ClientApp.RoomMsgQueues.get(msg.getTo()).add(msg);
+                                if (ClientApp.RoomMsgQueues.containsKey(msg.getTo())) {
+                                    ClientApp.RoomMsgQueues.get(msg.getTo()).add(msg);
+
+                                } else {
+                                    ClientApp.RoomMsgQueues.put(msg.getTo(), new LinkedList<>());
+                                    ClientApp.RoomMsgQueues.get(msg.getTo()).add(msg);
+                                }
                             }
+                        // PERSON 일 때
+                        } else {
+                            if (ClientApp.RoomMsgQueues.containsKey(msg.getTo())) {
+                                    ClientApp.RoomMsgQueues.get(msg.getTo()).add(msg);
+                                } else {
+                                    ClientApp.RoomMsgQueues.put(msg.getTo(), new LinkedList<>());
+                                    ClientApp.RoomMsgQueues.get(msg.getTo()).add(msg);
+                                }
                         }
                     }
                 }
