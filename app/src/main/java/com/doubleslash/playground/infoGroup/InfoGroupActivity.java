@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.bumptech.glide.Glide;
@@ -112,6 +113,7 @@ public class InfoGroupActivity extends AppCompatActivity {
         // 가입 신청 버튼 눌렀을 때
         binding.btnGroupRegister.setOnClickListener(v -> {
             // 레트로핏 통신으로 리퀘스트 보냄
+            Log.d("userId", ClientApp.userId + "");
             retrofitClient.group_request_accept(Aria.GROUP, Type.REQUEST, ClientApp.userId, String.valueOf(teamId), System.currentTimeMillis());
         });
 

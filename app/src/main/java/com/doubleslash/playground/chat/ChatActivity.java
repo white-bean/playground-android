@@ -219,10 +219,6 @@ public class ChatActivity extends AppCompatActivity{
                                             msg.getText(),
                                             dateConvert(msg.getSendTime()),
                                             ChatType.ViewType.RIGHT_CONTENT));
-                                    // 사용자가 메세지를 보냈을 경우 채팅방의 맨 마지막으로 스크롤링
-                                    handler.post(() -> {
-                                        binding.recyclerView.scrollToPosition(chats.size() - 1);
-                                    });
                                 } else {
                                     MessageEntity message = new MessageEntity(ChatType.ViewType.LEFT_CONTENT, msg.getFrom(), msg.getTo(), msg.getText(), msg.getSendTime());
                                     messageRepository.insert(message);
@@ -234,6 +230,10 @@ public class ChatActivity extends AppCompatActivity{
                                 }
                             }
                             chatsLiveData.postValue(chats);
+                            // 사용자가 메세지를 보냈을 경우 채팅방의 맨 마지막으로 스크롤링
+                            handler.post(() -> {
+                                binding.recyclerView.scrollToPosition(chats.size() - 1);
+                            });
                         }
                     }
                 }

@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
     Menu menu;
 
-    private RetrofitClient retrofitClient;
+    //private RetrofitClient retrofitClient;
 
     // 마지막으로 뒤로 가기 버튼을 눌렀던 시간 저장
     private long backKeyPressedTime = 0;
@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
-        retrofitClient = RetrofitClient.getInstance();
+        //retrofitClient = RetrofitClient.getInstance();
 
         initUI();
 
@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
     }// onCreate()..
 
     private void initUI() {
-        User_info_responseDTO body = retrofitClient.get_userinfo();
+        //User_info_responseDTO body = retrofitClient.get_userinfo();
 
         groupListFragment1 = new GroupListFragment1();
         groupListFragment2 = new GroupListFragment2();
@@ -71,13 +71,15 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigation.setItemIconTintList(null);
         menu=bottomNavigation.getMenu();
 
-        bottomNavigation.setOnNavigationItemSelectedListener(new ItemSelectedListener(body));
+        bottomNavigation.setOnNavigationItemSelectedListener(new ItemSelectedListener());
 
-        if (body.getData().getMyteams().size() == 0) {
-             getSupportFragmentManager().beginTransaction().replace(R.id.container, groupListFragment1).commit();
-        } else {
-            getSupportFragmentManager().beginTransaction().replace(R.id.container, groupListFragment2).commit();
-        }
+//        if (body.getData().getMyteams().size() == 0) {
+//             getSupportFragmentManager().beginTransaction().replace(R.id.container, groupListFragment1).commit();
+//        } else {
+//            getSupportFragmentManager().beginTransaction().replace(R.id.container, groupListFragment2).commit();
+//        }
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, groupListFragment2).commit();
     }// onCreate()..
     @Override
     public void onBackPressed() {
@@ -104,11 +106,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     class ItemSelectedListener implements BottomNavigationView.OnNavigationItemSelectedListener {
-        User_info_responseDTO body;
-
-        ItemSelectedListener(User_info_responseDTO body) {
-            this.body = body;
-        }
+//        User_info_responseDTO body;
+//
+//        ItemSelectedListener(User_info_responseDTO body) {
+//            this.body = body;
+//        }
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -119,11 +121,12 @@ public class MainActivity extends AppCompatActivity {
                     menu.findItem(R.id.chat).setIcon(R.drawable.chat_navigation);
                     menu.findItem(R.id.profile).setIcon(R.drawable.profile);
 
-                    if (body.getData().getMyteams().size() == 0) {
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container, groupListFragment1).commit();
-                    } else {
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container, groupListFragment2).commit();
-                    }
+//                    if (body.getData().getMyteams().size() == 0) {
+//                        getSupportFragmentManager().beginTransaction().replace(R.id.container, groupListFragment1).commit();
+//                    } else {
+//                        getSupportFragmentManager().beginTransaction().replace(R.id.container, groupListFragment2).commit();
+//                    }
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container, groupListFragment2).commit();
                     break;
 
                 case R.id.chat:

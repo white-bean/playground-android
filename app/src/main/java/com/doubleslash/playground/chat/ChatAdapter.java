@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.doubleslash.playground.ClientApp;
 import com.doubleslash.playground.R;
 import com.google.gson.Gson;
@@ -116,6 +117,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             sendTimeText.setText(item.getSendTime());
             Glide.with(context)
                     .load(ClientApp.API_URL + item.getUserImageUrl())
+                    .apply(new RequestOptions().circleCrop())
                     .into(profileImage);
         }
     }

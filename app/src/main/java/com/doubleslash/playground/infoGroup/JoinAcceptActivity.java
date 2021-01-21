@@ -60,10 +60,11 @@ public class JoinAcceptActivity extends AppCompatActivity {
             joinAdapter.setOnItemClickListener((holder, view, position) -> {
                 retrofitClient.group_request_accept(Aria.GROUP, Type.ACCEPT, Long.parseLong(joinAdapter.getItem(position).getUserName()), teamId, System.currentTimeMillis());
 
+                ClientApp.waitingUsers.get(teamId).remove(position);
                 ClientApp.waitingUsers.remove(joinAdapter.getItem(position).getUserName());
                 joinAdapter.removeItem(position);
 
-//                // 가입 대기 인원 체크
+                // 가입 대기 인원 체크
 //                binding.tvWaitingUsersNumber.setText(joinAdapter.getItemCount());
 //
 //                if (joinAdapter.getItemCount() > 0) {
