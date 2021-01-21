@@ -39,9 +39,9 @@ public class JoinAcceptActivity extends AppCompatActivity {
         adapter = new JoinAdapter(category, teamId);
 
         // 어답터에 추가하는 작업 있어야함
-        List<String> users = ClientApp.waitingUsers.get(teamId);
-        for (String user : users) {
-            adapter.addItem(new Join(user, "서울 광진구", "대학교"));
+        List<Long> users = ClientApp.waitingUsers.get(teamId);
+        for (Long user : users) {
+            adapter.addItem(new Join(Long.toString(user), "서울 광진구", "대학교"));
         }
         binding.recyclerView.setAdapter(adapter);
 
