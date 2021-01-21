@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide;
 import com.doubleslash.playground.ClientApp;
 import com.doubleslash.playground.EditGroupActivity;
 import com.doubleslash.playground.R;
+import com.doubleslash.playground.chat.ChatActivity;
 import com.doubleslash.playground.databinding.ActivityInfoGroupBinding;
 import com.doubleslash.playground.profile.ProfileOtherActivity;
 import com.doubleslash.playground.retrofit.RetrofitClient;
@@ -133,6 +134,10 @@ public class InfoGroupActivity extends AppCompatActivity {
         // 채팅방 입장 버튼 눌렀을 때
         binding.btnGroupChatroom.setOnClickListener(view -> {
             Toast.makeText(this, "채팅방 입장", Toast.LENGTH_SHORT).show();
+            Intent intent1=new Intent(getApplicationContext(), ChatActivity.class);
+            intent1.putExtra("teamId",teamId);
+            startActivity(intent1);
+            finish();
         });
 
         // (방장용) 소모임 설정 버튼 눌렀을 때
