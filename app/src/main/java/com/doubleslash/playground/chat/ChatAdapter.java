@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.doubleslash.playground.ClientApp;
 import com.doubleslash.playground.R;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -103,6 +104,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         public LeftViewHolder(View itemView) {
             super(itemView);
 
+            profileImage = itemView.findViewById(R.id.profile_image);
             nameText = itemView.findViewById(R.id.name_text);
             contentText = itemView.findViewById(R.id.msg_text);
             sendTimeText = itemView.findViewById(R.id.send_time_text);

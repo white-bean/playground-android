@@ -22,6 +22,8 @@ import com.doubleslash.playground.retrofit.dto.MemberDTO;
 import com.doubleslash.playground.socket.model.Aria;
 import com.doubleslash.playground.socket.model.Message;
 import com.doubleslash.playground.socket.model.Type;
+import com.google.gson.Gson;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -80,12 +82,19 @@ public class ChatActivity extends AppCompatActivity{
         roomId = intent.getStringExtra("roomId");
         roomType = intent.getStringExtra("roomType");
 
+
+
         // 멤버들 정보 초기화 (해싱으로 빠르게 불러오기 위함)
         memberInfos = new HashMap<>();
         List<MemberDTO> memberList = ClientApp.roomInfos.get(roomId).getMembersInfo();
         for (MemberDTO member : memberList) {
             memberInfos.put(member.getId(), member);
+            Gson gson = new Gson();
+            Log.d("members", gson.toJson(member));
         }
+
+
+
 
         // 플러스 버튼으로 메뉴 열고 닫기
         binding.menuLayout.setVisibility(GONE);
